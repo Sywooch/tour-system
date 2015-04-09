@@ -1,89 +1,32 @@
-Yii 2 Basic Application Template
-================================
+# Installing on Windows machines
 
-Yii 2 Basic Application Template is a skeleton Yii 2 application best for
-rapidly creating small projects.
+1. Create a virtual host:
+	* Add in file 'httpd-vhosts.conf' something like that:
+		```
+		<VirtualHost *:80>
+			ServerName tour-system
+			ServerAlias www.tour-system
 
-The template contains the basic features including user login/logout and a contact page.
-It includes all commonly used configurations that would allow you to focus on adding new
-features to your application.
-
-
-DIRECTORY STRUCTURE
--------------------
-
-      assets/             contains assets definition
-      commands/           contains console commands (controllers)
-      config/             contains application configurations
-      controllers/        contains Web controller classes
-      mail/               contains view files for e-mails
-      models/             contains model classes
-      runtime/            contains files generated during runtime
-      tests/              contains various tests for the basic application
-      vendor/             contains dependent 3rd-party packages
-      views/              contains view files for the Web application
-      web/                contains the entry script and Web resources
-
-
-
-REQUIREMENTS
-------------
-
-The minimum requirement by this application template that your Web server supports PHP 5.4.0.
-
-
-INSTALLATION
-------------
-
-### Install from an Archive File
-
-Extract the archive file downloaded from [yiiframework.com](http://www.yiiframework.com/download/) to
-a directory named `basic` that is directly under the Web root.
-
-You can then access the application through the following URL:
-
-~~~
-http://localhost/basic/web/
-~~~
-
-
-### Install via Composer
-
-If you do not have [Composer](http://getcomposer.org/), you may install it by following the instructions
-at [getcomposer.org](http://getcomposer.org/doc/00-intro.md#installation-nix).
-
-You can then install this application template using the following command:
-
-~~~
-php composer.phar global require "fxp/composer-asset-plugin:1.0.0"
-php composer.phar create-project --prefer-dist --stability=dev yiisoft/yii2-app-basic basic
-~~~
-
-Now you should be able to access the application through the following URL, assuming `basic` is the directory
-directly under the Web root.
-
-~~~
-http://localhost/basic/web/
-~~~
-
-
-CONFIGURATION
--------------
-
-### Database
-
-Edit the file `config/db.php` with real data, for example:
-
-```php
-return [
-    'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=yii2basic',
-    'username' => 'root',
-    'password' => '1234',
-    'charset' => 'utf8',
-];
-```
-
-**NOTE:** Yii won't create the database for you, this has to be done manually before you can access it.
-
-Also check and edit the other files in the `config/` directory to customize your application.
+			DocumentRoot C:/apache/tour-system/web
+			<Directory C:/apache/tour-system/web>
+				AllowOverride FileInfo
+				Require all granted
+			</Directory>
+		</VirtualHost>
+		```
+	* Edit your 'hosts' file(c:\Windows\System32\drivers\etc\). Add to the end of file:
+		```
+		127.0.0.1 tour-system
+		127.0.0.1 www.tour-system
+		```
+2. Start your 'Git Bash' app. Move to your folder with virtual hosts and type:
+	```
+	git clone https://github.com/KiresMA/tour-system.git
+	```
+3. Open standard windows command line, move into 'tour-system' folder you've just created and type:
+	```
+	composer install
+	```
+4. Restart your Apache server.
+5. Create database named 'toursystem'. Create mysql-user 'toursystem' with the same password.
+6. Execute yii migrate.
