@@ -54,7 +54,12 @@ class ContractorController extends Controller
 	
 	public function actionEdit($id){
 		$model = Contractor::findOne($id);
-		 
+		
+		if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($model);
+		}
+		
 		if ($model->load(Yii::$app->request->post()) && $model->save()) {
 			Yii::$app->session->setFlash('contractorEdited');
 		
