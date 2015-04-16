@@ -15,7 +15,7 @@ class m150409_162823_create_contractors_table extends Migration
             'contractorPostcode' => Schema::TYPE_STRING . '(45) NOT NULL',
             'contractorCity' => Schema::TYPE_STRING . '(45) NOT NULL',
             'contractorCountry' => Schema::TYPE_STRING . '(45) NOT NULL',
-            'contractorNIP' => Schema::TYPE_INTEGER . ' NOT NULL UNIQUE'
+            'contractorNIP' => Schema::TYPE_BIGINT . ' NOT NULL UNIQUE'
         ]);
     }
 

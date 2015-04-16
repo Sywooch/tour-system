@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'ContractorStreet') ?>
                 <?= $form->field($model, 'ContractorPostcode') ?>
                 <?= $form->field($model, 'ContractorCity') ?>
+                <?= $form->field($model, 'ContractorCountry') ?>
                 <?= $form->field($model, 'ContractorNIP')?>
                 <div class="form-group">
                     <?= Html::submitButton($model->isNewRecord ? 'Utwórz kontrahenta' : 'Zapisz zmiany', ['class' => 'btn btn-success', 'name' => 'save-contractor']) ?>

@@ -14,7 +14,7 @@ class m150409_153128_create_customers_table extends Migration
             'customerStreet' => Schema::TYPE_STRING . '(45) NOT NULL',
             'customerPostcode' => Schema::TYPE_STRING . '(6) NOT NULL',
             'customerCity' => Schema::TYPE_STRING . '(45) NOT NULL',
-            'customerPESEL' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'customerPESEL' => Schema::TYPE_BIGINT . ' NOT NULL',
             'customerPhone' => Schema::TYPE_STRING . '(13) NOT NULL',
             'customerBirthdate' => Schema::TYPE_DATE . ' NOT NULL',
             'user_userId' => Schema::TYPE_INTEGER

@@ -17,6 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     		<th>#</th>
     		<th>Nazwa Skrócona</th>
     		<th>Nazwa Pełna</th>
+    		<th>Kraj</th>
     		<th>Numer NIP</th>
     		<th>Akcje</th>
     	</tr>
@@ -28,6 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     			$row .= '<td>' . $i . '</td>';
     			$row .= '<td>' . $contractor->ContractorShortName . '</td>';
     			$row .= '<td>' . $contractor->ContractorFullName . '</td>';
+    			$row .= '<td>' . $contractor->ContractorCountry .'</td>';
     			$row .= '<td>' . $contractor->ContractorNIP .'</td>';
     			$row .= '<td>';
     			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $contractor->ContractorId, [
