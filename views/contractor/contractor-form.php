@@ -33,7 +33,10 @@ $this->params['breadcrumbs'][] = $this->title;
 		
     <div class="row">
         <div class="col-lg-5">
-            <?php $form = ActiveForm::begin(['id' => 'contractor-form']); ?>
+            <?php $form = ActiveForm::begin([
+            		'id' => 'contractor-form',
+            		'enableAjaxValidation' => 'true'
+            ]); ?>
                 <?= $form->field($model, 'ContractorShortName') ?>
                 <?= $form->field($model, 'ContractorFullName') ?>
                 <?= $form->field($model, 'ContractorStreet') ?>

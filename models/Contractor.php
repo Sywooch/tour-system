@@ -19,7 +19,9 @@ class Contractor extends \yii\db\ActiveRecord{
 				[['ContractorNIP'], 'integer', 'message' => 'Dozwolone znaki to cyfry.'],
 				[['ContractorShortName', 'ContractorStreet','ContractorCity', 'ContractorCountry'], 'string', 'max' => 45, 'message' => "Za długa wartość. Maksymalna długość: 45 znaków."],
 				[['ContractorFullName'], 'string', 'max' => 255, 'message' => "Za długa wartość. Maksymalna długość: 255 znaków."],
-				[['ContractorPostcode'], 'string', 'min' =>6, 'message' => "W tym polu powinno być 6 znaków.", 'max' => 6, 'message' => "W tym polu powinno być 6 znaków."]
+				[['ContractorPostcode'], 'string', 'min' =>6, 'message' => "W tym polu powinno być 6 znaków.", 'max' => 6, 'message' => "W tym polu powinno być 6 znaków."],
+				['ContractorShortName', 'unique', 'message' => 'Podana nazwa skrócona już istnieje w bazie.' ],
+				['ContractorNIP', 'unique', 'message' => 'Podana numer NIP już istnieje w bazie.' ]
 		];
 	}
 	

@@ -8,7 +8,8 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\Contractor;
 use yii\data\Pagination;
-use app\models\app\models;
+use yii\bootstrap\ActiveForm;
+use yii\web\Response;
 
 class ContractorController extends Controller
 {
@@ -17,6 +18,11 @@ class ContractorController extends Controller
 	public function actionAdd()
     {
     	$model = new Contractor();
+    	
+    	if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    		Yii::$app->response->format = Response::FORMAT_JSON;
+    		return ActiveForm::validate($model);
+    	}
     	
     	if ($model->load(Yii::$app->request->post()) && $model->save()) {
         	Yii::$app->session->setFlash('contractorAdded');
