@@ -7,9 +7,14 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'components' => [
+		'urlManager' => [
+			'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+        ], 
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
-            'cookieValidationKey' => 'glwvgRKIa5r5PVqJmtYpM3a4VwY0E_Ed',
+            'cookieValidationKey' => 'QwdXifuBSBNZ4JWd5zax1JrFmnsX9uXo',
         ],
         'cache' => [
             'class' => 'yii\caching\FileCache',
