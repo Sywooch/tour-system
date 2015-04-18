@@ -22,7 +22,11 @@ $this->params['breadcrumbs'][] = $this->title;
 	        <li>Nazwa pełna: <b><?= $model->contractorFullName; ?></b></li>
 	        <li>Adres: <b><?= $model->contractorStreet; ?></b></li>
 	        <li>Kod pocztowy, miejscowość: <b><?= $model->contractorPostcode; ?>, <?= $model->contractorCity; ?></b></li>
+<<<<<<< HEAD
 	        <li>Numer NIP: <b><?= $model->contractorNIP; ?></b></li>
+=======
+	        <li>Numer NIP: <b><?= $model->ContractorNIP; ?></b></li>
+>>>>>>> refs/remotes/origin/master
         </ul>
         <span>&nbsp;</span>
         <div class="col-lg-12">

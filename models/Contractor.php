@@ -14,7 +14,7 @@ class Contractor extends \yii\db\ActiveRecord{
 	{
 		return [
 				[['contractorShortName', 'contractorFullName', 'contractorStreet',
-				  'contractorPostcode', 'contractorCity', 'contractorCountry', 'contractorNIP'], 
+				  'contractorPostcode', 'contractorCity', 'contractorCountry', 'contractorNIP'],
 				 'required', 'message' => 'To pole nie może być puste.'],
 				[['contractorNIP'], 'integer', 'message' => 'Dozwolone znaki to cyfry.'],
 				[['contractorShortName', 'contractorStreet','contractorCity', 'contractorCountry'], 'string', 'max' => 45, 'message' => "Za długa wartość. Maksymalna długość: 45 znaków."],
