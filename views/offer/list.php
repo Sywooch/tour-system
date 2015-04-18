@@ -1,0 +1,52 @@
+<?php
+
+use yii\helpers\Html;
+use yii\grid\GridView;
+
+/* @var $this yii\web\View */
+/* @var $searchModel app\models\OfferSearch */
+/* @var $dataProvider yii\data\ActiveDataProvider */
+
+$this->title = 'Offers';
+$this->params['breadcrumbs'][] = $this->title;
+?>
+<div class="offer-index">
+
+    <h1><?= Html::encode($this->title) ?></h1>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
+    <p>
+        <?= Html::a('Create Offer', ['add'], ['class' => 'btn btn-success']) ?>
+    </p>
+
+    <?= GridView::widget([
+        'dataProvider' => $dataProvider,
+       // 'filterModel' => $searchModel,
+        'columns' => [
+            ['class' => 'yii\grid\SerialColumn'],
+
+            //'offerId',
+            'offerName',
+            'offerStartDate',
+            'offerEndDate',
+            'offerPrice',
+            'offerDescription:ntext',
+            'offerAccommodation:ntext',
+            'offerBenefits:ntext',
+            'offerProgram:ntext',
+            'offerOptional:ntext',
+            'offerNote:ntext',
+            'offerPracticalData:ntext',
+            'offerLastMinutePrice',
+            'offerFirstMinutePrice',
+            'offerIsFirstMinute',
+            'offerIsLastMinute',
+            'offerIsActive',
+            'countries_countryId',
+            'seasons_seasonId',
+
+            ['class' => 'yii\grid\ActionColumn'],
+        ],
+    ]); ?>
+
+</div>
