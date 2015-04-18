@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Offer */
@@ -14,9 +15,29 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'offerName')->textInput(['maxlength' => 45]) ?>
 
-    <?= $form->field($model, 'offerStartDate')->textInput() ?>
+    <?= $form->field($model, 'offerStartDate')->widget(
+        DatePicker::className(), [
+        // inline too, not bad
+        'inline' => false,
+        // modify template for custom rendering
+        //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d'
+        ]
+    ]);?>
 
-    <?= $form->field($model, 'offerEndDate')->textInput() ?>
+    <?= $form->field($model, 'offerEndDate')->widget(
+        DatePicker::className(), [
+        // inline too, not bad
+        'inline' => false,
+        // modify template for custom rendering
+        //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d'
+        ]
+    ]);?>
 
     <?= $form->field($model, 'offerPrice')->textInput() ?>
 
