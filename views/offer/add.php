@@ -7,7 +7,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Offer */
 
 $this->title = 'Create Offer';
-$this->params['breadcrumbs'][] = ['label' => 'Offers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Offers', 'url' => ['list']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="offer-create">

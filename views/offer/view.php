@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Offer */
 
 $this->title = $model->offerId;
-$this->params['breadcrumbs'][] = ['label' => 'Offers', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Offers', 'url' => ['list']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="offer-view">
