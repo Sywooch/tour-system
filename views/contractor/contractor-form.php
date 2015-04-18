@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 if($model->isNewRecord){
 	$this->title = 'Dodawanie kontrahenta';
 }else{
-	$this->title = 'Edytowanie kontrahenta:' . $model->ContractorShortName;
+	$this->title = 'Edytowanie kontrahenta:' . $model->contractorShortName;
 }
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -37,13 +37,13 @@ $this->params['breadcrumbs'][] = $this->title;
             		'id' => 'contractor-form',
             		'enableAjaxValidation' => 'true'
             ]); ?>
-                <?= $form->field($model, 'ContractorShortName') ?>
-                <?= $form->field($model, 'ContractorFullName') ?>
-                <?= $form->field($model, 'ContractorStreet') ?>
-                <?= $form->field($model, 'ContractorPostcode') ?>
-                <?= $form->field($model, 'ContractorCity') ?>
-                <?= $form->field($model, 'ContractorCountry') ?>
-                <?= $form->field($model, 'ContractorNIP')?>
+                <?= $form->field($model, 'contractorShortName') ?>
+                <?= $form->field($model, 'contractorFullName') ?>
+                <?= $form->field($model, 'contractorStreet') ?>
+                <?= $form->field($model, 'contractorPostcode') ?>
+                <?= $form->field($model, 'contractorCity') ?>
+                <?= $form->field($model, 'contractorCountry') ?>
+                <?= $form->field($model, 'contractorNIP')?>
                 <div class="form-group">
                     <?= Html::submitButton($model->isNewRecord ? 'Utwórz kontrahenta' : 'Zapisz zmiany', ['class' => 'btn btn-success', 'name' => 'save-contractor']) ?>
                 </div>
