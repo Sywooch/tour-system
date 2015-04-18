@@ -42,8 +42,8 @@ $this->params['breadcrumbs'][] = $this->title;
             'offerIsFirstMinute',
             'offerIsLastMinute',
             'offerIsActive',
-            'countries_countryId',
-            'seasons_seasonId',
+            'countriesCountry.countryName',
+            'seasonsSeason.seasonName',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
