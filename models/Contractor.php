@@ -13,28 +13,28 @@ class Contractor extends \yii\db\ActiveRecord{
 	public function rules()
 	{
 		return [
-				[['ContractorShortName', 'ContractorFullName', 'ContractorStreet',
-				  'ContractorPostcode', 'ContractorCity', 'ContractorCountry', 'ContractorNIP'], 
+				[['contractorShortName', 'contractorFullName', 'contractorStreet',
+				  'contractorPostcode', 'contractorCity', 'contractorCountry', 'contractorNIP'], 
 				 'required', 'message' => 'To pole nie może być puste.'],
-				[['ContractorNIP'], 'integer', 'message' => 'Dozwolone znaki to cyfry.'],
-				[['ContractorShortName', 'ContractorStreet','ContractorCity', 'ContractorCountry'], 'string', 'max' => 45, 'message' => "Za długa wartość. Maksymalna długość: 45 znaków."],
-				[['ContractorFullName'], 'string', 'max' => 255, 'message' => "Za długa wartość. Maksymalna długość: 255 znaków."],
-				[['ContractorPostcode'], 'string', 'min' =>6, 'message' => "W tym polu powinno być 6 znaków.", 'max' => 6, 'message' => "W tym polu powinno być 6 znaków."],
-				['ContractorShortName', 'unique', 'message' => 'Podana nazwa skrócona już istnieje w bazie.' ],
-				['ContractorNIP', 'unique', 'message' => 'Podana numer NIP już istnieje w bazie.' ]
+				[['contractorNIP'], 'integer', 'message' => 'Dozwolone znaki to cyfry.'],
+				[['contractorShortName', 'contractorStreet','contractorCity', 'contractorCountry'], 'string', 'max' => 45, 'message' => "Za długa wartość. Maksymalna długość: 45 znaków."],
+				[['contractorFullName'], 'string', 'max' => 255, 'message' => "Za długa wartość. Maksymalna długość: 255 znaków."],
+				[['contractorPostcode'], 'string', 'min' =>6, 'message' => "W tym polu powinno być 6 znaków.", 'max' => 6, 'message' => "W tym polu powinno być 6 znaków."],
+				['contractorShortName', 'unique', 'message' => 'Podana nazwa skrócona już istnieje w bazie.' ],
+				['contractorNIP', 'unique', 'message' => 'Podana numer NIP już istnieje w bazie.' ]
 		];
 	}
 	
 	public function attributeLabels()
 	{
 		return [
-				'ContractorShortName' => 'Nazwa skrócona',
-				'ContractorFullName' => 'Nazwa pełna',
-				'ContractorStreet' => 'Adres',
-				'ContractorPostcode' => 'Kod pocztowy',
-				'ContractorCity' => 'Miejscowość',
-				'ContractorCountry' => 'Kraj',
-				'ContractorNIP' => 'Numer NIP'
+				'contractorShortName' => 'Nazwa skrócona',
+				'contractorFullName' => 'Nazwa pełna',
+				'contractorStreet' => 'Adres',
+				'contractorPostcode' => 'Kod pocztowy',
+				'contractorCity' => 'Miejscowość',
+				'contractorCountry' => 'Kraj',
+				'contractorNIP' => 'Numer NIP'
 		];
 	}
 }

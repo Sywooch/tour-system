@@ -22,20 +22,20 @@ $this->params['breadcrumbs'][] = $this->title;
     		<th>Akcje</th>
     	</tr>
     	<?php
-    		$i = 1; 
+    		$i = $pagination->page*10 + 1; 
     		foreach ($contractors as $contractor) 
     		{
     			$row = '<tr>';
     			$row .= '<td>' . $i . '</td>';
-    			$row .= '<td>' . $contractor->ContractorShortName . '</td>';
-    			$row .= '<td>' . $contractor->ContractorFullName . '</td>';
-    			$row .= '<td>' . $contractor->ContractorCountry .'</td>';
-    			$row .= '<td>' . $contractor->ContractorNIP .'</td>';
+    			$row .= '<td>' . $contractor->contractorShortName . '</td>';
+    			$row .= '<td>' . $contractor->contractorFullName . '</td>';
+    			$row .= '<td>' . $contractor->contractorCountry .'</td>';
+    			$row .= '<td>' . $contractor->contractorNIP .'</td>';
     			$row .= '<td>';
-    			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $contractor->ContractorId, [
+    			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $contractor->contractorId, [
                     'title' => 'Edytuj']);
     			$row .= '&nbsp;&nbsp;';
-    			$row .=  Html::a('<span class="glyphicon glyphicon-trash"></span>', 'delete?id=' . $contractor->ContractorId, [
+    			$row .=  Html::a('<span class="glyphicon glyphicon-trash"></span>', 'delete?id=' . $contractor->contractorId, [
     					'title' => 'Usuń']);
     			$row .= '</td></tr>'; 	
     			$i++;
