@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     		<th>Akcje</th>
     	</tr>
     	<?php
-    		$i = 1; 
+    		$i = $pagination->page*10 + 1; 
     		foreach ($contractors as $contractor) 
     		{
     			$row = '<tr>';

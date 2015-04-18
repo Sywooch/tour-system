@@ -2,7 +2,8 @@
 use yii\helpers\Html;
 
 if(Yii::$app->session->hasFlash('contractorDeleted')) $this->title = 'Kontrahent usunięty.'; 
-else $this->title = 'Usuwanie kontrahenta: ' . $model->ContractorShortName;
+else $this->title = 'Usuwanie kontrahenta: ' . $model->contractorShortName;
+$this->params['breadcrumbs'][] = ['label' => 'Kontrahenci', 'url' => ['list']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="content">
@@ -21,6 +22,8 @@ $this->params['breadcrumbs'][] = $this->title;
 	        <li>Nazwa pełna: <b><?= $model->contractorFullName; ?></b></li>
 	        <li>Adres: <b><?= $model->contractorStreet; ?></b></li>
 	        <li>Kod pocztowy, miejscowość: <b><?= $model->contractorPostcode; ?>, <?= $model->contractorCity; ?></b></li>
+	        <li>Numer NIP: <b><?= $model->contractorNIP; ?></b></li>
+=======
 	        <li>Numer NIP: <b><?= $model->ContractorNIP; ?></b></li>
         </ul>
         <span>&nbsp;</span>

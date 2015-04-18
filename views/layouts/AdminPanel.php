@@ -56,6 +56,10 @@ AppAsset::register($this);
 
         <div class="container">
             <?= Breadcrumbs::widget([
+            	'homeLink' => [
+            			'label' =>'Panel administracyjny',
+            			'url' => '/admin-panel',
+            	],
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
             <?= $content ?>

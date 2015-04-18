@@ -11,6 +11,7 @@ if($model->isNewRecord){
 }else{
 	$this->title = 'Edytowanie kontrahenta:' . $model->contractorShortName;
 }
+$this->params['breadcrumbs'][] = ['label' => 'Kontrahenci', 'url' => ['list']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-contact">
