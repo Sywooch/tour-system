@@ -59,11 +59,11 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'offerFirstMinutePrice')->textInput() ?>
 
-    <?= $form->field($model, 'offerIsFirstMinute')->textInput() ?>
+    <?= $form->field($model, 'offerIsFirstMinute')->checkbox() ?>
 
-    <?= $form->field($model, 'offerIsLastMinute')->textInput() ?>
+    <?= $form->field($model, 'offerIsLastMinute')->checkbox() ?>
 
-    <?= $form->field($model, 'offerIsActive')->textInput() ?>
+    <?= $form->field($model, 'offerIsActive')->checkbox() ?>
 
     <?= $form->field($model, 'countries_countryId')->textInput() ?>
 
