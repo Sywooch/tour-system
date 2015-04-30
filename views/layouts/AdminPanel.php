@@ -49,6 +49,13 @@ AppAsset::register($this);
                      	['label' => 'Lista kontrahentów', 'url' => ['/contractor/list']],
                      ],	
                 	],
+                	['label' => 'Nowy',
+                	 'items' => [
+                	 	['label' => 'Nowy klient', 'url' => ['/customer/add']],
+                	 	['label' => 'Nowy agent', 'url' => ['agent/add']],
+                	 	['label' => 'Nowy pracownik', 'url' => ['worker/add']],
+                	],
+                  ]
                 ],
             ]);
             NavBar::end();

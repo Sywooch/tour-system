@@ -24,7 +24,7 @@ class ContractorController extends Controller
     		return ActiveForm::validate($model);
     	}
     	
-    	if ($model->load(Yii::$app->request->post()) && $model->save()) {
+    	if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
         	Yii::$app->session->setFlash('contractorAdded');
 
             return $this->refresh();
