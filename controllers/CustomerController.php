@@ -28,12 +28,17 @@ class CustomerController extends Controller
 			
 		}
 		 
-		if ($model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post()) && $model1->save(false) && $model2->save(false)) {
+		if ($model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post()) && $model1->save() && $model2->save()) {
 			Yii::$app->session->setFlash('customerAdded');
 			return $this->refresh();
 		} else {
 			return $this->render('customer-form', array ('model1' => $model1, 'model2' => $model2));
 		}
+	}
+	
+	public function actionBuy()
+	{
+		
 	}
 
 	/*public function actionList(){
