@@ -70,8 +70,8 @@ class Offer extends \yii\db\ActiveRecord
             'offerPrice' => 'Cena oferty',
             'offerDescription' => 'Opis oferty',
             'offerAccommodation' => 'Offer Accommodation',
-            'offerBenefits' => 'Offer Benefits',
-            'offerProgram' => 'Offer Program',
+            'offerBenefits' => 'Korzyści oferty',
+            'offerProgram' => 'Programa oferty',
             'offerOptional' => 'Offer Optional',
             'offerNote' => 'Offer Note',
             'offerPracticalData' => 'Offer Practical Data',
@@ -80,8 +80,8 @@ class Offer extends \yii\db\ActiveRecord
             'offerIsFirstMinute' => 'Offer Is First Minute',
             'offerIsLastMinute' => 'Offer Is Last Minute',
             'offerIsActive' => 'Offer Is Active',
-            'countries_countryId' => 'Country name',
-            'seasons_seasonId' => 'Season name',
+            'countries_countryId' => 'Nazwa kraju',
+            'seasons_seasonId' => 'Nazwa sezonu',
         ];
     }
 
