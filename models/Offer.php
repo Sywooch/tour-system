@@ -80,8 +80,8 @@ class Offer extends \yii\db\ActiveRecord
             'offerIsFirstMinute' => 'Offer Is First Minute',
             'offerIsLastMinute' => 'Offer Is Last Minute',
             'offerIsActive' => 'Offer Is Active',
-            'countries_countryId' => 'Countries Country ID',
-            'seasons_seasonId' => 'Seasons Season ID',
+            'countries_countryId' => 'Country name',
+            'seasons_seasonId' => 'Season name',
         ];
     }
 
