@@ -1,12 +1,13 @@
 <?php
 
 use yii\helpers\Html;
+use yii\bootstrap\Tabs;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Offer */
 
-$this->title = $model->offerId;
+$this->title = $model->offerName;
 $this->params['breadcrumbs'][] = ['label' => 'Offers', 'url' => ['list']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -28,26 +29,64 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'offerId',
             'offerName',
             'offerStartDate',
             'offerEndDate',
             'offerPrice',
-            'offerDescription:ntext',
-            'offerAccommodation:ntext',
-            'offerBenefits:ntext',
-            'offerProgram:ntext',
-            'offerOptional:ntext',
-            'offerNote:ntext',
-            'offerPracticalData:ntext',
             'offerLastMinutePrice',
             'offerFirstMinutePrice',
             'offerIsFirstMinute',
             'offerIsLastMinute',
             'offerIsActive',
-            'countries_countryId',
-            'seasons_seasonId',
+            'countriesCountry.countryName',
+            'seasonsSeason.seasonName',
         ],
     ]) ?>
 
+    <?= Tabs::widget([
+            'items' => [
+                [
+                    'label' => 'Opis oferty',
+                    'content' => $model->offerDescription,
+                    'active' => true
+                ],
+                [
+                    'label' => 'Offer Accommodation',
+                    'content' => $model->offerAccommodation,
+                    'headerOptions' => [],
+                    'options' => ['id' => 'myveryownID'],
+                ],
+                [
+                    'label' => 'Korzyści oferty',
+                    'content' => $model->offerBenefits,
+                    'headerOptions' => [],
+                    'options' => ['id' => 'myveryownID'],
+                ],
+                [
+                    'label' => 'Programa oferty',
+                    'content' => $model->offerProgram,
+                    'headerOptions' => [],
+                    'options' => ['id' => 'myveryownID'],
+                ],
+                [
+                    'label' => 'Offer Optional',
+                    'content' => $model->offerOptional,
+                    'headerOptions' => [],
+                    'options' => ['id' => 'myveryownID'],
+                ],
+                [
+                    'label' => 'Offer Note',
+                    'content' => $model->offerNote,
+                    'headerOptions' => [],
+                    'options' => ['id' => 'myveryownID'],
+                ],
+                [
+                    'label' => 'Offer Practical Data',
+                    'content' => $model->offerPracticalData,
+                    'headerOptions' => [],
+                    'options' => ['id' => 'myveryownID'],
+                ],
+            ],
+        ]);
+    ?>
 </div>
