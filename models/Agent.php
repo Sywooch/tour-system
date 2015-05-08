@@ -22,14 +22,14 @@ class Agent extends \yii\db\ActiveRecord
 	{
 		return [
 				[['agentName', 'agentSurname'],
-					 'required', 'message' => 'To pole nie mo¿e byæ puste.'],
+					 'required', 'message' => 'To pole nie moÅ¼e byÄ‡ puste.'],
 				[['agentName', 'agentSurname'], 'string', 'min'=>2, 'max'=>100]
 		];
 	}
 	public function attributeLabels()
 	{
 		return [
-				'agentName' => 'Imiê',
+				'agentName' => 'ImiÄ™',
 				'agentSurname' => 'Nazwisko',
 				'user_userId' => 'User ID',
 		];

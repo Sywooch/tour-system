@@ -2,102 +2,115 @@
 
 namespace app\models;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+use Yii;
+use yii\validators\StringValidator;
+use yii\base\NotSupportedException;
+use yii\db\ActiveRecord;
+use yii\helpers\Security;
+use yii\web\IdentityInterface;
+
+
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
-    ];
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentity($id)
-    {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public static function findIdentityByAccessToken($token, $type = null)
-    {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * Finds user by username
-     *
-     * @param  string      $username
-     * @return static|null
-     */
-    public static function findByUsername($username)
-    {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function getAuthKey()
-    {
-        return $this->authKey;
-    }
-
-    /**
-     * @inheritdoc
-     */
-    public function validateAuthKey($authKey)
-    {
-        return $this->authKey === $authKey;
-    }
-
-    /**
-     * Validates password
-     *
-     * @param  string  $password password to validate
-     * @return boolean if password provided is valid for current user
-     */
-    public function validatePassword($password)
-    {
-        return $this->password === $password;
-    }
+	/**
+	 * @inheritdoc
+	 */
+	public static function tableName()
+	{
+		return 'user';
+	}
+	
+	/**
+	 * @inheritdoc
+	 */
+	public function rules()
+	{
+		return [
+				[['userLogin', 'userPassword', 'userEmail'],
+					 'required', 'message' => 'To pole nie może być puste.'],
+				[['userLogin'], 'string', 'min'=>4, 'message'=>"Nazwa użytkownika powinna mieć co najmniej cztery znaki", 'max'=>10, 'message'=>"Nazwa użytkownika powinna mieć nie więcej niż 10 znaków"],
+				[['userPassword'], 'string', 'min'=>6, 'message'=>"Hasło powinno mieć przynajmniej sześć znaków", 'max'=>255, 'message'=>"Hasło zbyt długie"],
+				[['userEmail'], 'email', 'message'=>"Niepoprawny adres e-mail"],
+				[['userLogin'], 'unique', 'message'=>"Wybrany login jest już zajęty"]
+		];
+	}
+	public function attributeLabels()
+	{
+		return [
+				'userLogin' => 'Login',
+				'userPassword' => 'Hasło',
+				'userEmail' => 'E-mail',
+				'userId' => 'User ID',
+				'groups_groupId' => 'Groups Groups ID'
+		];
+	}
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getGroups()
+	{
+		return $this->hasOne(Group::className(), ['groupId' => 'groups_groupId']);
+	}
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getCustomer()
+	{
+		return $this->hasOne(Customer::className(), ['user_userId' => 'userId']);
+	}
+	/**
+	 * @return \yii\db\ActiveQuery
+	 */
+	public function getAgent()
+	{
+		return $this->hasOne(Agent::className(), ['user_userId' => 'userId']);
+	}
+	public static function findIdentity($id)
+	{
+		return static::findOne($id);
+	}
+	public static function findIdentityByAccessToken($token, $type = null)
+	{
+		return static::findOne(['accessToken' => $token]);
+	}
+	public static function findByUsername ($us)
+	{
+		return static::findOne(['userLogin' => $us]);
+	}
+	public function getId ()
+	{
+		return $this->getPrimaryKey();
+	}
+	public function getAuthKey ()
+	{
+		return $this->authKey;
+	}
+	public function validateAuthKey ($authKey)
+	{
+		return $this->getAuthKey() === $authKey;
+	}
+	public function validatePassword ($password)
+	{
+		return $this->userPassword === $password;
+	}
+	public function setPassword ($password)
+	{
+		$this->userPassword=Security::generatePasswordHash($password);
+	}
+	public function generateAuthKey ()
+	{
+		$this->authKey=Security::generateRandomKey();
+	}
+	public function isCustomer () 
+	{
+		return $this->groups_groupId === 3;
+	}
+	public function isAgent ()
+	{
+		return $this->groups_groupId === 2;
+	}
+	public function isPersonnel ()
+	{
+		return $this->groups_groupId === 1;
+	}
 }

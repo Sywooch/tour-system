@@ -22,11 +22,11 @@ class Customer extends \yii\db\ActiveRecord
 	{
 		return [
 				[['customerBirthdate', 'customerCity', 'customerName', 'customerPESEL', 'customerPhone', 'customerPostcode', 'customerStreet', 'customerSurname'],
-					 'required', 'message' => 'To pole nie mo¿e byæ puste.'],
-				[['userBirthdate'], 'date', 'message'=>"Niepoprawny format daty"],
+					 'required', 'message' => 'To pole nie moï¿½e byï¿½ puste.'],
+				//[['customerBirthdate'], 'date', 'message'=>"Niepoprawny format daty"],
 				[['customerCity', 'customerName', 'customerStreet', 'customerSurname'], 'string', 'min'=>2, 'max'=>100],
-				[['customerPESEL'], 'integer', 'min'=>11, 'message'=>"Niepoprawny PESEL", 'max'=>11, 'message'=>"Niepoprawny PESEL"],
-				[['customerPhone'], 'integer', 'min'=>9, 'message'=>"Numer telefonu jest za któtki", 'max'=>9, 'message'=>"Numer telefonu jest za d³ugi"],
+				[['customerPESEL'], 'integer'/*, 'max'=>11, 'min'=>11*/],
+				[['customerPhone'], 'integer'/*, 'min'=>9, 'message'=>"Numer telefonu jest za ktÃ³tki", 'max'=>9, 'message'=>"Numer telefonu jest za dÅ‚ugi"*/],
 				[['customerPostcode'], 'string', 'min'=>6, 'message'=>"Niepoprawny kod pocztowy", 'max'=>6, 'message'=>"Niepoprawny kod pocztowy"]
 		];
 	}
@@ -36,7 +36,7 @@ class Customer extends \yii\db\ActiveRecord
 				'customerId' => 'ID Klienta',
 				'customerBirthdate' => 'Data urodzenia',
 				'customerCity' => 'Miejsce zamieszkania',
-				'customerName' => 'Imiê',
+				'customerName' => 'ImiÄ™',
 				'customerPESEL' => 'Numer PESEL',
 				'customerPhone' => 'Numer telefonu',
 				'customerPostcode' => 'Kod pocztowy',
