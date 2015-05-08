@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
             		'enableAjaxValidation' => 'true'
             ]); ?>
                 <?= $form->field($model1, 'userLogin') ?>
-                <?= $form->field($model1, 'userPassword') ?>
+                <?= $form->field($model1, 'userPassword')->passwordInput() ?>
                 <?= $form->field($model1, 'userEmail') ?>
                 <?= $form->field($model2, 'agentName') ?>
                 <?= $form->field($model2, 'agentSurname') ?>

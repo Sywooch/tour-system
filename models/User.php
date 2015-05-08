@@ -89,17 +89,18 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 	{
 		return $this->getAuthKey() === $authKey;
 	}
-	public function validatePassword ($password)
+	/*public function validatePassword ($password)
 	{
-		return $this->userPassword === $password;
-	}
+		return $this->userPassword === Yii::$app->getSecurity()->generatePasswordHash($password);
+		//return $this->userPassword === sha1($password);
+	}*/
 	public function setPassword ($password)
 	{
-		$this->userPassword=Security::generatePasswordHash($password);
+		$this->userPassword=Yii::$app->getSecurity()->generatePasswordHash($password);
 	}
 	public function generateAuthKey ()
 	{
-		$this->authKey=Security::generateRandomKey();
+		$this->authKey=Yii::$app->getSecurity()->generateRandomKey();
 	}
 	public function isCustomer () 
 	{

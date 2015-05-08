@@ -37,6 +37,7 @@ AppAsset::register($this);
             echo Nav::widget([            
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
+                	['label' => 'Strona startowa', 'url' => ['/starting-panel/index']],
                 	['label' => 'Oferty',
                 	 'items' => [
                 	 	['label' => 'Dodaj ofertę', 'url' => ['/offer/add']],
@@ -56,6 +57,11 @@ AppAsset::register($this);
                 	 	['label' => 'Nowy pracownik', 'url' => ['personnel/add']],
                 	],
                 	],
+                	Yii::$app->user->isGuest ?
+                	['label' => 'Logowanie', 'url' => ['/site/login']] :
+                	['label' => 'Wyloguj (' . Yii::$app->user->identity->userLogin . ')',
+                			'url' => ['/site/logout'],
+                			'linkOptions' => ['data-method' => 'post']],
                 ],
             ]);
             NavBar::end();

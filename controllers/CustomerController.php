@@ -14,7 +14,7 @@ use yii\web\Response;
 
 class CustomerController extends Controller
 {
-	public $layout = 'AdminPanel';
+	public $layout = 'StartingPanel';
 
 	public function actionAdd()
 	{
@@ -28,38 +28,17 @@ class CustomerController extends Controller
 			Yii::$app->response->format = Response::FORMAT_JSON;
 			return ActiveForm::validate($model1);
 			return ActiveForm::validate($model2);
-			//$model1->setPassword($model1->userPassword);
-			//$model1->save();
 		}
 		 
 		if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
 			$model2->user_userId=$model1->getId();
-			$model2->save();
+			$model1->setPassword($model1->userPassword);
+			$model1->generateAuthKey();
+			$model1->save(); $model2->save();
 			Yii::$app->session->setFlash('customerAdded');
-			//$model1->setPassword($model1->userPassword);
-			//$model1->save();
 			return $this->refresh();
 		} else {
 			return $this->render('customer-form', array ('model1' => $model1, 'model2' => $model2));
 		}
 	}
-
-	/*public function actionList(){
-		$query = Contractor::find();
-
-		$pagination = new Pagination([
-				'defaultPageSize' => 10,
-				'totalCount' => $query->count(),
-		]);
-
-		$contractors = $query->orderBy('ContractorId')
-		->offset($pagination->offset)
-		->limit($pagination->limit)
-		->all();
-
-		return $this->render('contractors-list', [
-				'contractors' => $contractors,
-				'pagination' => $pagination,
-		]);
-	}*/
 }

@@ -42,13 +42,15 @@ AppAsset::register($this);
                 	 	['label' => 'Lista ofert', 'url' => ['/offer/list']],	
             		 ],
             		],
-                		Yii::$app->user->isGuest ?
-                		['label' => 'Zarejestruj się', 'url' => ['/customer/add']] :
                     Yii::$app->user->isGuest ?
                         ['label' => 'Logowanie', 'url' => ['/site/login']] :
                         ['label' => 'Wyloguj (' . Yii::$app->user->identity->userLogin . ')',
                             'url' => ['/site/logout'],
                             'linkOptions' => ['data-method' => 'post']],
+                		Yii::$app->user->isGuest ?
+                		['label' => 'Zarejestruj się', 'url' => ['/customer/add']] : ['label'=>''],
+                		!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel() ?
+                		['label' => 'Panel administrotora', 'url' => ['/admin-panel/index']] : ['label'=>'']
                 ],
             ]);
             NavBar::end();

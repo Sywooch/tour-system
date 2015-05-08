@@ -39,6 +39,6 @@ class Agent extends \yii\db\ActiveRecord
 	 */
 	public function getUser()
 	{
-		return $this->hasOne(Users::className(), ['userId' => 'user_userId']);
+		return $this->hasOne(User::className(), ['userId' => 'user_userId']);
 	}
 }
