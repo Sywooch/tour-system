@@ -2,6 +2,9 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\helpers\ArrayHelper;
+use app\models\Country;
+use app\models\Season;
 use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
@@ -65,9 +68,15 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'offerIsActive')->checkbox() ?>
 
-    <?= $form->field($model, 'countries_countryId')->textInput() ?>
+    <?= $form->field($model, 'countries_countryId')->dropDownList(
+        ArrayHelper::map(Country::find()->all(),'countryId','countryName'),
+        ['prompt' => 'Select Country']
+    ) ?>
 
-    <?= $form->field($model, 'seasons_seasonId')->textInput() ?>
+    <?= $form->field($model, 'seasons_seasonId')->dropDownList(
+        ArrayHelper::map(Season::find()->all(),'seasonId','seasonName'),
+        ['prompt' => 'Select Season']
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

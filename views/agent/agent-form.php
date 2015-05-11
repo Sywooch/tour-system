@@ -7,19 +7,19 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
-$this->title='Dodawanie nowego klienta';
+$this->title='Dodawanie nowego agenta';
 
-$this->params['breadcrumbs'][] = ['label' => 'Klienci', 'url' => ['list']]; //akcja lista?
+$this->params['breadcrumbs'][] = ['label' => 'Agenci', 'url' => ['list']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <?php if (Yii::$app->session->hasFlash('customerAdded')): ?>
+    <?php if (Yii::$app->session->hasFlash('agentAdded')): ?>
 
     <div class="alert alert-success">
-        Dodano nowego klienta.
+        Dodano nowego agenta.
     </div>
 	
 	<?php else: ?>    
@@ -27,22 +27,16 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin([
-            		'id' => 'customer-form',
+            		'id' => 'agent-form',
             		'enableAjaxValidation' => 'true'
             ]); ?>
                 <?= $form->field($model1, 'userLogin') ?>
                 <?= $form->field($model1, 'userPassword')->passwordInput() ?>
                 <?= $form->field($model1, 'userEmail') ?>
-                <?= $form->field($model2, 'customerName') ?>
-                <?= $form->field($model2, 'customerSurname') ?>
-                <?= $form->field($model2, 'customerBirthdate') ?>
-                <?= $form->field($model2, 'customerPESEL') ?>
-                <?= $form->field($model2, 'customerPhone') ?>
-                <?= $form->field($model2, 'customerStreet') ?>
-                <?= $form->field($model2, 'customerCity')?>
-                <?= $form->field($model2, 'customerPostcode')?>
+                <?= $form->field($model2, 'agentName') ?>
+                <?= $form->field($model2, 'agentSurname') ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Utwórz klienta', ['class' => 'btn btn-success', 'name' => 'save-customer']) ?>
+                    <?= Html::submitButton('Utwórz agenta', ['class' => 'btn btn-success', 'name' => 'save-agent']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

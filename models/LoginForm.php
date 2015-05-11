@@ -32,6 +32,14 @@ class LoginForm extends Model
         ];
     }
 
+    public function attributeLabels()
+    {
+    	return [
+    			'username' => 'Nazwa użytkownika',
+    			'password' => 'Hasło',
+    			'rememberMe' => 'Zapamiętaj',
+    	];
+    }
     /**
      * Validates the password.
      * This method serves as the inline validation for password.
@@ -39,7 +47,7 @@ class LoginForm extends Model
      * @param string $attribute the attribute currently being validated
      * @param array $params the additional name-value pairs given in the rule
      */
-    public function validatePassword($attribute, $params)
+   /* public function validatePassword($attribute, $params)
     {
         if (!$this->hasErrors()) {
             $user = $this->getUser();
@@ -48,6 +56,10 @@ class LoginForm extends Model
                 $this->addError($attribute, 'Incorrect username or password.');
             }
         }
+    }*/
+    public function validatePassword ($password)
+    {
+    	return $this->password === Yii::$app->getSecurity()->generatePasswordHash($password);
     }
 
     /**

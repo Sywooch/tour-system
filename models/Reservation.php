@@ -3,7 +3,7 @@ namespace app\models;
 
 use Yii;
 
-class Contractor extends \yii\db\ActiveRecord{
+class Reservation extends \yii\db\ActiveRecord{
 
 	public static function tableName()
 	{
@@ -14,7 +14,7 @@ class Contractor extends \yii\db\ActiveRecord{
 	{
 		return [
 				[['reservationDate'], 'date',  'message' => "B³êdny format daty."],
-				[['reservationInvoiced'], 'string'], 
+				[['reservationInvoiced'], 'boolean'], 
 				[['reservationPricePerAtendee'], 'float']
 		];
 	}
