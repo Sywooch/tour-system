@@ -12,7 +12,7 @@ class Attendee extends \yii\db\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return 'attendee';
+		return 'attendees';
 	}
 
 	/**
