@@ -23,6 +23,8 @@ class PersonnelController extends Controller
 		
 		$model1->groups_groupId=1;
 		
+		$model1->authKey = "aefgkjsjndjbndjvndj";
+		//$model1->generateAuthKey();
 		 
 		if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
 			Yii::$app->response->format = Response::FORMAT_JSON;
@@ -33,7 +35,6 @@ class PersonnelController extends Controller
 		if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
 			$model2->user_userId=$model1->getId();
 			$model1->setPassword($model1->userPassword);
-			$model1->generateAuthKey();
 			$model1->save(); $model2->save();
 			Yii::$app->session->setFlash('personnelAdded');
 			return $this->refresh();

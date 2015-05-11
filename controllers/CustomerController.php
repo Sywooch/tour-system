@@ -25,7 +25,8 @@ class CustomerController extends Controller
 		$model2 = new Customer();
 		
 		$model1->groups_groupId=3;
-		
+		//$model1->generateAuthKey();
+		$model1->authKey = "hgytdydrdrdyrdrt";
 		 
 		if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
 			Yii::$app->response->format = Response::FORMAT_JSON;
@@ -36,9 +37,9 @@ class CustomerController extends Controller
 		if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
 			$model2->user_userId=$model1->getId();
 			$model1->setPassword($model1->userPassword);
-			$model1->generateAuthKey();
+						
 			$model1->save(); $model2->save();
-
+			
 			Yii::$app->session->setFlash('customerAdded');
 			return $this->refresh();
 		} else {
