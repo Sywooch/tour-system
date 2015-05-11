@@ -34,34 +34,23 @@ AppAsset::register($this);
                     'class' => 'navbar-inverse navbar-fixed-top',
                 ],
             ]);
-            echo Nav::widget([            
+            echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
-                	['label' => 'Strona startowa', 'url' => ['/starting-panel/index']],
-                	['label' => 'Oferty',
+                   ['label' => 'Oferty',
                 	 'items' => [
-                	 	['label' => 'Dodaj ofertę', 'url' => ['/offer/add']],
                 	 	['label' => 'Lista ofert', 'url' => ['/offer/list']],	
             		 ],
             		],
-                    ['label' => 'Kontrahenci',
-                     'items' => [
-                     	['label' => 'Dodaj kontrahenta', 'url' => ['/contractor/add']], 
-                     	['label' => 'Lista kontrahentów', 'url' => ['/contractor/list']],
-                     ],	
-                	],
-                	['label' => 'Nowy',
-                	 'items' => [
-                	 	['label' => 'Nowy klient', 'url' => ['/customer/add']],
-                	 	['label' => 'Nowy agent', 'url' => ['agent/add']],
-                	 	['label' => 'Nowy pracownik', 'url' => ['personnel/add']],
-                	],
-                	],
-                	Yii::$app->user->isGuest ?
-                	['label' => 'Logowanie', 'url' => ['/site/login']] :
-                	['label' => 'Wyloguj (' . Yii::$app->user->identity->userLogin . ')',
-                			'url' => ['/site/logout'],
-                			'linkOptions' => ['data-method' => 'post']],
+                    Yii::$app->user->isGuest ?
+                        ['label' => 'Logowanie', 'url' => ['/site/login']] :
+                        ['label' => 'Wyloguj (' . Yii::$app->user->identity->userLogin . ')',
+                            'url' => ['/site/logout'],
+                            'linkOptions' => ['data-method' => 'post']],
+                		Yii::$app->user->isGuest ?
+                		['label' => 'Zarejestruj się', 'url' => ['/customer/add']] : ['label'=>''],
+                		!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel() ?
+                		['label' => 'Panel administrotora', 'url' => ['/admin-panel/index']] : ['label'=>'']
                 ],
             ]);
             NavBar::end();
@@ -70,8 +59,8 @@ AppAsset::register($this);
         <div class="container">
             <?= Breadcrumbs::widget([
             	'homeLink' => [
-            			'label' =>'Panel administracyjny',
-            			'url' => '/admin-panel',
+            			'label' =>'Strona startowa',
+            			'url' => '/starting-panel',
             	],
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>

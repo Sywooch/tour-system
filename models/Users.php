@@ -4,8 +4,13 @@ namespace app\models;
 
 use Yii;
 use yii\validators\StringValidator;
+use yii\base\NotSupportedException;
+use yii\db\ActiveRecord;
+use yii\helpers\Security;
+use yii\web\IdentityInterface;
 
-class Users extends \yii\db\ActiveRecord
+
+class Users extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
 	/**
 	 * @inheritdoc
@@ -22,18 +27,18 @@ class Users extends \yii\db\ActiveRecord
 	{
 		return [
 				[['userLogin', 'userPassword', 'userEmail'],
-					 'required', 'message' => 'To pole nie mo¿e byæ puste.'],
-				[['userLogin'], 'string', 'min'=>4, 'message'=>"Nazwa u¿ytkownika powinna mieæ co najmniej cztery znaki", 'max'=>10, 'message'=>"Nazwa u¿ytkownika powinna mieæ nie wiêcej ni¿ 10 znaków"],
-				[['userPassword'], 'string', 'min'=>6, 'message'=>"Has³o powinno mieæ przynajmniej szeœæ znaków", 'max'=>255, 'message'=>"Has³o zbyt d³ugie"],
-				[['userEmail'], 'email'/*, 'message'=>"Niepoprawny adres e-mail"*/],
-				[['userLogin'], 'unique'/*, 'message'=>"Wybrany login jest ju¿ zajêty"*/]
+					 'required', 'message' => 'To pole nie moÅ¼e byÄ‡ puste.'],
+				[['userLogin'], 'string', 'min'=>4, 'message'=>"Nazwa uÅ¼ytkownika powinna mieÄ‡ co najmniej cztery znaki", 'max'=>10, 'message'=>"Nazwa uÅ¼ytkownika powinna mieÄ‡ nie wiÄ™cej niÅ¼ 10 znakÃ³w"],
+				[['userPassword'], 'string', 'min'=>6, 'message'=>"HasÅ‚o powinno mieÄ‡ przynajmniej szeÅ›Ä‡ znakÃ³w", 'max'=>255, 'message'=>"HasÅ‚o zbyt dÅ‚ugie"],
+				[['userEmail'], 'email', 'message'=>"Niepoprawny adres e-mail"],
+				[['userLogin'], 'unique', 'message'=>"Wybrany login jest juÅ¼ zajÄ™ty"]
 		];
 	}
 	public function attributeLabels()
 	{
 		return [
 				'userLogin' => 'Login',
-				'userPassword' => 'Has³o',
+				'userPassword' => 'HasÅ‚o',
 				'userEmail' => 'E-mail',
 				'userId' => 'User ID',
 				'groups_groupId' => 'Groups Groups ID'
@@ -59,5 +64,41 @@ class Users extends \yii\db\ActiveRecord
 	public function getAgent()
 	{
 		return $this->hasOne(Agent::className(), ['user_userId' => 'userId']);
+	}
+	public static function findIdentity($id)
+	{
+		return static::findOne($id);
+	}
+	public static function findIdentityByAccessToken($token, $type = null)
+	{
+		return static::findOne(['accessToken' => $token]);
+	}
+	public static function findByUsername ($us)
+	{
+		return static::findOne(['userLogin' => $us]);
+	}
+	public function getId ()
+	{
+		return $this->getPrimaryKey();
+	}
+	public function getAuthKey ()
+	{
+		return $this->authKey;
+	}
+	public function validateAuthKey ($authKey)
+	{
+		return $this->getAuthKey() === $authKey;
+	}
+	public function validatePassword ($password)
+	{
+		return $this->userPassword === sha1($password);
+	}
+	public function setPassword ($password)
+	{
+		$this->userPassword=Security::generatePasswordHash($password);
+	}
+	public function generateAuthKey ()
+	{
+		$this->authKey=Security::generateRandomKey();
 	}
 }

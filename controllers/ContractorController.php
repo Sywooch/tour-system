@@ -17,19 +17,24 @@ class ContractorController extends Controller
 	
 	public function actionAdd()
     {
-    	$model = new Contractor();
+    	if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel ()) {
+    		$model = new Contractor();
     	
-    	if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-    		Yii::$app->response->format = Response::FORMAT_JSON;
-    		return ActiveForm::validate($model);
-    	}
+    		if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+    			Yii::$app->response->format = Response::FORMAT_JSON;
+    			return ActiveForm::validate($model);
+    		}
     	
-    	if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
-        	Yii::$app->session->setFlash('contractorAdded');
+    		if ($model->load(Yii::$app->request->post()) && $model->save(false)) {
+        		Yii::$app->session->setFlash('contractorAdded');
 
-            return $this->refresh();
-        } else {
-        	return $this->render('contractor-form', ['model' => $model]);
+            	return $this->refresh();
+        	} else {
+        		return $this->render('contractor-form', ['model' => $model]);
+    		}
+    	} else {
+    		Yii::$app->session->setFlash('contractorAddAttempt');
+    		return $this->render('contractor-error');
     	}
     }
     
@@ -53,19 +58,25 @@ class ContractorController extends Controller
 	}
 	
 	public function actionEdit($id){
-		$model = Contractor::findOne($id);
 		
-		if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
-			Yii::$app->response->format = Response::FORMAT_JSON;
-			return ActiveForm::validate($model);
-		}
+			if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel ()) {
+			$model = Contractor::findOne($id);
 		
-		if ($model->load(Yii::$app->request->post()) && $model->save()) {
-			Yii::$app->session->setFlash('contractorEdited');
+			if (Yii::$app->request->isAjax && $model->load(Yii::$app->request->post())) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ActiveForm::validate($model);
+			}
 		
-			return $this->refresh();
+			if ($model->load(Yii::$app->request->post()) && $model->save()) {
+				Yii::$app->session->setFlash('contractorEdited');
+		
+				return $this->refresh();
+			} else {
+				return $this->render('contractor-form', ['model' => $model]);
+			}
 		} else {
-			return $this->render('contractor-form', ['model' => $model]);
+			Yii::$app->session->setFlash('contractorEditAttempt');
+			return $this->render('contractor-error');
 		}
 	}
 	
