@@ -27,6 +27,8 @@ AppAsset::register($this);
 <?php $this->beginBody() ?>
     <div class="wrap">
         <?php
+        if (!Yii::$app->user->isGuest)  //===============================użytkownik zalogowany
+        {
             NavBar::begin([
                 'brandLabel' => 'TourSystem',
                 'brandUrl' => Yii::$app->homeUrl,
@@ -39,21 +41,43 @@ AppAsset::register($this);
                 'items' => [
                    ['label' => 'Oferty',
                 	 'items' => [
-                	 	['label' => 'Lista ofert', 'url' => ['/offer/list']],	
+                	 	['label' => 'Lista ofert', 'url' => ['/offer/list']],
+                	 	Yii::$app->user->identity->isCustomer() ?
+                	 		['label' => 'Moje rezerwacje', 'url' => ['/customer/reservations']] :['label'=>''],
+                	 	Yii::$app->user->identity->isAgent() ?
+                	 		['label' => 'Sprzedane oferty', 'url' => ['/agent/oferty']]:['label' =>''],
             		 ],
             		],
-                    Yii::$app->user->isGuest ?
-                        ['label' => 'Logowanie', 'url' => ['/site/login']] :
-                        ['label' => 'Wyloguj (' . Yii::$app->user->identity->userLogin . ')',
-                            'url' => ['/site/logout'],
-                            'linkOptions' => ['data-method' => 'post']],
-                		Yii::$app->user->isGuest ?
-                		['label' => 'Zarejestruj się', 'url' => ['/customer/add']] : ['label'=>''],
-                		!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel() ?
-                		['label' => 'Panel administrotora', 'url' => ['/admin-panel/index']] : ['label'=>'']
+                		Yii::$app->user->identity->isPersonnel() ?
+                		['label' => 'Panel administrotora', 'url' => ['/admin-panel/index']] : ['label'=>''],
+                        ['label' => 'Witaj (' . Yii::$app->user->identity->userLogin . ')',
+                        		'items' => [
+                        				['label' => 'Edytuj dane', 'url' => ['/customer/edit']],
+                        				['label' => 'Wyloguj', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']]		
+                        		]
+                        ]                		
                 ],
             ]);
             NavBar::end();
+        } else { //====================================================gość
+        	NavBar::begin([
+        			'brandLabel' => 'TourSystem',
+        			'brandUrl' => Yii::$app->homeUrl,
+        			'options' => [
+        					'class' => 'navbar-inverse navbar-fixed-top',
+        			],
+        	]);
+        	echo Nav::widget([
+        			'options' => ['class' => 'navbar-nav navbar-right'],
+        			'items' => [
+        					['label' => 'Lista ofert', 'url' => ['/offer/list']],
+        					['label' => 'Last Minute', 'url' => ['/offer/last-minute']],
+        					['label' => 'Zaloguj' ,	'url' => ['/site/login']],
+        					['label' => 'Rejestracja', 'url' => ['/customer/add']]
+        			],
+        	]);
+        	NavBar::end();
+        }
         ?>
 
         <div class="container">
