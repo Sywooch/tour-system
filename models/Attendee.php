@@ -44,7 +44,7 @@ class Attendee extends \yii\db\ActiveRecord
 	
 	public function getReservation()
 	{
-		return $this->hasOne(Customers::className(), ['reservations' => 'reservations_reservationId']);
+		return $this->hasOne(Customer::className(), ['reservations' => 'reservations_reservationId']);
 	}
 	
 	

@@ -30,17 +30,17 @@ class Reservation extends \yii\db\ActiveRecord{
 	
 	public function getCustomers()
 	{
-		return $this->hasOne(Customers::className(), ['customers' => 'customers_userId']);
+		return $this->hasOne(Customer::className(), ['customers' => 'customers_userId']);
 	}
 	
 	public function getAgents()
 	{
-		return $this->hasOne(Agents::className(), ['agents' => 'agents_userId']);
+		return $this->hasOne(Agent::className(), ['agents' => 'agents_userId']);
 	}
 	
 	public function getOffers()
 	{
-		return $this->hasOne(Offers::className(), ['offers' => 'offers_offerId']);
+		return $this->hasOne(Offer::className(), ['offers' => 'offers_offerId']);
 	}
 	
 }
