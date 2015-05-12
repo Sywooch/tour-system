@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use dosamigos\datepicker\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -36,9 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model2, 'attendeeSPostcode') ?>
                 <?= $form->field($model2, 'attendeeCity') ?>
                 <?= $form->field($model2, 'attendeePESEL') ?>
-                <?= $form->field($model2, 'attendeeBirthdate')?>
+                <?= $form->field($model2, 'attendeeBirthdate')->widget(
+        DatePicker::className(), [
+        // inline too, not bad
+        'inline' => false,
+        // modify template for custom rendering
+        //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
+        'clientOptions' => [
+            'autoclose' => true,
+            'format' => 'yyyy-m-d'
+        ]
+    ]);?>
                 <div class="form-group">
-                    <?= Html::submitButton('Utwórz klienta', ['class' => 'btn btn-success', 'name' => 'save-customer']) ?>
+                    <?= Html::submitButton('Rezerwuj', ['class' => 'btn btn-success', 'name' => 'save-reservation']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
