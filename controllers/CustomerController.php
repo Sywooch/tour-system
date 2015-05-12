@@ -80,6 +80,23 @@ class CustomerController extends Controller
 			}
 		}
 	}
-
+	public function actionEdit($id){
+	
+			$model1 = User::findIdentity($id);
+			$model2 = $model1->getCustomer();//Customer::findOne($cid);
+	
+			if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ActiveForm::validate($model1);
+				return ActiveForm::validate($model2);
+			}
+	
+			if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
+				Yii::$app->session->setFlash('customerEdited');
+				return $this->refresh();
+			} else {
+				return $this->render('customer-form', array ('model1' => $model1, 'model2' => $model2));
+			}
+	}
 
 }

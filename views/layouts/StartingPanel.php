@@ -52,7 +52,7 @@ AppAsset::register($this);
                 		['label' => 'Panel administrotora', 'url' => ['/admin-panel/index']] : ['label'=>''],
                         ['label' => 'Witaj (' . Yii::$app->user->identity->userLogin . ')',
                         		'items' => [
-                        				['label' => 'Edytuj dane', 'url' => ['/customer/edit']],
+                        				['label' => 'Edytuj dane', 'url' => ['/customer/edit', 'id' => Yii::$app->user->identity->userId]],
                         				['label' => 'Wyloguj', 'url' => ['/site/logout'], 'linkOptions' => ['data-method' => 'post']]		
                         		]
                         ]                		

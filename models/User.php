@@ -57,6 +57,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 	public function getCustomer()
 	{
 		return $this->hasOne(Customer::className(), ['user_userId' => 'userId']);
+		//return $this->hasOne(Customer::className(), ['userId' => 'user_userId']);
 	}
 	/**
 	 * @return \yii\db\ActiveQuery
