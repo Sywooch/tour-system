@@ -15,7 +15,7 @@ class Reservation extends \yii\db\ActiveRecord{
 		return [
 				[['reservationDate'], 'date',  'message' => "B��dny format daty."],
 				[['reservationInvoiced'], 'boolean'], 
-				[['reservationPricePerAtendee'], 'float']
+				[['reservationPricePerAtendee'], 'integer']
 		];
 	}
 

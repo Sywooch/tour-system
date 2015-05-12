@@ -24,7 +24,7 @@ class Attendee extends \yii\db\ActiveRecord
 				[['attendeeName', 'attendeeSurname', 'attendeeStreet','attendeeSPostcode','attendeeCity'],
 				'required', 'message' => 'To pole nie może być puste.'],
 				[['attendeePESEL', 'reservations_reservationId'], 'integer'],
-				[['attendeeBirthdate'], 'date', 'message'=>"To pole nie może by puste."],
+				[['attendeeBirthdate'], 'safe', 'message'=>"To pole nie może by puste."],
 		];
 	}
 	public function attributeLabels()

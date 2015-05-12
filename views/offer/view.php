@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'method' => 'post',
             ],
         ]) ?>
-        <?= Html::a('Rezerwacja', ['/customer/buy'], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Rezerwacja', ['/customer/buy', 'id' => $model->offerId], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([

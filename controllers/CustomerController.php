@@ -10,6 +10,7 @@ use app\models\User;
 use app\models\Customer;
 use app\models\Reservation;
 use app\models\Attendee;
+use app\models\Offer;
 use yii\data\Pagination;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
@@ -55,10 +56,13 @@ public function actionBuy($id)
 		
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
 		{
-			
+			if (Yii::$app->request->isAjax && $model2->load(Yii::$app->request->post())) {
+				Yii::$app->response->format = Response::FORMAT_JSON;
+				return ActiveForm::validate($model2);
+			}	
 			
 			if ($model2->load(Yii::$app->request->post())) {
-				print_r($model2);
+				$model2->validate();
 				$model1->reservationDate=date('Y-m-d');
 				$model1->offers_offerId = $id;
 				$offer = Offer::findOne($id);
@@ -68,9 +72,9 @@ public function actionBuy($id)
 				//else 
 				$model1->customers_userId=Yii::$app->User->identity->getCustomer();
 				$model1->save();
-				$model2->reservations_reservationId=$model1->reservationId; 
-				$model2->save();
-			
+				//$model2->reservations_reservationId=1;
+				//$model2->save();
+				
 				Yii::$app->session->setFlash('reservationAdded');
 				return $this->refresh();
 			} else {
