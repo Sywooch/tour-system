@@ -13,7 +13,7 @@ class Reservation extends \yii\db\ActiveRecord{
 	public function rules()
 	{
 		return [
-				[['reservationDate'], 'date',  'message' => "B��dny format daty."],
+				[['reservationDate'], 'safe',  'message' => "B��dny format daty."],
 				[['reservationInvoiced'], 'boolean'], 
 				[['reservationPricePerAtendee'], 'integer']
 		];

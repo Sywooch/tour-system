@@ -61,8 +61,7 @@ public function actionBuy($id)
 				return ActiveForm::validate($model2);
 			}	
 			
-			if ($model2->load(Yii::$app->request->post())) {
-				$model2->validate();
+			if ($model2->load(Yii::$app->request->post()) ) {
 				$model1->reservationDate=date('Y-m-d');
 				$model1->offers_offerId = $id;
 				$offer = Offer::findOne($id);
@@ -70,10 +69,10 @@ public function actionBuy($id)
 				//if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
 				//	$model1->agents_userId=getAgents()->agentId;
 				//else 
-				$model1->customers_userId=Yii::$app->User->identity->getCustomer();
+				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->user_userId;
 				$model1->save();
-				//$model2->reservations_reservationId=1;
-				//$model2->save();
+				$model2->reservations_reservationId=$model1->reservationId;
+				$model2->save();
 				
 				Yii::$app->session->setFlash('reservationAdded');
 				return $this->refresh();
@@ -82,7 +81,7 @@ public function actionBuy($id)
 			}
 		}
 	}
-	public function actionEdit($id){
+public function actionEdit($id){
 	
 			$model1 = User::findIdentity($id);
 			$model1->userPassword=NULL;
