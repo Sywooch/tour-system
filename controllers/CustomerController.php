@@ -70,9 +70,9 @@ public function actionBuy($id)
 				//if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
 				//	$model1->agents_userId=getAgents()->agentId;
 				//else 
-				$model1->customers_userId=Yii::$app->User->identity->getCustomer();
+				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->customerId;
 				$model1->save();
-				//$model2->reservations_reservationId=1;
+				//$model2->reservations_reservationId=$model1->reservationId;
 				//$model2->save();
 				
 				Yii::$app->session->setFlash('reservationAdded');
@@ -82,9 +82,10 @@ public function actionBuy($id)
 			}
 		}
 	}
-	public function actionEdit($id){
+public function actionEdit($id){
 	
 			$model1 = User::findIdentity($id);
+			$model1->userPassword=NULL;
 			$model2 = $model1->getCustomer()->one();
 	
 			if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
@@ -94,6 +95,8 @@ public function actionBuy($id)
 			}
 	
 			if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
+				$model1->setPassword($model1->userPassword);	
+				$model1->save();
 				Yii::$app->session->setFlash('customerEdited');
 				return $this->refresh();
 			} else {
