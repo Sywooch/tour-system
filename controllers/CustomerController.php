@@ -103,5 +103,24 @@ public function actionBuy($id)
 				return $this->render('customer-form', array ('model1' => $model1, 'model2' => $model2));
 			}
 	}
-
+	
+	public function actionReservations () {
+		$query1 = Reservation::find()->where(['customers_userId' => Yii::$app->user->identity->getId()]);
+		//$query2 = Offer::find()->where (['']);
+		
+		$pagination = new Pagination([
+				'defaultPageSize' => 10,
+				'totalCount' => $query1->count(),
+		]);
+		
+		$reservations = $query1->orderBy('ReservationId')
+		->offset($pagination->offset)
+		->limit($pagination->limit)
+		->all();
+		
+		return $this->render('reservations-list', [
+				'contractors' => $reservations,
+				'pagination' => $pagination,
+		]);		
+	}
 }

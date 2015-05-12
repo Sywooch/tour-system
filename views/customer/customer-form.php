@@ -7,7 +7,11 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
-$this->title='Dodawanie nowego klienta';
+if($model1->isNewRecord){
+	$this->title = 'Dodawanie nowego klienta';
+}else{
+	$this->title = 'Edytowanie danych użytkownika ' . $model1->userLogin;
+}
 
 $this->params['breadcrumbs'][] = ['label' => 'Klienci', 'url' => ['list']]; //akcja lista?
 $this->params['breadcrumbs'][] = $this->title;
@@ -20,6 +24,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <div class="alert alert-success">
         Dodano nowego klienta.
+    </div>
+	
+	<?php else: ?>  
+	
+	 <?php if (Yii::$app->session->hasFlash('customerEdited')): ?>
+
+    <div class="alert alert-success">
+        Edytowano dane użytkownika.
     </div>
 	
 	<?php else: ?>    
@@ -42,11 +54,12 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model2, 'customerCity')?>
                 <?= $form->field($model2, 'customerPostcode')?>
                 <div class="form-group">
-                    <?= Html::submitButton('Utwórz klienta', ['class' => 'btn btn-success', 'name' => 'save-customer']) ?>
+                    <?= Html::submitButton($model1->isNewRecord ? 'Utwórz klienta' : 'Zapisz zmiany', ['class' => 'btn btn-success', 'name' => 'save-customer']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
     </div>
 
+    <?php endif; ?>
     <?php endif; ?>
 </div>
