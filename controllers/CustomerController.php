@@ -53,7 +53,7 @@ class CustomerController extends Controller
 		$model1 = new Reservation ();
 		$model2 = new Attendee();
 		
-		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isClient())
+		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
 		{
 			if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
 				Yii::$app->response->format = Response::FORMAT_JSON;
@@ -65,40 +65,21 @@ class CustomerController extends Controller
 				$model1->reservationDate=date('Y-m-d H:i:s');
 				$model1->offers_offerId=getOffers()->offerId;
 				$model1->reservationPricePerAtendee=getOffers()->offerPrice;
-				if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
-					$model1->agents_userId=getAgents()->agentId;
-				else 
-					$model1->customers_userId=getCustomers()->customerId;
+				//if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
+				//	$model1->agents_userId=getAgents()->agentId;
+				//else 
+				$model1->customers_userId=getCustomers()->customerId;
 				$model1->save();
 				$model2->reservations_reservationId=getReservation()->reservationId; 
 				$model2->save();
 			
 				Yii::$app->session->setFlash('reservationAdded');
-				return $this->render('reservation-form', ['model2' => $model2]);
+				return $this->refresh();
 			} else {
-				return $this->render('reservation-form', ['model2' => $model2]);
+				return $this->render('/reservations/reservation-form', ['model2' => $model2]);
 			}
 		}
 	}
 
-	/*public function actionList(){
-		$query = Contractor::find();
 
-		$pagination = new Pagination([
-				'defaultPageSize' => 10,
-				'totalCount' => $query->count(),
-		]);
-
-		$contractors = $query->orderBy('ContractorId')
-		->offset($pagination->offset)
-		->limit($pagination->limit)
-		->all();
-
-		return $this->render('contractors-list', [
-				'contractors' => $contractors,
-				'pagination' => $pagination,
-		]);
-	}*/
-//=======
-//>>>>>>> branch 'master' of https://github.com/KiresMA/tour-system.git
 }
