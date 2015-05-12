@@ -48,29 +48,27 @@ class CustomerController extends Controller
 	}
 
 	
-	public function actionBuy()
+public function actionBuy($id)
 	{
 		$model1 = new Reservation ();
 		$model2 = new Attendee();
 		
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
 		{
-			if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
-				Yii::$app->response->format = Response::FORMAT_JSON;
 			
-				return ActiveForm::validate($model2);
-			}
 			
-			if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
+			if ($model2->load(Yii::$app->request->post())) {
+				print_r($model2);
 				$model1->reservationDate=date('Y-m-d');
-				$model1->offers_offerId = $model1->getOffers()->offerId;
-				$model1->reservationPricePerAtendee = $model1->getOffers()->offerPrice;
+				$model1->offers_offerId = $id;
+				$offer = Offer::findOne($id);
+				$model1->reservationPricePerAtendee = $offer->offerPrice;
 				//if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
 				//	$model1->agents_userId=getAgents()->agentId;
 				//else 
-				$model1->customers_userId=getCustomers()->customerId;
+				$model1->customers_userId=Yii::$app->User->identity->getCustomer();
 				$model1->save();
-				$model2->reservations_reservationId=getReservation()->reservationId; 
+				$model2->reservations_reservationId=$model1->reservationId; 
 				$model2->save();
 			
 				Yii::$app->session->setFlash('reservationAdded');
