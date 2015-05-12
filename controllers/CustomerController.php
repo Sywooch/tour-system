@@ -81,7 +81,7 @@ public function actionBuy($id)
 	public function actionEdit($id){
 	
 			$model1 = User::findIdentity($id);
-			$model2 = $model1->getCustomer();//Customer::findOne($cid);
+			$model2 = $model1->getCustomer()->one();
 	
 			if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
 				Yii::$app->response->format = Response::FORMAT_JSON;
