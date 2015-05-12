@@ -90,11 +90,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 	{
 		return $this->getAuthKey() === $authKey;
 	}
-	/*public function validatePassword ($password)
+	public function validatePassword ($password)
 	{
 		return $this->userPassword === Yii::$app->getSecurity()->generatePasswordHash($password);
-		//return $this->userPassword === sha1($password);
-	}*/
+		//return $this->userPassword === $password;
+	}
 	public function setPassword ($password)
 	{
 		$this->userPassword=Yii::$app->getSecurity()->generatePasswordHash($password);
