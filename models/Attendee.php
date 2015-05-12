@@ -12,7 +12,7 @@ class Attendee extends \yii\db\ActiveRecord
 	 */
 	public static function tableName()
 	{
-		return 'attendee';
+		return 'attendees';
 	}
 
 	/**
@@ -22,9 +22,9 @@ class Attendee extends \yii\db\ActiveRecord
 	{
 		return [
 				[['attendeeName', 'attendeeSurname', 'attendeeStreet','attendeeSPostcode','attendeeCity'],
-					 'required', 'message' => 'To pole nie mo¿e byæ puste.'],
-				[['attendeePESEL'],'required', 'integer', 'min'=>11, 'message'=>"za ma³o cyfr.",'max'=>11, 'message'=>"Za du¿o cyfr."],
-				[['attendeeBirthdate'],'required', 'date', 'message'=>"To pole nie mo¿e byæ puste."],
+					 'required', 'message' => 'To pole nie moï¿½e byï¿½ puste.'],
+				[['attendeePESEL'],'required', 'integer', 'min'=>11, 'message'=>"za maï¿½o cyfr.",'max'=>11, 'message'=>"Za duï¿½o cyfr."],
+				[['attendeeBirthdate'],'required', 'date', 'message'=>"To pole nie moï¿½e byï¿½ puste."],
 				[['reservations_reservationId'],'required', 'integer'],
 		];
 	}

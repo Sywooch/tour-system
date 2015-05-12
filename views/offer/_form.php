@@ -6,6 +6,9 @@ use yii\helpers\ArrayHelper;
 use app\models\Country;
 use app\models\Season;
 use dosamigos\datepicker\DatePicker;
+use dosamigos\switchinput;
+use dosamigos\tinymce\TinyMce;
+use dosamigos\switchinput\SwitchBox;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Offer */
@@ -44,29 +47,125 @@ use dosamigos\datepicker\DatePicker;
 
     <?= $form->field($model, 'offerPrice')->textInput() ?>
 
-    <?= $form->field($model, 'offerDescription')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'offerDescription')->widget(TinyMce::classname(), [
+    	'options' => ['rows' => 10],
+    	'language' => 'pl',
+    	'clientOptions' => [
+        'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    ]
+]) ?>
 
-    <?= $form->field($model, 'offerAccommodation')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'offerAccommodation')->widget(TinyMce::classname(), [
+    	'options' => ['rows' => 10],
+    	'language' => 'pl',
+    	'clientOptions' => [
+        'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    ]
+]) ?>
 
-    <?= $form->field($model, 'offerBenefits')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'offerBenefits')->widget(TinyMce::classname(), [
+    	'options' => ['rows' => 10],
+    	'language' => 'pl',
+    	'clientOptions' => [
+        'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    ]
+]) ?>
 
-    <?= $form->field($model, 'offerProgram')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'offerProgram')->widget(TinyMce::classname(), [
+    	'options' => ['rows' => 10],
+    	'language' => 'pl',
+    	'clientOptions' => [
+        'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    ]
+]) ?>
 
-    <?= $form->field($model, 'offerOptional')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'offerOptional')->widget(TinyMce::classname(), [
+    	'options' => ['rows' => 10],
+    	'language' => 'pl',
+    	'clientOptions' => [
+        'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    ]
+]) ?>
 
-    <?= $form->field($model, 'offerNote')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'offerNote')->widget(TinyMce::classname(), [
+    	'options' => ['rows' => 10],
+    	'language' => 'pl',
+    	'clientOptions' => [
+        'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    ]
+]) ?>
 
-    <?= $form->field($model, 'offerPracticalData')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'offerPracticalData')->widget(TinyMce::classname(), [
+    	'options' => ['rows' => 10],
+    	'language' => 'pl',
+    	'clientOptions' => [
+        'plugins' => [
+            "advlist autolink lists link charmap print preview anchor",
+            "searchreplace visualblocks code fullscreen",
+            "insertdatetime media table contextmenu paste"
+        ],
+        'toolbar' => "undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image"
+    ]
+]) ?>
 
     <?= $form->field($model, 'offerLastMinutePrice')->textInput() ?>
 
     <?= $form->field($model, 'offerFirstMinutePrice')->textInput() ?>
 
-    <?= $form->field($model, 'offerIsFirstMinute')->checkbox() ?>
+    <?= $form->field($model, 'offerIsFirstMinute')->widget(
+    		SwitchBox::className(), [
+    			'clientOptions' => [
+    				'onText' => 'TAK',
+    				'offText' => 'NIE'
+    			]
+    ]
+    )->label(false) ?>
 
-    <?= $form->field($model, 'offerIsLastMinute')->checkbox() ?>
+    <?= $form->field($model, 'offerIsLastMinute')->widget(
+    		SwitchBox::className(), [
+    			'clientOptions' => [
+    				'onText' => 'TAK',
+    				'offText' => 'NIE'
+    			]
+    ])->label(false); ?>
 
-    <?= $form->field($model, 'offerIsActive')->checkbox() ?>
+    <?= $form->field($model, 'offerIsActive')->widget(
+    		SwitchBox::className(), [
+    			'clientOptions' => [
+    				'onText' => 'TAK',
+    				'offText' => 'NIE'
+    			]
+    ])->label(false) ?>
 
     <?= $form->field($model, 'countries_countryId')->dropDownList(
         ArrayHelper::map(Country::find()->all(),'countryId','countryName'),
