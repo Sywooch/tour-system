@@ -52,4 +52,9 @@ class Customer extends \yii\db\ActiveRecord
 	{
 		return $this->hasOne(User::className(), ['userId' => 'user_userId']);
 	}
+	
+	public function getReservations()
+	{
+		return $this->hasOne(Customer::className(), ['customers_userId' => 'customerId']);
+	}
 }

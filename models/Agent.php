@@ -41,4 +41,9 @@ class Agent extends \yii\db\ActiveRecord
 	{
 		return $this->hasOne(User::className(), ['userId' => 'user_userId']);
 	}
+	
+	public function getReservations()
+	{
+		return $this->hasOne(Agent::className(), ['agents_agentId' => 'agentId']);
+	}
 }

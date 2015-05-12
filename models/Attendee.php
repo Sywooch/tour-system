@@ -22,10 +22,9 @@ class Attendee extends \yii\db\ActiveRecord
 	{
 		return [
 				[['attendeeName', 'attendeeSurname', 'attendeeStreet','attendeeSPostcode','attendeeCity'],
-					 'required', 'message' => 'To pole nie mo�e by� puste.'],
-				[['attendeePESEL'],'required', 'integer', 'min'=>11, 'message'=>"za ma�o cyfr.",'max'=>11, 'message'=>"Za du�o cyfr."],
-				[['attendeeBirthdate'],'required', 'date', 'message'=>"To pole nie mo�e by� puste."],
-				[['reservations_reservationId'],'required', 'integer'],
+				'required', 'message' => 'To pole nie może być puste.'],
+				[['attendeePESEL', 'reservations_reservationId'], 'integer'],
+				[['attendeeBirthdate'], 'date', 'message'=>"To pole nie może by puste."],
 		];
 	}
 	public function attributeLabels()
@@ -44,7 +43,7 @@ class Attendee extends \yii\db\ActiveRecord
 	
 	public function getReservation()
 	{
-		return $this->hasOne(Customer::className(), ['reservations' => 'reservations_reservationId']);
+		return $this->hasOne(Customer::className(), ['reservationId' => 'reservations_reservationId']);
 	}
 	
 	

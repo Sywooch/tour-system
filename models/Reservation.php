@@ -13,7 +13,7 @@ class Reservation extends \yii\db\ActiveRecord{
 	public function rules()
 	{
 		return [
-				[['reservationDate'], 'date',  'message' => "B³êdny format daty."],
+				[['reservationDate'], 'date',  'message' => "Bï¿½ï¿½dny format daty."],
 				[['reservationInvoiced'], 'boolean'], 
 				[['reservationPricePerAtendee'], 'float']
 		];
@@ -24,23 +24,23 @@ class Reservation extends \yii\db\ActiveRecord{
 		return [
 				'reservationDate' => 'Data rezerwacji',
 				'reservationInvoiced' => 'Zafakturowane',
-				'reservationPricePerAtendee' => 'Cena za ca³¹ rezerwacjê'
+				'reservationPricePerAtendee' => 'Cena za caï¿½ï¿½ rezerwacjï¿½'
 		];
 	}
 	
 	public function getCustomers()
 	{
-		return $this->hasOne(Customer::className(), ['customers' => 'customers_userId']);
+		return $this->hasOne(Customer::className(), ['customerId' => 'customers_userId']);
 	}
 	
 	public function getAgents()
 	{
-		return $this->hasOne(Agent::className(), ['agents' => 'agents_userId']);
+		return $this->hasOne(Agent::className(), ['agentId' => 'agents_userId']);
 	}
 	
 	public function getOffers()
 	{
-		return $this->hasOne(Offer::className(), ['offers' => 'offers_offerId']);
+		return $this->hasOne(Offer::className(), ['offerId' => 'offers_offerId']);
 	}
 	
 }

@@ -7,7 +7,7 @@ use yii\bootstrap\ActiveForm;
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
-$this->title='Dodawanie nowego klienta';
+$this->title='Rezerwacja oferty';
 
 $this->params['breadcrumbs'][] = ['label' => 'Rezerwacje', 'url' => ['list']]; 
 $this->params['breadcrumbs'][] = $this->title;
@@ -19,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if (Yii::$app->session->hasFlash('reservationAdded')): ?>
 
     <div class="alert alert-success">
-        Dodano now¹ rezerwacjê.
+        Dodano nowï¿½ rezerwacjï¿½.
     </div>
 	
 	<?php else: ?>    

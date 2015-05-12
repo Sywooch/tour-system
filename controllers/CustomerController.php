@@ -62,9 +62,9 @@ class CustomerController extends Controller
 			}
 			
 			if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
-				$model1->reservationDate=date('Y-m-d H:i:s');
-				$model1->offers_offerId=getOffers()->offerId;
-				$model1->reservationPricePerAtendee=getOffers()->offerPrice;
+				$model1->reservationDate=date('Y-m-d');
+				$model1->offers_offerId = $model1->getOffers()->offerId;
+				$model1->reservationPricePerAtendee = $model1->getOffers()->offerPrice;
 				//if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
 				//	$model1->agents_userId=getAgents()->agentId;
 				//else 

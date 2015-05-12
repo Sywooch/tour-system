@@ -34,6 +34,6 @@ class Settlement extends \yii\db\ActiveRecord{
 	}
 	
 	public function getOffer(){
-		return $this->hasOne(Offer::className(), ['offers_offerId' => 'offerId']);
+		return $this->hasOne(Offer::className(), ['offerId' => 'offers_offerId']);
 	}
 }

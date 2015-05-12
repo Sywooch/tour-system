@@ -100,4 +100,9 @@ class Offer extends \yii\db\ActiveRecord
     {
         return $this->hasOne(Season::className(), ['seasonId' => 'seasons_seasonId']);
     }
+    
+    public function getReservations()
+    {
+    	return $this->hasOne(Offer::className(), ['offers_offerId' => 'offerId']);
+    }
 }
