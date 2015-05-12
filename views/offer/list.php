@@ -45,7 +45,17 @@ $this->params['breadcrumbs'][] = $this->title;
             //'countriesCountry.countryName',
             //'seasonsSeason.seasonName',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            ['class' => 'yii\grid\ActionColumn',
+             'template'=> '{view} {update} {settlement}',
+             'buttons' => [
+             		'settlement' => function($url,$model) {
+             		$icon = '<span class="glyphicon glyphicon-usd"></span>';
+             		$label = 'Rozliczenie oferty';
+             		$url = "/settlement/add?id=" . $model->offerId;
+             		return Html::a($icon, $url, ['title' => $label, 'aria-label' => $label]);
+        			}
+        	 ]
+        ],
         ],
     ]); ?>
 
