@@ -18,7 +18,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?= Html::a('Create Offer', ['add'], ['class' => 'btn btn-success']) ?>
     </p>
-
+    
+	 <?php 
+	 if (Yii::$app->user->isGuest || Yii::$app->user->identity->isCustomer() || Yii::$app->user->identity->isAgent()) {
+	 	$template = '{view}';
+	 } else {
+	 	$template = '{view} {update} {settlement}';
+	 }
+	 ?>
+    
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
        // 'filterModel' => $searchModel,
@@ -46,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             //'seasonsSeason.seasonName',
 
             ['class' => 'yii\grid\ActionColumn',
-             'template'=> '{view} {update} {settlement}',
+             'template'=> $template,
              'buttons' => [
              		'settlement' => function($url,$model) {
              		$icon = '<span class="glyphicon glyphicon-usd"></span>';

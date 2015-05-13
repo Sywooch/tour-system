@@ -17,18 +17,22 @@ class OfferController extends Controller
 	
 	public $layout = 'StartingPanel';
 
-	public function beforeAction($action)
+public function beforeAction($action)
 	{
 		if (!parent::beforeAction($action)) {
 			return false;
 		}
-		if (Yii::$app->user->identity->isAgent ()) {
-			$this->layout = 'AgentPanel';
+		if (Yii::$app->user->isGuest) {
+			$this->layout = 'StartingPanel';
 		} else {
-			if (Yii::$app->user->identity->isCustomer ()) {
-				$this->layout = 'StartingPanel';
+			if (Yii::$app->user->identity->isAgent ()) {
+				$this->layout = 'AgentPanel';
 			} else {
-				$this->layout = 'AdminPanel';
+				if (Yii::$app->user->identity->isCustomer ()) {
+					$this->layout = 'StartingPanel';
+				} else {
+					$this->layout = 'AdminPanel';
+				}
 			}
 		}
 			
