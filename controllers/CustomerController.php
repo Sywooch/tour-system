@@ -91,7 +91,7 @@ public function actionBuy($id)
 				$model1->offers_offerId = $id;
 				$offer = Offer::findOne($id);
 				$model1->reservationPricePerAtendee = $offer->offerPrice*$model3->attendeeQuantity;
-				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->user_userId;
+				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->customerId/*user_userId*/;//powinno być customerId
 				$model1->save();
 				$model2->reservations_reservationId=$model1->reservationId;
 				$model2->save();

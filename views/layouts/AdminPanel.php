@@ -52,7 +52,7 @@ AppAsset::register($this);
                      	['label' => 'Lista dokumentów kosztowych', 'url' => ['/costs-bill/list']],
                      ],	
                 	],
-                	['label' => 'Rezerwacje', 'url'=>['/personnel/reservation-list']],
+                	['label' => 'Rezerwacje', 'url'=>['/personnel/reservations-list']],
                 	['label' => 'Nowy',
                 	 'items' => [
                 	 	['label' => 'Nowy klient', 'url' => ['/customer/add']],
