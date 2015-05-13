@@ -13,11 +13,14 @@ $this->params['breadcrumbs'][] = $this->title;
     <table class="table table-striped">
     	<tr>
     		<th>#</th>
-    		<th>Data rezerwacji</th>
-    		<th>Nazwa Pełna</th>
+    		<th>Numer rezerwacji</th>
+    		<th>Nazwa oferty</th>
     		<th>Kraj</th>
-    		<th>Numer NIP</th>
-    		<th>Akcje</th>
+    		<th>Miejsce pobytu</th>
+    		<th>Data rezerwacji</th>
+    		<th>Cena</th>
+    		<th>Początek</th>
+    		<th>Zakończenie</th>
     	</tr>
     	<?php
     		$i = $pagination->page*10 + 1; 
@@ -25,16 +28,20 @@ $this->params['breadcrumbs'][] = $this->title;
     		{
     			$row = '<tr>';
     			$row .= '<td>' . $i . '</td>';
-    			$row .= '<td>' . $contractor->contractorShortName . '</td>';
-    			$row .= '<td>' . $contractor->contractorFullName . '</td>';
-    			$row .= '<td>' . $contractor->contractorCountry .'</td>';
-    			$row .= '<td>' . $contractor->contractorNIP .'</td>';
+    			$row .= '<td>' . $reservation->reservationId . '</td>';
+    			$row .= '<td>' . $reservation->getOffers()->one()->offerName . '</td>';
+    			$row .= '<td>' . $reservation->getOffers()->one()->getCountriesCountry()->one()->countryName .'</td>';
+    			$row .= '<td>' . $reservation->getOffers()->one()->offerAccommodation .'</td>';
+    			$row .= '<td>' . $reservation->reservationDate .'</td>';
+    			$row .= '<td>' . $reservation->getOffers()->one()->offerPrice .'</td>';
+    			$row .= '<td>' . $reservation->getOffers()->one()->offerStartDate .'</td>';
+    			$row .= '<td>' . $reservation->getOffers()->one()->offerEndDate .'</td>';
     			$row .= '<td>';
-    			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $contractor->contractorId, [
+    			/*$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $reservation->reservationId, [
                     'title' => 'Edytuj']);
     			$row .= '&nbsp;&nbsp;';
-    			$row .=  Html::a('<span class="glyphicon glyphicon-trash"></span>', 'delete?id=' . $contractor->contractorId, [
-    					'title' => 'Usuń']);
+    			$row .=  Html::a('<span class="glyphicon glyphicon-trash"></span>', 'delete?id=' . $reservation->reservationId, [
+    					'title' => 'Usuń']);*/
     			$row .= '</td></tr>'; 	
     			$i++;
     			echo $row;

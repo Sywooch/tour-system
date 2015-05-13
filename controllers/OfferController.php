@@ -14,7 +14,7 @@ use yii\filters\VerbFilter;
  */
 class OfferController extends Controller
 {
-    public $layout = 'AdminPanel';
+    public $layout = 'StartingPanel';
 
     public function behaviors()
     {
