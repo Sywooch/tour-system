@@ -14,7 +14,25 @@ use yii\web\Response;
 
 class AgentController extends Controller
 {
-	public $layout = 'AdminPanel';
+	public $layout = 'AgentPanel';
+	
+	public function beforeAction($action)
+	{
+		if (!parent::beforeAction($action)) {
+			return false;
+		}
+		if (Yii::$app->user->identity->isAgent ()) {
+			$this->layout = 'AgentPanel';
+		} else {
+			if (Yii::$app->user->identity->isCustomer ()) {
+				$this->layout = 'StartingPanel';
+			} else {
+				$this->layout = 'AdminPanel';
+			}
+		}
+			
+		return true; // or false to not run the action
+	}
 
 	public function actionAdd()
 	{
