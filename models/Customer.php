@@ -23,7 +23,7 @@ class Customer extends \yii\db\ActiveRecord
 		return [
 				[['customerBirthdate', 'customerCity', 'customerName', 'customerPESEL', 'customerPhone', 'customerPostcode', 'customerStreet', 'customerSurname'],
 					 'required', 'message' => 'To pole nie mo�e by� puste.'],
-				//[['customerBirthdate'], 'date', 'message'=>"Niepoprawny format daty"],
+				[['customerBirthdate'], 'safe', 'message'=>"Niepoprawny format daty"],
 				[['customerCity', 'customerName', 'customerStreet', 'customerSurname'], 'string', 'min'=>2, 'max'=>100],
 				[['customerPESEL'], 'integer'/*, 'max'=>11, 'min'=>11*/],
 				[['customerPhone'], 'integer'/*, 'min'=>9, 'message'=>"Numer telefonu jest za któtki", 'max'=>9, 'message'=>"Numer telefonu jest za długi"*/],
