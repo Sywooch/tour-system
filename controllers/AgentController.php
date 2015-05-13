@@ -41,4 +41,35 @@ class AgentController extends Controller
 			return $this->render('agent-form', array ('model1' => $model1, 'model2' => $model2));
 		}
 	}
+
+
+public function actionAgentBuy($id)
+{
+	$model1 = new Reservation ();
+	$model2 = new Attendee();
+
+	if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
+	{
+		if (Yii::$app->request->isAjax && $model2->load(Yii::$app->request->post())) {
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($model2);
+		}
+			
+		if ($model2->load(Yii::$app->request->post()) ) {
+			$model1->reservationDate=date('Y-m-d');
+			$model1->offers_offerId = $id;
+			$offer = Offer::findOne($id);
+			$model1->reservationPricePerAtendee = $offer->offerPrice;
+			$model1->customers_userId=Yii::$app->User->identity->getAgent()->one()->user_userId;
+			$model1->save();
+			$model2->reservations_reservationId=$model1->reservationId;
+			$model2->save();
+
+			Yii::$app->session->setFlash('reservationAddedAgent');
+			return $this->refresh();
+		} else {
+			return $this->render('/reservations/reservation-form', ['model2' => $model2]);
+		}
+	}
+}
 }
