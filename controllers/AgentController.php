@@ -63,4 +63,5 @@ public function beforeAction($action)
 			return $this->render('agent-form', array ('model1' => $model1, 'model2' => $model2));
 		}
 	}
+	
 }

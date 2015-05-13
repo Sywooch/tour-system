@@ -17,14 +17,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Update', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->offerId], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-        <?= Html::a('Rezerwacja', ['/customer/buy', 'id' => $model->offerId], ['class' => 'btn btn-primary']) ?>
+
+        <?= Html::a(!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent() ? 
+        		'Sprzedarz' : 
+        		'Rezerwacja', !Yii::$app->user->isGuest && (Yii::$app->user->identity->isAgent() || Yii::$app->user->identity->isPersonnel()) ? 
+        		['/agent/buy', 'id' => $model->offerId] : 
+        		Yii::$app->user->isGuest ? 
+        		['/site/login'] : 
+        		['/customer/buy', 'id' => $model->offerId], ['class' => 'btn btn-primary']) ?>
     </p>
 
     <?= DetailView::widget([
