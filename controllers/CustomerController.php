@@ -78,6 +78,7 @@ public function actionBuy($id)
 		$model2 = new Attendee();
 		$model3 = new ReservationForm();
 		
+		
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
 		{
 			if (Yii::$app->request->isAjax && $model2->load(Yii::$app->request->post())) {

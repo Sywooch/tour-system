@@ -33,6 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             		'id' => 'reservation-form',
             		'enableAjaxValidation' => 'true'
             ]); ?>
+             <?php   if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer()):?>
                 <?= $form->field($model3, 'attendeeQuantity') ?>
                 <?= $form->field($model3, 'userAttends')->widget(
     		SwitchBox::className(), [
@@ -58,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'yyyy-m-d'
         ]
     ]);?>
+    <?php endif; ?>
                 <div class="form-group">
                     <?= Html::submitButton('Rezerwuj', ['class' => 'btn btn-success', 'name' => 'save-reservation']) ?>
                 </div>

@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= Html::a(!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent() ? 
         		'Sprzedarz' : 
         		'Rezerwacja', !Yii::$app->user->isGuest && (Yii::$app->user->identity->isAgent() || Yii::$app->user->identity->isPersonnel()) ? 
-        		['/agent/buy', 'id' => $model->offerId] : 
+        		['/agent/sell', 'id' => $model->offerId] : 
         		Yii::$app->user->isGuest ? 
         		['/site/login'] : 
         		['/customer/buy', 'id' => $model->offerId], ['class' => 'btn btn-primary']) ?>
