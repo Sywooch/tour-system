@@ -18,7 +18,7 @@ class SettlementController extends Controller
 	
 	public function actionAdd($id)	
     {
-    	$settlement = Settlement::find($id)->one();
+    	$settlement = Settlement::find()->where(['offers_offerId'=> $id])->one();
     	
     	$costsBills = CostsBill::find()
     	->where(['settlements_offerId' => $id])
@@ -44,16 +44,12 @@ class SettlementController extends Controller
     		return ActiveForm::validate($settlement);
     	}
     	
-    	if ($settlement->load(Yii::$app->request->post())) {
-    		
+    	if ($settlement->load(Yii::$app->request->post()) && $settlement->save(false)) {
     		Yii::$app->session->setFlash('settlementAdded');
-    		
-			if($settlement->save(false))
-    			return $this->refresh();
-			else{
-				Yii::$app->session->setFlash('settlementError');
-				return $this->refresh();
-			}
+    		return $this->refresh();
+    	}else{
+			Yii::$app->session->setFlash('settlementError');
+			return $this->refresh();
     	}
     	
     	return $this->render('settlement-form', ['settlement' => $settlement, 'costsBills' => $costsBills]);
