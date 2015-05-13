@@ -10,6 +10,7 @@ use app\models\User;
 use app\models\Agent;
 use app\models\Reservation;
 use app\models\Attendee;
+use app\models\Offer;
 use app\models\ReservationForm;
 use app\models\Customer;
 use yii\data\Pagination;
@@ -26,7 +27,7 @@ class AgentController extends Controller
 		$model2 = new Agent();
 		
 		$model1->groups_groupId=2;
-		
+		$model1->authKey = "hgytdydrdrdyrdrt";
 		 
 		if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
 			Yii::$app->response->format = Response::FORMAT_JSON;
@@ -37,7 +38,7 @@ class AgentController extends Controller
 		if (($model1->load(Yii::$app->request->post()) && $model1->save()) && ($model2->load(Yii::$app->request->post()) && $model2->save())) {
 			$model2->user_userId=$model1->getId();
 			$model1->setPassword($model1->userPassword);
-			$model1->generateAuthKey();
+			//$model1->generateAuthKey();
 			$model1->save(); $model2->save();
 			Yii::$app->session->setFlash('agentAdded');
 			return $this->refresh();
@@ -56,12 +57,13 @@ public function actionSell($id)
 		
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
 		{
-			if (Yii::$app->request->isAjax && $model2->load(Yii::$app->request->post())) {
+
+			if (Yii::$app->request->isAjax && $model4->load(Yii::$app->request->post())) {
 				Yii::$app->response->format = Response::FORMAT_JSON;
-				return ActiveForm::validate($model2);
-			}	
+				return ActiveForm::validate($model4);
+			}
 			
-			if ($model3->load(Yii::$app->request->post()) || $model4->load(Yii::$app->request->post())) {
+			if ($model3->load(Yii::$app->request->post()) && $model4->load(Yii::$app->request->post()) && $model4->save()) {
 				$model4->save();
 				$model2->attendeeName=$model4->customerName;
 				$model2->attendeeSurname=$model4->customerSurname;
@@ -76,6 +78,7 @@ public function actionSell($id)
 				$offer = Offer::findOne($id);
 				$model1->reservationPricePerAtendee = $offer->offerPrice*$model3->attendeeQuantity;
 				$model1->customers_userId=$model4->user_userId;
+				$model1->agents_userId=Yii::$app->User->identity->getAgent()->one()->user_userId;
 				$model1->save();
 				$model2->reservations_reservationId=$model1->reservationId;
 				$model2->save();
