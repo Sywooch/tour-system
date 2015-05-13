@@ -16,8 +16,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary']) ?>
-
+    <?php 
+    if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel()) {
+    	Html::a('Update', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
+    }
+    ?>
+        
         <?= Html::a(!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent() ? 
         		'Sprzedarz' : 
         		'Rezerwacja', !Yii::$app->user->isGuest && (Yii::$app->user->identity->isAgent() || Yii::$app->user->identity->isPersonnel()) ? 
