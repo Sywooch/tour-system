@@ -4,94 +4,32 @@ use yii\bootstrap\ActiveForm;
 use yii\jui\DatePicker;
 use yii\jui\AutoComplete;
 use yii\web\JsExpression;
+use app\models\Reservation;
 
 /* @var $this y. ii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\ContactForm */
 
-$contractors = app\models\Contractor::find()
-->select('contractorId as id, contractorShortName as label, contractorShortName as value')
-->asArray()
-->all();
-
-$counter = 0;
-
-$this->registerJs('
-	var counter = 0;
-	$("#add-bill").on("click", function(){
-		counter++;
-		console.log("w" + counter);
-		
-		$("#costs-bills").append("<tr>" +
-		"<td>" +
-		"<div class=\'form-group field-costbill-" + counter + "-costbilldate required\'>" +
-		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbilldate\' name=\'CostsBill[" + counter + "][costsBillDate]\' class=\'form-control dp\'>" +
-		"<p class=\'help-block help-block-error\'></p>" + 
-		"</div>" +
-		"</td>" +
-		"<td>" +
-		"<div class=\'form-group field-costbill-" + counter + "-costbillno required\'>" +
-		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbillno\' name=\'CostsBill[" + counter + "][costsBillNo]\' class=\'form-control\'>" +
-		"<p class=\'help-block help-block-error\'></p>" + 
-		"</div>" +
-		"</td>" +
-		"<td>" +
-		"<input type=\'text\' id=\'w" + counter + "\' class=\'form-control ac\'>" +
-		"<div class=\'form-group field-costbill-" + counter + "-contractors_contractorid required\'>" +
-		"<input type=\'hidden\' id=\'costsbill-" + counter + "-contractors_contractorid\' name=\'CostsBill[" + counter + "][contractors_contractorId]\' class=\'form-control\'>" +
-		"<p class=\'help-block help-block-error\'></p>" + 
-		"</div>" +
-		"</td>" +
-		"<td>" +
-		"<div class=\'form-group field-costbill-" + counter + "-costbilldescription required\'>" +
-		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbilldescription\' name=\'CostsBill[" + counter + "][costsBillDescription]\' class=\'form-control\'>" +
-		"<p class=\'help-block help-block-error\'></p>" + 
-		"</div>" +
-		"</td>" +
-		"<td>" +
-		"<div class=\'form-group field-costbill-" + counter + "-costbillvalue required\'>" +
-		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbillvalue\' name=\'CostsBill[" + counter + "][costsBillValue]\' class=\'form-control\'>" +
-		"<p class=\'help-block help-block-error\'></p>" + 
-		"</div>" +
-		"</td>" +
-		"<td class=\'text-center delete\'><div class=\'glyphicon glyphicon-trash\'></div></td>" +
-		"</tr>");
-		$(".delete").on("click", function(){
-			var $killrow = $(this).parent("tr");
-			$killrow.addClass("danger");
-			$killrow.fadeOut(2000, function(){
-				$(this).remove();
-			});
-		});
-		
-		$("#costs-bills .dp").datepicker();
-		$("#costs-bills .ac").autocomplete(
-		{
-			source:'
-			. json_encode($contractors) . ',
-			select: function(event, ui) {
-				$($(this).parent().find(\'input[name="CostsBill[' . $counter . '][contractors_contractorId]"]\')).val(ui.item.id);
-			}
-		});
-	});
-		
-	$(".delete").on("click",function(){
-		var $killrow = $(this).parent("tr");
-    	$killrow.addClass("danger");
-		$killrow.fadeOut(2000, function(){
-    	$(this).remove();
-		});
-	})'
-);
-
 $this->registerCss('.delete{ cursor: pointer; color: #337ab7;} .delete:hover{color: #0D5491;}');
 
 $this->title = 'Dodawanie rozliczenia';
 
-$this->params['breadcrumbs'][] = ['label' => 'Rozliczenia', 'url' => ['list']];
+$this->params['breadcrumbs'][] = ['label' => 'Lista ofert', 'url' => ['list']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
+
+<?php if (Yii::$app->session->hasFlash('settlementAdded')): ?>
+
+    <div class="alert alert-success">
+        Zapisywanie rozliczenia zakończone sukcesem.
+    </div>
+ <?php elseif (Yii::$app->session->hasFlash('settlementError')): ?>
+ 	 <div class="alert alert-error">
+        Zapisywanie rozliczenia zakończone niepowodzeniem.
+    </div>
+<?php endif;?>
+
 <div class="site-contact">
     <h1><?= Html::encode($this->title) ?></h1>
     <div class="row">
@@ -104,45 +42,62 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($settlement, 'settlementDate')->widget(
         DatePicker::className(), [
         'language' => 'pl',
-        'dateFormat' => 'yyyy-MM-dd'
+        'dateFormat' => 'yyyy-MM-dd',
+        'options' => ['class'=>'form-control']
     ]); ?>
 		</div>
 	</div>
 	<div class="row">
 		<div class="col-lg-12">
-			    <table class="table table-striped" id="costs-bills">
-			    	<tr>
-			    		<th>Data wystawienia dokumentu</th>
-			    		<th>Numer dokumentu</th>
-			    		<th>Kontrahent</th>
-			    		<th>Opis zdarzenia</th>
-			    		<th>Wartość brutto</th>
-			    		<th>Usuń</th>
-			    	</tr>
-			    	<tr>
-			    		<td><?= $form->field($costsBill, '[0]costsBillDate')->widget(DatePicker::className(),[
-			    				'language' => 'pl',
-			    				'dateFormat' => 'yyyy-MM-dd'
-			    		])->label(false) ?></td>
-			    		<td><?= $form->field($costsBill, '[0]costsBillNo')->label(false) ?></td>
-			    		<td><?= AutoComplete::widget([
-				    				'clientOptions' => [
-				    					'autofill' => true,
-			    						'source' => $contractors,
-			    						'select' => new JsExpression("function( event, ui ) {
-        $($(this).parent().find('input[name=\"CostsBill[0][contractors_contractorId]\"]')).val(ui.item.id);
-     }")
-			    				],]) ?>
-			    			<?= $form->field($costsBill, '[0]contractors_contractorId')->hiddenInput()->label(false) ?>
-			    		</td>
-			    		<td><?= $form->field($costsBill, '[0]costsBillDescription')->label(false) ?></td>
-			    		<td><?= $form->field($costsBill, '[0]costsBillValue')->label(false) ?></td>
-			    		<td class="text-center delete"><div class="glyphicon glyphicon-trash"></div></td>
-			    	</tr>
-			    </table>
-			    <div class="text-center">
-			    	<?= Html::button('Dodaj pozycję księgowania', $options = ['id' => 'add-bill', 'class' => 'btn btn-primary']) ?>
-			    </div>
+		    <table class="table table-striped" id="costs-bills">
+		    	<tr>
+		    		<th>Data wystawienia dokumentu</th>
+		    		<th>Numer dokumentu</th>
+		    		<th>Kontrahent</th>
+		    		<th>Opis zdarzenia</th>
+		    		<th>Wartość brutto</th>
+		    		<th>Usuń</th>
+		    	</tr>
+				<?php 
+					foreach($costsBills as $costBill){
+						$row = <<<ROW
+				<tr>
+					<td>{$costBill->costsBillDate}</td>
+					<td>{$costBill->costsBillNo}</td>
+					<td>{$costBill->getContractor()->one()->contractorFullName}, {$costBill->getContractor()->one()->contractorStreet}, 
+					{$costBill->getContractor()->one()->contractorPostcode} {$costBill->getContractor()->one()->contractorCity}, 
+					NIP: {$costBill->getContractor()->one()->contractorNIP}</td>
+					<td>{$costBill->costsBillDescription}</td>
+					<td>{$costBill->costsBillValue}</td>
+				</tr>
+ROW;
+					echo $row;
+					}
+				?>
+		    </table>
+		</div>
+		<div class="col-lg-5">
+		    <?= $form->field($settlement, 'settlementTotalIncome')->textInput(['readonly' => true]) ?>
+		    <?= $form->field($settlement, 'settlementCosts')->textInput(['readonly' => true]) ?>
+			<div class="form-group">		
+				<label class="control-label" for="margin">Marża brutto</label>
+				<?php ($settlement->settlementTotalIncome - $settlement->settlementCosts > 0) ? $margin = $settlement->settlementTotalIncome - $settlement->settlementCosts : $margin = 0 ;?>
+				<?= Html::textInput('margin', $margin, 
+						['disabled' => true, 
+						 'class' => 'form-control',
+						 'id' => 'margin'
+				]) ?>
+			</div>
+			<?= $form->field($settlement, 'settlementVAT')->textInput(['readonly' => true]) ?>
+			<div class="form-group">		
+				<label class="control-label" for="vat">Marża netto</label>
+				<?= Html::textInput('vat', ($margin - $settlement->settlementVAT), 
+						['disabled' => true, 
+						 'class' => 'form-control',
+						 'id' => 'vat'
+				]) ?>
+			</div>
+			<?= $form->field($settlement, 'offers_offerId')->hiddenInput()->label(false) ?>
 		</div>
 	</div>
 	<div class="row">

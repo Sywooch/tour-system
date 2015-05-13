@@ -13,8 +13,8 @@ class m150409_141711_create_user_table extends Migration
             'userPassword' => Schema::TYPE_STRING . '(255) NOT NULL',
             'userEmail' => Schema::TYPE_STRING . '(65) NOT NULL',
             'groups_groupId' => Schema::TYPE_INTEGER . ' NOT NULL',
-            'authKey' => Schema::TYPE_STRING . ' NOT NULL',
-            'accessToken' => Schema::TYPE_STRING . ' NOT NULL'
+            'authKey' => Schema::TYPE_STRING,
+            'accessToken' => Schema::TYPE_STRING
         ]);
     }
 
