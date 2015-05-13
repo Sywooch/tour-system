@@ -11,7 +11,6 @@ use app\models\Offer;
 use app\models\CostsBill;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
-use app\models\app\models;
 
 class SettlementController extends Controller
 {
@@ -19,47 +18,44 @@ class SettlementController extends Controller
 	
 	public function actionAdd($id)	
     {
-    	$settlement = new Settlement();
-    	$costsBill = new CostsBill();
+    	$settlement = Settlement::find($id)->one();
+    	
+    	$costsBills = CostsBill::find()
+    	->where(['settlements_offerId' => $id])
+    	->all();
+    	
+    	if($settlement === null){
+    		$settlement = new Settlement();
+    		
+    		$settlement->offers_offerId = $id;
+    		
+    		$settlement->settlementCosts = 0;
+    		foreach($costsBills as $costBill){
+    			$settlement->settlementCosts += $costBill->costsBillValue;
+    		}
+    		 
+    		$settlement->settlementTotalIncome = Offer::find($id)->one()->getTotalIncome();
+    		$settlement->settlementVAT = ($settlement->settlementTotalIncome - $settlement->settlementCosts) * 0.23 / 1.23;
+    		if($settlement->settlementVAT < 0) $settlement->settlementVAT = 0;
+    	}
     	
     	if (Yii::$app->request->isAjax && $settlement->load(Yii::$app->request->post())) {
     		Yii::$app->response->format = Response::FORMAT_JSON;
     		return ActiveForm::validate($settlement);
     	}
     	
-    	if (Yii::$app->request->isAjax && $costsBill->load(Yii::$app->request->post())) {
-    		Yii::$app->response->format = Response::FORMAT_JSON;
-    		return ActiveForm::validate($costsBill);
+    	if ($settlement->load(Yii::$app->request->post())) {
+    		
+    		Yii::$app->session->setFlash('settlementAdded');
+    		
+			if($settlement->save(false))
+    			return $this->refresh();
+			else{
+				Yii::$app->session->setFlash('settlementError');
+				return $this->refresh();
+			}
     	}
     	
-    	if($settlement->load(Yii::$app->request->post())){
-    		/*$offer = Offer::find($id)->one();
-    		$settlement->settlementTotalIncome = 0;
-    		$settlement->settlementCosts = 0;
-    		$reservations = $offer->getReservations()->all();
-    		foreach($reservations as $reservation) 
-    			$settlement->settlementTotalIncome += $reservation->reservationPricePerAtendee;
-    		foreach($_POST['CostsBill'] as $cb)
-    			$settlement->settlementCosts += $cb['costsBillValue'];
-    		$settlement->settlementVAT = ($settlement->settlementTotalIncome - $settlement->settlementCosts) * 0.23 / 1.23;
-    		$settlement->offers_offerId = $id;
-    		$settlement->settlementNo = $_POST['Settlement']['settlementNo'];
-    		$settlement->settlementDate = $_POST['Settlement']['settlementDate'];
-    		
-    		$settlement->save();
-    		
-    		foreach($_POST['CostsBill'] as $cb){
-    			$costBill = new CostsBill();
-    			$costBill->settlements_offerId = $settlement['offers_offerId'];
-    			$costBill->costsBillDate = $cb['costsBillDate'];
-    			$costBill->costsBillNo = $cb['costsBillNo'];
-    			$costBill->costsBillValue = $cb['costsBillValue'];
-    			$costBill->costsBillDescription = $cb['costsBillDescription'];
-    			$costBill->contractors_contractorId = $cb['contractors_contractorId'];
-    			$costBill->save(); */
-    		var_dump($_POST);
-    	}
-    	
-    	return $this->render('settlement-form', ['settlement' => $settlement, 'costsBill' => $costsBill]);
+    	return $this->render('settlement-form', ['settlement' => $settlement, 'costsBills' => $costsBills]);
     }
  }

@@ -105,4 +105,16 @@ class Offer extends \yii\db\ActiveRecord
     {
     	return $this->hasMany(Reservation::className(), ['offers_offerId' => 'offerId']);
     }
+    
+    
+    public function getTotalIncome(){
+    	$reservations = $this->getReservations()->all();
+    	$totalIncome = 0;
+    	 
+    	foreach($reservations as $reservation){
+    		$totalIncome += $reservation->reservationPricePerAtendee;
+    	}
+    	 
+    	return $totalIncome;
+    }
 }
