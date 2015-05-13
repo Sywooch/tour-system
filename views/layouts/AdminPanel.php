@@ -44,10 +44,12 @@ AppAsset::register($this);
                 	 	['label' => 'Lista ofert', 'url' => ['/offer/list']],	
             		 ],
             		],
-                    ['label' => 'Kontrahenci',
+                    ['label' => 'Dokumenty kosztowe',
                      'items' => [
                      	['label' => 'Dodaj kontrahenta', 'url' => ['/contractor/add']], 
                      	['label' => 'Lista kontrahentów', 'url' => ['/contractor/list']],
+                     	['label' => 'Dodaj dokument kosztowy', 'url' => ['/costs-bill/add']],
+                     	['label' => 'Lista dokumentów kosztowych', 'url' => ['/costs-bill/list']],
                      ],	
                 	],
                 	['label' => 'Nowy',
