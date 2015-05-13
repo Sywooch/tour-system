@@ -9,6 +9,7 @@ use yii\filters\VerbFilter;
 use app\models\User;
 use app\models\Customer;
 use app\models\Reservation;
+use app\models\ReservationForm;
 use app\models\Attendee;
 use app\models\Offer;
 use yii\data\Pagination;
@@ -75,6 +76,8 @@ public function actionBuy($id)
 	{
 		$model1 = new Reservation ();
 		$model2 = new Attendee();
+		$model3 = new ReservationForm();
+		
 		
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
 		{
@@ -83,14 +86,11 @@ public function actionBuy($id)
 				return ActiveForm::validate($model2);
 			}	
 			
-			if ($model2->load(Yii::$app->request->post()) ) {
+			if ($model2->load(Yii::$app->request->post()) || $model3->load(Yii::$app->request->post())) {
 				$model1->reservationDate=date('Y-m-d');
 				$model1->offers_offerId = $id;
 				$offer = Offer::findOne($id);
-				$model1->reservationPricePerAtendee = $offer->offerPrice;
-				//if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
-				//	$model1->agents_userId=getAgents()->agentId;
-				//else 
+				$model1->reservationPricePerAtendee = $offer->offerPrice*$model3->attendeeQuantity;
 				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->user_userId;
 				$model1->save();
 				$model2->reservations_reservationId=$model1->reservationId;
@@ -99,7 +99,7 @@ public function actionBuy($id)
 				Yii::$app->session->setFlash('reservationAdded');
 				return $this->refresh();
 			} else {
-				return $this->render('/reservations/reservation-form', ['model2' => $model2]);
+				return $this->render('/reservations/reservation-form', array ('model2' => $model2, 'model3' => $model3));
 			}
 		}
 	}

@@ -3,6 +3,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use dosamigos\datepicker\DatePicker;
+use dosamigos\switchinput\SwitchBox;
+
 
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
@@ -31,6 +33,15 @@ $this->params['breadcrumbs'][] = $this->title;
             		'id' => 'reservation-form',
             		'enableAjaxValidation' => 'true'
             ]); ?>
+             <?php   if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer()):?>
+                <?= $form->field($model3, 'attendeeQuantity') ?>
+                <?= $form->field($model3, 'userAttends')->widget(
+    		SwitchBox::className(), [
+    			'clientOptions' => [
+    				'onText' => 'TAK',
+    				'offText' => 'NIE'
+    			]
+    				])->label(false); ?>
                 <?= $form->field($model2, 'attendeeName') ?>
                 <?= $form->field($model2, 'attendeeSurname') ?>
                 <?= $form->field($model2, 'attendeeStreet') ?>
@@ -48,6 +59,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'format' => 'yyyy-m-d'
         ]
     ]);?>
+    <?php endif; ?>
                 <div class="form-group">
                     <?= Html::submitButton('Rezerwuj', ['class' => 'btn btn-success', 'name' => 'save-reservation']) ?>
                 </div>

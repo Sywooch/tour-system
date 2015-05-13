@@ -40,7 +40,7 @@ AppAsset::register($this);
                 	['label' => 'Strona startowa', 'url' => ['/starting-panel/index']],
                 	['label' => 'Lista ofert', 'url' => ['/offer/list']],
                     ['label' => 'Moja Sprzedaż', 'url' => ['/agent/sold']],
-                	['label' => 'Rozliczenia', 'url' => ['/agent/sold']],
+                	['label' => 'Rozliczenia', 'url' => ['/personnel/report']],
                 	Yii::$app->user->isGuest ?
                 	['label' => 'Logowanie', 'url' => ['/site/login']] :
                 	['label' => 'Wyloguj (' . Yii::$app->user->identity->userLogin . ')',
