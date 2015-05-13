@@ -18,7 +18,7 @@ class m150409_153920_create_reservations_table extends Migration
         ]);
     }
 
-    public function down()
+    public function down() 	
     {
         $this->dropTable('reservations');
     }

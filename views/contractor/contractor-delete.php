@@ -23,7 +23,6 @@ $this->params['breadcrumbs'][] = $this->title;
 	        <li>Adres: <b><?= $model->contractorStreet; ?></b></li>
 	        <li>Kod pocztowy, miejscowość: <b><?= $model->contractorPostcode; ?>, <?= $model->contractorCity; ?></b></li>
 	        <li>Numer NIP: <b><?= $model->contractorNIP; ?></b></li>
-=======
 	        <li>Numer NIP: <b><?= $model->ContractorNIP; ?></b></li>
         </ul>
         <span>&nbsp;</span>

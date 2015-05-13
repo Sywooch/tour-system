@@ -13,9 +13,9 @@ class CostsBill extends \yii\db\ActiveRecord{
 	public function rules()
 	{
 		return [
-				[['contractors_contractorId', 'costsBillDate', 'costsBillNo', 'costsBillValue', 'costsBillDescription'],
+				[['settlements_offerId', 'contractors_contractorId', 'costsBillDate', 'costsBillNo', 'costsBillValue', 'costsBillDescription'],
 				 'required', 'message' => 'To pole nie może być puste.'],
-				[['contractors_contractorId'], 'integer', 'message' => 'To pole musi wskazywać na klucz w bazie danych.'],
+				[['settlements_offerId', 'contractors_contractorId'], 'integer', 'message' => 'To pole musi wskazywać na klucz w bazie danych.'],
 				[['costsBillNo', 'costsBillValue', 'costsBillDescription'], 'string', 'max' => 45, 'message' => "Za długa wartość. Maksymalna długość: 45 znaków."],
 		       ];
 	}
@@ -23,9 +23,10 @@ class CostsBill extends \yii\db\ActiveRecord{
 	public function attributeLabels()
 	{
 		return [
+				'settlements_offerId' => 'Dotyczy oferty',
 				'contractors_contractorId' => 'Nazwa skrócona kontrahenta',
 				'costsBillDate' => 'Data wystawienia',
-				'costsBillNo' => 'Nuemr dokumentu',
+				'costsBillNo' => 'Numer dokumentu',
 				'costsBillValue' => 'Wartość brutto',
 				'costsBillDescription' => 'Opis zdarzenia'
 		];
