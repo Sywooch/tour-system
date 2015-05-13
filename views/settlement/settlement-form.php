@@ -20,29 +20,42 @@ $this->registerJs('
 	var counter = 0;
 	$("#add-bill").on("click", function(){
 		counter++;
-		$("#costs-bills").append(\'<tr>'
-. '<td><div class="form-group field-costsbill-" + counter + "-costsbilldate required">'
-. '<input type="text" id="costsbill-" + counter + "-costsbilldate" name="CostsBill[" + counter + "][costsBillDate]" class="form-control dp">'
-.' <p class="help-block help-block-error"></p> '
-.' </div></td> '
-. '<td><div class="form-group field-costsbill-" + counter + "-costsbillno required">'
-. '<input type="text" id="costsbill-" + counter + "-costsbillno" class="form-control" name="CostsBill[" + counter + "][costsBillNo]">'
-. '<p class="help-block help-block-error"></p>'
-. '</div></td> '
-. '<td><input type="text" id="w" + counter + "" class="form-control ac"><div class="form-group field-costsbill-" + counter + "-contractors_contractorid required">'
-.'<input type="hidden" id="costsbill-" + counter + "-contractors_contractorid" class="form-control" name="CostsBill[" + counter + "][contractors_contractorId]">'
-.'<p class="help-block help-block-error"></p>'
-.'</div></td>'
-.'<td><div class="form-group field-costsbill-" + counter + "-costsbilldescription required">'
-.'<input type="text" id="costsbill-" + counter + "-costsbilldescription" class="form-control" name="CostsBill[" + counter + "][costsBillDescription]">'
-.'<p class="help-block help-block-error"></p>'
-.'</div></td>'
-.'<td><div class="form-group field-costsbill-" + counter + "-costsbillvalue required">'
-.'<input type="text" id="costsbill-" + counter + "-costsbillvalue" class="form-control" name="CostsBill[" + counter + "][costsBillValue]">'
-.'<p class="help-block help-block-error"></p>'
-.'</div></td>'
-.'<td class="text-center delete"><div class="glyphicon glyphicon-trash"></div></td>'
-.'</tr>\');
+		console.log("w" + counter);
+		
+		$("#costs-bills").append("<tr>" +
+		"<td>" +
+		"<div class=\'form-group field-costbill-" + counter + "-costbilldate required\'>" +
+		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbilldate\' name=\'CostsBill[" + counter + "][costsBillDate]\' class=\'form-control dp\'>" +
+		"<p class=\'help-block help-block-error\'></p>" + 
+		"</div>" +
+		"</td>" +
+		"<td>" +
+		"<div class=\'form-group field-costbill-" + counter + "-costbillno required\'>" +
+		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbillno\' name=\'CostsBill[" + counter + "][costsBillNo]\' class=\'form-control\'>" +
+		"<p class=\'help-block help-block-error\'></p>" + 
+		"</div>" +
+		"</td>" +
+		"<td>" +
+		"<input type=\'text\' id=\'w" + counter + "\' class=\'form-control ac\'>" +
+		"<div class=\'form-group field-costbill-" + counter + "-contractors_contractorid required\'>" +
+		"<input type=\'hidden\' id=\'costsbill-" + counter + "-contractors_contractorid\' name=\'CostsBill[" + counter + "][contractors_contractorId]\' class=\'form-control\'>" +
+		"<p class=\'help-block help-block-error\'></p>" + 
+		"</div>" +
+		"</td>" +
+		"<td>" +
+		"<div class=\'form-group field-costbill-" + counter + "-costbilldescription required\'>" +
+		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbilldescription\' name=\'CostsBill[" + counter + "][costsBillDescription]\' class=\'form-control\'>" +
+		"<p class=\'help-block help-block-error\'></p>" + 
+		"</div>" +
+		"</td>" +
+		"<td>" +
+		"<div class=\'form-group field-costbill-" + counter + "-costbillvalue required\'>" +
+		"<input type=\'text\' id=\'costsbill-" + counter + "-costsbillvalue\' name=\'CostsBill[" + counter + "][costsBillValue]\' class=\'form-control\'>" +
+		"<p class=\'help-block help-block-error\'></p>" + 
+		"</div>" +
+		"</td>" +
+		"<td class=\'text-center delete\'><div class=\'glyphicon glyphicon-trash\'></div></td>" +
+		"</tr>");
 		$(".delete").on("click", function(){
 			var $killrow = $(this).parent("tr");
 			$killrow.addClass("danger");

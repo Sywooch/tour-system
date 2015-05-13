@@ -103,6 +103,6 @@ class Offer extends \yii\db\ActiveRecord
     
     public function getReservations()
     {
-    	return $this->hasOne(Offer::className(), ['offers_offerId' => 'offerId']);
+    	return $this->hasMany(Reservation::className(), ['offers_offerId' => 'offerId']);
     }
 }
