@@ -11,7 +11,7 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->addForeignKey('userId_fk_in_agents', 'agents', 'user_userId', 'user', 'userId');
         $this->addForeignKey('userId_fk_in_customers', 'customers', 'user_userId', 'user', 'userId');
         $this->addForeignKey('agents_userId_fk_in_reservations', 'reservations', 'agents_userId', 'agents', 'user_userId');
-        $this->addForeignKey('customers_userId_fk_in_reservations', 'reservations', 'customers_userId', 'customers', 'user_userId');
+        $this->addForeignKey('customers_userId_fk_in_reservations', 'reservations', 'customers_userId', 'customers', 'customerId');
         $this->addForeignKey('offersId_fk_in_reservations', 'reservations', 'offers_offerId', 'offers', 'offerId');
         $this->addForeignKey('reservationId_fk_in_reviews', 'reviews', 'reservations_reservationId', 'reservations', 'reservationId');
         $this->addForeignKey('reservationId_fk_in_payments', 'payments', 'reservations_reservationId', 'reservations', 'reservationId');

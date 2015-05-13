@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\User;
 use app\models\Agent;
+use app\models\Reservation;
 use yii\data\Pagination;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
@@ -43,6 +44,26 @@ class PersonnelController extends Controller
 			return $this->render('personnel-form', array ('model1' => $model1, 'model2' => $model2));
 		}
 	}
+	
+	public function actionReservationsList () {
+		$query1 = Reservation::find();
+	
+		$pagination = new Pagination([
+				'defaultPageSize' => 10,
+				'totalCount' => $query1->count(),
+		]);
+	
+		$reservations = $query1->orderBy('ReservationId')
+		->offset($pagination->offset)
+		->limit($pagination->limit)
+		->all();
+	
+		return $this->render('reservations-list', [
+				'reservations' => $reservations,
+				'pagination' => $pagination,
+		]);
+	}
+	
 	public function actionReport() {
 		
 		$content = $this->renderPartial('render-form');
