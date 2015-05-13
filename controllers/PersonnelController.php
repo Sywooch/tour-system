@@ -11,6 +11,7 @@ use app\models\Agent;
 use yii\data\Pagination;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
+use kartik\mpdf\Pdf;
 
 class PersonnelController extends Controller
 {
@@ -41,5 +42,14 @@ class PersonnelController extends Controller
 		} else {
 			return $this->render('personnel-form', array ('model1' => $model1, 'model2' => $model2));
 		}
+	}
+	public function actionReport() {
+		
+		$content = $this->renderPartial('render-form');
+		$pdf = Yii::$app->pdf; // or new Pdf();
+		$mpdf = $pdf->api; // fetches mpdf api
+		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
+		$mpdf->WriteHtml($content); // call mpdf write html
+		echo $mpdf->Output('filename.pdf', 'D'); // call the mpdf api output as needed
 	}
 }

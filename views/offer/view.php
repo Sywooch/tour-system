@@ -18,17 +18,21 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
     <?php 
     if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel()) {
-    	Html::a('Aktualizuj', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
+    	echo Html::a('Aktualizuj', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
     }
-    ?>
+  
+        if (Yii::$app->user->isGuest) {
+        	echo Html::a('Rezerwacja', ['/site/login'], ['class' => 'btn btn-primary']);
+        } else {
+        	if (Yii::$app->user->identity->isAgent() || Yii::$app->user->identity->isPersonnel()) {
+        		echo Html::a('Sprzedarz', ['/agent/sell', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
+        	} else {
+        			echo Html::a('Rezerwacja', ['/customer/buy', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
+        	}
+        }
+        ?>
         
-        <?= Html::a(!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent() ? 
-        		'Sprzedarz' : 
-        		'Rezerwacja', !Yii::$app->user->isGuest && (Yii::$app->user->identity->isAgent() || Yii::$app->user->identity->isPersonnel()) ? 
-        		['/agent/sell', 'id' => $model->offerId] : 
-        		Yii::$app->user->isGuest ? 
-        		['/site/login'] : 
-        		['/customer/buy', 'id' => $model->offerId], ['class' => 'btn btn-primary']) ?>
+        
     </p>
 
     <?= DetailView::widget([
