@@ -16,7 +16,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Offer', ['add'], ['class' => 'btn btn-success']) ?>
+        <?php 
+    if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel()) {
+    	Html::a('Stwórz ofertę', ['add'], ['class' => 'btn btn-success']);
+    }
+    ?>
     </p>
     
 	 <?php 
