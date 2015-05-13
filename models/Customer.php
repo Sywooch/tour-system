@@ -57,4 +57,11 @@ class Customer extends \yii\db\ActiveRecord
 	{
 		return $this->hasOne(Customer::className(), ['customers_userId' => 'customerId']);
 	}
+	public function isUser () {
+		if ($this->user_userId===NULL) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 }

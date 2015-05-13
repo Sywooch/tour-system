@@ -77,7 +77,7 @@ public function actionSell($id)
 				$model1->offers_offerId = $id;
 				$offer = Offer::findOne($id);
 				$model1->reservationPricePerAtendee = $offer->offerPrice*$model3->attendeeQuantity;
-				$model1->customers_userId=$model4->user_userId;
+				$model1->customers_userId=$model4->customerId;
 				$model1->agents_userId=Yii::$app->User->identity->getAgent()->one()->user_userId;
 				$model1->save();
 				$model2->reservations_reservationId=$model1->reservationId;

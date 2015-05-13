@@ -126,7 +126,7 @@ public function actionEdit($id){
 	}
 	
 	public function actionReservations () {
-		$query1 = Reservation::find()->where(['customers_userId' => Yii::$app->user->identity->getId()]);
+		$query1 = Reservation::find()->where(['customers_userId' => Yii::$app->user->identity->getCustomer()->one()->customerId]);
 		//$query2 = Offer::find()->where (['']);
 		//$query2 = $query1->getOffers()->all();
 		

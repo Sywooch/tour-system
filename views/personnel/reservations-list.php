@@ -15,6 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     		<th>#</th>
     		<th>Numer rezerwacji</th>
     		<th>Użytkownik</th>
+    		<th>Imię klienta</th>
+    		<th>Nazwisko klienta</th>
     		<th>Nazwa oferty</th>
     		<th>Kraj</th>
     		<th>Miejsce pobytu</th>
@@ -30,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
     			$row = '<tr>';
     			$row .= '<td>' . $i . '</td>';
     			$row .= '<td>' . $reservation->reservationId . '</td>';
-    			$row .= '<td>' . $reservation->getCustomers()->one()->customerName/*->getUser()->one->userLogin*/ . '</td>';
+    			/*$reservation->getCustomers()->one()->isUser() ?
+    			$row .= '<td>' . 'Brak' . '</td>':
+    			$row .= '<td>' . $reservation->getCustomers()->one()->getUser()->one()->userLogin . '</td>';*/
+    			$row .= '<td>' . $reservation->getCustomers()->one()->customerName . '</td>';
+    			$row .= '<td>' . $reservation->getCustomers()->one()->customerSurname . '</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerName . '</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->getCountriesCountry()->one()->countryName .'</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerAccommodation .'</td>';
