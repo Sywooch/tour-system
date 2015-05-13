@@ -14,8 +14,27 @@ use yii\filters\VerbFilter;
  */
 class OfferController extends Controller
 {
-    public $layout = 'StartingPanel';
+	
+	public $layout = 'StartingPanel';
 
+	public function beforeAction($action)
+	{
+		if (!parent::beforeAction($action)) {
+			return false;
+		}
+		if (Yii::$app->user->identity->isAgent ()) {
+			$this->layout = 'AgentPanel';
+		} else {
+			if (Yii::$app->user->identity->isCustomer ()) {
+				$this->layout = 'StartingPanel';
+			} else {
+				$this->layout = 'AdminPanel';
+			}
+		}
+			
+		return true; // or false to not run the action
+	}
+	
     public function behaviors()
     {
         return [
@@ -33,7 +52,7 @@ class OfferController extends Controller
      * @return mixed
      */
     public function actionList()
-    {
+    {    	
         $searchModel = new OfferSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 

@@ -21,6 +21,24 @@ class CustomerController extends Controller
 {
 	public $layout = 'StartingPanel';
 
+	public function beforeAction($action)
+	{
+		if (!parent::beforeAction($action)) {
+			return false;
+		}
+		if (Yii::$app->user->identity->isAgent ()) {
+			$this->layout = 'AgentPanel';
+		} else {
+			if (Yii::$app->user->identity->isCustomer ()) {
+				$this->layout = 'StartingPanel';
+			} else {
+				$this->layout = 'AdminPanel';
+			}
+		}
+			
+		return true; // or false to not run the action
+	}
+	
 	public function actionAdd()
 	{
 		$model1 = new User ();
@@ -67,7 +85,7 @@ public function actionBuy($id)
 				$model1->reservationDate=date('Y-m-d');
 				$model1->offers_offerId = $id;
 				$offer = Offer::findOne($id);
-				$model1->reservationPricePerAtendee = $offer->offerPrice;
+				$model1->reservationPricePerAtendee = $offer->offerPrice*$model3->attendeeQuantity;
 				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->user_userId;
 				$model1->save();
 				$model2->reservations_reservationId=$model1->reservationId;
@@ -76,7 +94,7 @@ public function actionBuy($id)
 				Yii::$app->session->setFlash('reservationAdded');
 				return $this->refresh();
 			} else {
-				return $this->render('/reservations/reservation-form', ['model2' => $model2]);
+				return $this->render('/reservations/reservation-form', array ('model2' => $model2, 'model3' => $model3));
 			}
 		}
 	}
