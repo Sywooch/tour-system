@@ -8,6 +8,7 @@ class m150409_162635_create_settlements_table extends Migration
     public function up()
     {
         $this->createTable('settlements', [
+            'settlementId' => Schema::TYPE_PK,
             'offers_offerId' => Schema::TYPE_INTEGER . ' NOT NULL',
             'settlementNo' => Schema::TYPE_STRING . '(45) NOT NULL',
             'settlementTotalIncome' => Schema::TYPE_INTEGER  . ' NOT NULL',
