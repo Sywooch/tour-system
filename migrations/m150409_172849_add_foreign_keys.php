@@ -25,6 +25,7 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->addForeignKey('contractorId_fk_in_costsBills', 'costsBills', 'contractors_contractorId', 'contractors', 'contractorId');
         $this->addForeignKey('countryId_fk_in_offers', 'offers', 'countries_countryId', 'countries', 'countryId');
         $this->addForeignKey('seasonId_fk_in_offers', 'offers', 'seasons_seasonId', 'seasons', 'seasonId');
+        $this->addForeignKey('offers_offerId_fk_in_offerimages', 'offerimages', 'offers_offerId', 'offers', 'offerId');
     }
 
     public function down()
@@ -43,10 +44,11 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->dropForeignKey('offerId_fk_in_settlements', 'settlements');
         $this->dropForeignKey('settlements_offerId_fk_in_customerInvoices', 'customerInvoices');
         $this->dropForeignKey('paymentMethodId_fk_in_customerInvoices', 'customerInvoices');
-        $this->dropForeignKey('settlements_offerId_fk_in_costsBills', 'costsBills');
+        $this->dropForeignKey('offers_offerId_fk_in_costsBills', 'costsBills');
         $this->dropForeignKey('contractorId_fk_in_costsBills', 'costsBills');
         $this->dropForeignKey('countryId_fk_in_offers', 'offers');
         $this->dropForeignKey('seasonId_fk_in_offers', 'offers');
+        $this->dropForeignKey('offers_offerId_fk_in_offerimages', 'offerimages');
     }
     
     /*
