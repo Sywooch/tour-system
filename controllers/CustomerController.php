@@ -133,7 +133,7 @@ public function actionBuy($id)
             ]);
             }
             //////////////*/			
-			if ( $model3->load(Yii::$app->request->post())) 
+			if ( $model3->load(Yii::$app->request->post()) && Modelforattendees::loadMultiple($model2, Yii::$app->request->post()))
 			{
 				//$reservation = findOne()->where(['offers_offerId' => $id])
 				
