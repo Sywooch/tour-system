@@ -33,7 +33,7 @@ class CostsBill extends \yii\db\ActiveRecord{
 	}
 	
 	public function getOffer(){
-		return $this->hasOne(Settlement::className(), ['offerId' => 'offers_offerId']);
+		return $this->hasOne(Offer::className(), ['offerId' => 'offers_offerId']);
 	}
 	
 	public function getContractor(){

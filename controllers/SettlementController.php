@@ -65,15 +65,17 @@ class SettlementController extends Controller
     public function actionReport($id) {
     	
     	$settlement = Settlement::find()->where(['offers_offerId'=> $id])->one();
-    	/*$costsBills = CostsBill::find()
-    	->where(['settlements_offerId' => $id])
-    	->all(); */
+    	$costsBills = CostsBill::find()
+    	->where(['offers_offerId' => $id])
+    	->all();
     
-    	$content = $this->renderPartial('settlement-pdf', ['settlement' => $settlement]);
+    	$content = $this->renderPartial('settlement-pdf', ['settlement' => $settlement, 'costsBills' => $costsBills]);
     	$pdf = Yii::$app->pdf; // or new Pdf();
     	$mpdf = $pdf->api; // fetches mpdf api
     	$mpdf->SetHeader('TourSystem'); // call methods or set any properties
-    	$mpdf->WriteHtml($content); // call mpdf write html
+    	$css = file_get_contents(Yii::$app->basePath . "/vendor/bower/bootstrap/dist/css/bootstrap.min.css");
+    	$mpdf->WriteHtml($css, 1);
+    	$mpdf->WriteHtml($content, 2); // call mpdf write html
     	echo $mpdf->Output('settlement.pdf', 'D'); // call the mpdf api output as needed
     }
  }
