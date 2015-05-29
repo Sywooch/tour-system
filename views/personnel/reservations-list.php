@@ -14,7 +14,6 @@ $this->params['breadcrumbs'][] = $this->title;
     	<tr>
     		<th>#</th>
     		<th>Numer rezerwacji</th>
-    		<th>Użytkownik</th>
     		<th>Imię klienta</th>
     		<th>Nazwisko klienta</th>
     		<th>Nazwa oferty</th>

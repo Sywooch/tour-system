@@ -21,7 +21,7 @@ class SettlementController extends Controller
     	$settlement = Settlement::find()->where(['offers_offerId'=> $id])->one();
     	
     	$costsBills = CostsBill::find()
-    	->where(['settlements_offerId' => $id])
+    	->where(['offers_offerId' => $id])
     	->all();
     	
     	if($settlement === null){
@@ -44,14 +44,36 @@ class SettlementController extends Controller
     		return ActiveForm::validate($settlement);
     	}
     	
+
     	if ($settlement->load(Yii::$app->request->post()) && $settlement->save(false)) {
-    		Yii::$app->session->setFlash('settlementAdded');
+    		Yii::$app->session->setFlash('settlementAdded');	
     		return $this->refresh();
-    	}else{
-			Yii::$app->session->setFlash('settlementError');
-			return $this->refresh();
     	}
     	
+    	$settlement->settlementCosts = 0;
+    	foreach($costsBills as $costBill){
+    		$settlement->settlementCosts += $costBill->costsBillValue;
+    	}
+    	 
+    	$settlement->settlementTotalIncome = Offer::find($id)->one()->getTotalIncome();
+    	$settlement->settlementVAT = ($settlement->settlementTotalIncome - $settlement->settlementCosts) * 0.23 / 1.23;
+    	if($settlement->settlementVAT < 0) $settlement->settlementVAT = 0;
+    	
     	return $this->render('settlement-form', ['settlement' => $settlement, 'costsBills' => $costsBills]);
+    }
+    
+    public function actionReport($id) {
+    	
+    	$settlement = Settlement::find()->where(['offers_offerId'=> $id])->one();
+    	/*$costsBills = CostsBill::find()
+    	->where(['settlements_offerId' => $id])
+    	->all(); */
+    
+    	$content = $this->renderPartial('settlement-pdf', ['settlement' => $settlement]);
+    	$pdf = Yii::$app->pdf; // or new Pdf();
+    	$mpdf = $pdf->api; // fetches mpdf api
+    	$mpdf->SetHeader('TourSystem'); // call methods or set any properties
+    	$mpdf->WriteHtml($content); // call mpdf write html
+    	echo $mpdf->Output('settlement.pdf', 'D'); // call the mpdf api output as needed
     }
  }
