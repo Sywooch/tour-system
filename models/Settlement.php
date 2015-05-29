@@ -29,11 +29,14 @@ class Settlement extends \yii\db\ActiveRecord{
 		];
 	}
 	
-	public function getCostsBills(){
-		return $this->hasMany(CostsBill::className(), ['settlement_offerId' => 'offers_offerId']);
-	}
-	
 	public function getOffer(){
 		return $this->hasOne(Offer::className(), ['offerId' => 'offers_offerId']);
+	}
+	
+	public function getMargin(){
+		$margin = $this->settlementTotalIncome - $this->settlementCosts;
+		if ($margin < 0) $margin = 0;
+		
+		return $margin;
 	}
 }

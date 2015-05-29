@@ -117,4 +117,8 @@ class Offer extends \yii\db\ActiveRecord
     	 
     	return $totalIncome;
     }
+    
+    public function getCostsBills(){
+    	return $this->hasMany(CostsBill::className(), ['offers_offerId' => 'offerId']);
+    }
 }

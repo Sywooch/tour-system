@@ -14,7 +14,7 @@ $this->registerCss('.delete{ cursor: pointer; color: #337ab7;} .delete:hover{col
 
 $this->title = 'Dodawanie rozliczenia';
 
-$this->params['breadcrumbs'][] = ['label' => 'Lista ofert', 'url' => ['list']];
+$this->params['breadcrumbs'][] = ['label' => 'Lista ofert', 'url' => ['/offer/list']];
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
@@ -56,7 +56,6 @@ $this->params['breadcrumbs'][] = $this->title;
 		    		<th>Kontrahent</th>
 		    		<th>Opis zdarzenia</th>
 		    		<th>Wartość brutto</th>
-		    		<th>Usuń</th>
 		    	</tr>
 				<?php 
 					foreach($costsBills as $costBill){
@@ -104,6 +103,7 @@ ROW;
 		<div class="col-lg-5">	    
                 <div class="form-group">
                     <?= Html::submitButton('Zapisz rozliczenie', ['class' => 'btn btn-success', 'name' => 'save-contractor']) ?>
+                    <?= Html::a('Pobierz PDF', 'report?id=' . $settlement->offers_offerId, ['class' => 'btn btn-primary']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
