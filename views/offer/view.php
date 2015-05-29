@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php 
     if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isPersonnel()) {
     	echo Html::a('Aktualizuj', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
+        echo Html::a('Dodaj zdjęcie', ['addimage', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
     }
   
         if (Yii::$app->user->isGuest) {
