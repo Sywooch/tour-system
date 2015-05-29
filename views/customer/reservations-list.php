@@ -22,6 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
     		<th>Początek</th>
     		<th>Zakończenie</th>
     	</tr>
+    	<?=Html::a('Aktualizuj', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary'])?>
     	<?php
     		$i = $pagination->page*10 + 1; 
     		foreach ($reservations as $reservation) 

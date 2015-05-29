@@ -12,10 +12,13 @@ use app\models\Reservation;
 use app\models\ReservationForm;
 use app\models\Attendee;
 use app\models\Offer;
+use app\models\Modelforattendees;
 use yii\data\Pagination;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
 use app\models\app\models;
+
+
 
 class CustomerController extends Controller
 {
@@ -74,32 +77,100 @@ public function beforeAction($action)
 	
 public function actionBuy($id)
 	{
-		$model1 = new Reservation ();
-		$model2 = new Attendee();
-		$model3 = new ReservationForm();
-		
-		
+				
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
 		{
-			if (Yii::$app->request->isAjax && $model2->load(Yii::$app->request->post())) {
-				Yii::$app->response->format = Response::FORMAT_JSON;
-				return ActiveForm::validate($model2);
-			}	
+			$model1 = new Reservation ();
+			$model2 = [new Attendee()];
+			$model3 = new ReservationForm();
 			
-			if ($model2->load(Yii::$app->request->post()) || $model3->load(Yii::$app->request->post())) {
+			/*if ($model1->load(Yii::$app->request->post())) {
+							
+			$model2 = Modelforattendees::createMultiple(Attendee::classname());
+            Model::loadMultiple($model2, Yii::$app->request->post());
+
+            // ajax validation
+            if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ActiveForm::validateMultiple($model2);
+            }
+////////////////
+
+            $model1->reservationDate=date('Y-m-d');
+            $model1->offers_offerId = $id;
+            $offer = Offer::findOne($id);
+            $model1->reservationPricePerAtendee = $offer->offerPrice;
+            $model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->customerId;//powinno być customerId
+            
+            $valid = $model1->validate();
+            $valid = Modelforattendees::validateMultiple($model2) && $valid;
+           
+            if ($valid) {
+            	$transaction = \Yii::$app->db->beginTransaction();
+            	try {
+            		if ($flag = $model1->save(false)) {
+            			foreach ($model2 as $models2) {
+            				$models2->reservations_reservationId = $model1->reservationId;
+            				if (! ($flag = $models2->save(false))) {
+            					$transaction->rollBack();
+            					break;
+            				}
+            			}
+            		}
+            		if ($flag) {
+            			$transaction->commit();
+            			return $this->refresh();
+            		}
+            	} catch (Exception $e) {
+            		$transaction->rollBack();
+            	}
+            }
+        }
+             return $this->render('/reservations/reservation-form', [
+            		'model1' => $model1,
+            		'model2' => (empty($model2)) ? [new Attendee()] : $model2,
+             		//'model3' => (empty($model3)) ? [new ReservationForm()] : $model3
+            ]);
+            }
+            //////////////*/			
+			if ( $model3->load(Yii::$app->request->post())) 
+			{
+				//$reservation = findOne()->where(['offers_offerId' => $id])
+				
 				$model1->reservationDate=date('Y-m-d');
 				$model1->offers_offerId = $id;
 				$offer = Offer::findOne($id);
 				$model1->reservationPricePerAtendee = $offer->offerPrice*$model3->attendeeQuantity;
-				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->customerId/*user_userId*/;//powinno być customerId
-				$model1->save();
-				$model2->reservations_reservationId=$model1->reservationId;
-				$model2->save();
+				$model1->customers_userId=Yii::$app->User->identity->getCustomer()->one()->customerId;
 				
-				Yii::$app->session->setFlash('reservationAdded');
+            //$valid = Modelforattendees::validateMultiple($model2);
+           // if ($valid) {
+				$flag = $model1->save(false);
+                $transaction = \Yii::$app->db->beginTransaction();
+                
+                try {
+                    if ($flag) {
+                        foreach ($model2 as $models2) {
+                        	$models2->reservations_reservationId=$model1->reservationId;
+                            if (! ($flag = $models2->save(false))) {
+                                $transaction->rollBack();
+                                break;
+                            }
+                        }
+                    }
+                    if ($flag) {
+                        $transaction->commit();
+                        Yii::$app->session->setFlash('reservationAdded');
+                    }
+                } catch (Exception $e) {
+                    $transaction->rollBack();
+            //   }
+            }
+				
+				
 				return $this->refresh();
 			} else {
-				return $this->render('/reservations/reservation-form', array ('model2' => $model2, 'model3' => $model3));
+				return $this->render('/reservations/reservation-form', array ('model2' => (empty($model2)) ? [new Attendee()] : $model2, 'model3' => $model3));
 			}
 		}
 	}
@@ -146,5 +217,15 @@ public function actionEdit($id){
 				'reservations' => $reservations,
 				'pagination' => $pagination,
 		]);		
+	}
+	
+	public function actionAgreement() {
+	
+		$content = $this->renderPartial('render-form');
+		$pdf = Yii::$app->pdf; // or new Pdf();
+		$mpdf = $pdf->api; // fetches mpdf api
+		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
+		$mpdf->WriteHtml($content); // call mpdf write html
+		echo $mpdf->Output('filename.pdf', 'D'); // call the mpdf api output as needed
 	}
 }
