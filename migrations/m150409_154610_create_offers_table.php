@@ -9,7 +9,7 @@ class m150409_154610_create_offers_table extends Migration
     {
         $this->createTable('offers', [
             'offerId' => Schema::TYPE_PK,
-            'offerName' => Schema::TYPE_STRING . '(45) NOT NULL',
+            'offerName' => Schema::TYPE_STRING . '(100) NOT NULL',
             'offerStartDate' => Schema::TYPE_DATE . ' NOT NULL',
             'offerEndDate' => Schema::TYPE_DATE . ' NOT NULL',
             'offerPrice' => Schema::TYPE_INTEGER . ' NOT NULL',

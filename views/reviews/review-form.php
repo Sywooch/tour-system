@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if (Yii::$app->session->hasFlash('reviewAdded')): ?>
 
     <div class="alert alert-success">
-        Twoja recenzja została dodana.
+        Twoja recenzja zostaĹ‚a dodana.
     </div>
 	
 	<?php else: ?>  
@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	 <?php if (Yii::$app->session->hasFlash('OfferNotEnd')): ?>
 
     <div class="alert alert-danger">
-        Opinię można wystawić dopiero po zakończeniu wycieczki.
+        OpiniÄ™ moĹĽna wystawiÄ‡ dopiero po zakoĹ„czeniu wycieczki.
     </div>
 	
 	<?php else: ?>  
@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 	 <?php if (Yii::$app->session->hasFlash('reviewExists')): ?>
 	
 	<div class="alert alert-danger">
-        Opinia została już wystawiona.
+        Opinia zostaĹ‚a juĹĽ wystawiona.
     </div>
 	
 	<?php else: ?>    
@@ -43,17 +43,17 @@ $this->params['breadcrumbs'][] = $this->title;
             		'id' => 'review-form',
             		'enableAjaxValidation' => 'true'
             ]); ?>
-            	<?= $form->field($model, 'reservations_reservationId') ?>
-                <?= $form->field($model, 'reviewDescription')/*->widget(TinyMce::classname(), [
+            	<?= $form->field($model, 'reservations_reservationId')->hiddenInput()->label(fale) ?>
+                <?= $form->field($model, 'reviewDescription')->widget(TinyMce::classname(), [
     	'options' => ['rows' => 10],
     	'language' => 'pl',
     	'clientOptions' => [
         
         'toolbar' => "undo redo | styleselect | bold italic"
     ]
-])*/ ?>
+]) ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Wystaw opinię', ['class' => 'btn btn-success', 'name' => 'review-accept']) ?>
+                    <?= Html::submitButton('Wystaw opiniÄ™', ['class' => 'btn btn-success', 'name' => 'review-accept']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>

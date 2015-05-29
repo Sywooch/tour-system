@@ -127,39 +127,29 @@ public function beforeAction($action)
     public function actionReview ($id)
     {
     	$model = new Review();
+    	
+    	if ($this->review_exists($id)){
+    		Yii::$app->session->setFlash('reviewExists');
+    		return $this->render('/reviews/review-form', ['model' => $model]);
+    	}
+    	
+    	$offer = Reservation::findOne($id)->getOffers()->one();
+    	$d1=new \DateTime(date("Y-m-d"));
+    	$d2=new \DateTime($offer->offerEndDate);
+    	if ($d2>$d1)
+    	{
+    		Yii::$app->session->setFlash('OfferNotEnd');
+    		return $this->render('/reviews/review-form', ['model' => $model]);
+    	}
+    	
     	if(!$model->load(Yii::$app->request->post())){
     		$model->reservations_reservationId=$id;
-    		$model->reviewDate=date('Y-m-d');
-    	//$model->reviewDescription="chujjjj";
-    		$offer = $model->getReservationsReservation()->one()->getOffers()->one();
-    		$d1=new \DateTime($model->reviewDate);
-    		$d2=new \DateTime($offer->offerEndDate);
-    		if ($d2>$d1)
-    		{
-    			Yii::$app->session->setFlash('OfferNotEnd');
-    			//return $this->render('/reviews/review-form', ['model' => $model]);
-    		} else {
-    			if ($this->review_exists($id)){
-	    			Yii::$app->session->setFlash('reviewExists');
-	    			//return $this->render('/reviews/review-form', ['model' => $model]);
-    			}	
-    		}
     		return $this->render('/reviews/review-form', ['model' => $model]);
-    	}else{
-    		echo "id". $model->reservations_reservationId;
-    	
-    		/*	if (Yii::$app->request->isAjax) {
-    				Yii::$app->response->format = Response::FORMAT_JSON;
-    				return ActiveForm::validate($model);
-    			}
-    		
-    			if ($model->save()){
-    				Yii::$app->session->setFlash('reviewAdded');
-    				return $this->refresh();
-    			} else {
-    				
-    			}*/
     	}
+    	$model->reservations_reservationId = $_POST['Review']['reservations_reservationId'];
+    	$model->reviewDate = date("Y-m-d");
+    	$model->reviewDescription = $_POST['Review']['reviewDescription'];
+    	$model->save();
     }
 
     public function actionAddimage($id)
