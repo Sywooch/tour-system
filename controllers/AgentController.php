@@ -114,5 +114,25 @@ public function beforeAction($action)
 		return true; // or false to not run the action
 	}
 
+	public function actionSold()
+	{
+		$query1 = Reservation::find()->where (['agents_userId' => Yii::$app->user->identity->getAgent()->one()->agentId]);
+		
+		$pagination = new Pagination([
+				'defaultPageSize' => 10,
+				'totalCount' => $query1->count(),
+		]);
+		
+		$reservations = $query1->orderBy('ReservationId')
+		->offset($pagination->offset)
+		->limit($pagination->limit)
+		->all();
+		
+		return $this->render('/personnel/reservations-list', [
+				'reservations' => $reservations,
+				'pagination' => $pagination,
+		]);
+	}
+	
 	
 }

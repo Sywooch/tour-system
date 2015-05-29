@@ -6,10 +6,13 @@ use app\models\Offerimage;
 use Yii;
 use app\models\Offer;
 use app\models\OfferSearch;
+use app\models\Review;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
+use yii\base\Object;
+use app\models\Reservation;
 
 /**
  * OfferController implements the CRUD actions for Offer model.
@@ -68,6 +71,17 @@ public function beforeAction($action)
         ]);
     }
 
+    public function actionLastMinute ()
+    {
+    	$searchModel = new OfferSearch();
+    	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    	
+    	return $this->render('list', [
+    			'searchModel' => $searchModel,
+    			'dataProvider' => $dataProvider,
+    	]);
+    }
+    
     /**
      * Displays a single Offer model.
      * @param integer $id
@@ -79,7 +93,7 @@ public function beforeAction($action)
             'model' => $this->findModel($id),
         ]);
     }
-
+    
     /**
      * Creates a new Offer model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -96,6 +110,56 @@ public function beforeAction($action)
                 'model' => $model,
             ]);
         }
+    }
+    
+    public function review_exists ($id) 
+    {
+    	$reviews = Review::find()->all();
+    	
+    	foreach ($reviews as $review)
+    	{
+    		if ($review->reservations_reservationId==$id)
+    			return true;
+    	}
+    	return false;
+    }
+    
+    public function actionReview ($id)
+    {
+    	$model = new Review();
+    	if(!$model->load(Yii::$app->request->post())){
+    		$model->reservations_reservationId=$id;
+    		$model->reviewDate=date('Y-m-d');
+    	//$model->reviewDescription="chujjjj";
+    		$offer = $model->getReservationsReservation()->one()->getOffers()->one();
+    		$d1=new \DateTime($model->reviewDate);
+    		$d2=new \DateTime($offer->offerEndDate);
+    		if ($d2>$d1)
+    		{
+    			Yii::$app->session->setFlash('OfferNotEnd');
+    			//return $this->render('/reviews/review-form', ['model' => $model]);
+    		} else {
+    			if ($this->review_exists($id)){
+	    			Yii::$app->session->setFlash('reviewExists');
+	    			//return $this->render('/reviews/review-form', ['model' => $model]);
+    			}	
+    		}
+    		return $this->render('/reviews/review-form', ['model' => $model]);
+    	}else{
+    		echo "id". $model->reservations_reservationId;
+    	
+    		/*	if (Yii::$app->request->isAjax) {
+    				Yii::$app->response->format = Response::FORMAT_JSON;
+    				return ActiveForm::validate($model);
+    			}
+    		
+    			if ($model->save()){
+    				Yii::$app->session->setFlash('reviewAdded');
+    				return $this->refresh();
+    			} else {
+    				
+    			}*/
+    	}
     }
 
     public function actionAddimage($id)
@@ -148,6 +212,7 @@ public function beforeAction($action)
 
         return $this->redirect(['list']);
     }
+   
 
     /**
      * Finds the Offer model based on its primary key value.

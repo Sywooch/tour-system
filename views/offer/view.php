@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'active' => true
                 ],
                 [
-                    'label' => 'Offer Accommodation',
+                    'label' => 'Akomodacja',
                     'content' => $model->offerAccommodation,
                     'headerOptions' => [],
                     'options' => ['id' => 'offer-accomodation'],

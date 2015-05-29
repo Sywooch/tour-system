@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
     			$row .= '<td>' . $costBill->costsBillDescription .'</td>';
     			$row .= '<td>' . $costBill->costsBillValue .'</td>';
     			$row .= '<td>' . $costBill->getContractor()->one()->contractorShortName .'</td>';
-    			$row .= '<td>' . $costBill->getSettlement()->one()->getOffer()->one()->offerName .'</td>';
+    			$row .= '<td>' . $costBill->getOffer()->one()->offerName .'</td>';
     			$row .= '<td>';
     			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $costBill->costsBillId, [
                     'title' => 'Edytuj']);
