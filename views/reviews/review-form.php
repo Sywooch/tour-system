@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
             		'id' => 'review-form',
             		'enableAjaxValidation' => 'true'
             ]); ?>
-            	<?= $form->field($model, 'reservations_reservationId')->hiddenInput()->label(fale) ?>
+            	<?= $form->field($model, 'reservations_reservationId')->hiddenInput()->label(false) ?>
                 <?= $form->field($model, 'reviewDescription')->widget(TinyMce::classname(), [
     	'options' => ['rows' => 10],
     	'language' => 'pl',
