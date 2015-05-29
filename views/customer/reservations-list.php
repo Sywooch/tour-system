@@ -21,6 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     		<th>Cena</th>
     		<th>Początek</th>
     		<th>Zakończenie</th>
+    		<th>Wystaw Opinię</th>
     	</tr>
     	<?=Html::a('Aktualizuj', ['update', 'id' => $model->offerId], ['class' => 'btn btn-primary'])?>
     	<?php
@@ -38,11 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
     			$row .= '<td>' . $reservation->getOffers()->one()->offerStartDate .'</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerEndDate .'</td>';
     			$row .= '<td>';
-    			/*$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $reservation->reservationId, [
-                    'title' => 'Edytuj']);
+    			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', '/offer/review?id=' . $reservation->reservationId, [
+                    'title' => 'Wystaw Opinię']);
     			$row .= '&nbsp;&nbsp;';
-    			$row .=  Html::a('<span class="glyphicon glyphicon-trash"></span>', 'delete?id=' . $reservation->reservationId, [
-    					'title' => 'Usuń']);*/
     			$row .= '</td></tr>'; 	
     			$i++;
     			echo $row;

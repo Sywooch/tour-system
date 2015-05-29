@@ -39,6 +39,7 @@ AppAsset::register($this);
             echo Nav::widget([
                 'options' => ['class' => 'navbar-nav navbar-right'],
                 'items' => [
+                		['label' => 'Opinie', 'url' => ['/review/view']],
                    ['label' => 'Oferty',
                 	 'items' => [
                 	 	['label' => 'Lista ofert', 'url' => ['/offer/list']],
@@ -70,6 +71,7 @@ AppAsset::register($this);
         	echo Nav::widget([
         			'options' => ['class' => 'navbar-nav navbar-right'],
         			'items' => [
+        					['label' => 'Opinie', 'url' => ['/review/view']],
         					['label' => 'Lista ofert', 'url' => ['/offer/list']],
         					['label' => 'Last Minute', 'url' => ['/offer/last-minute']],
         					['label' => 'Zaloguj' ,	'url' => ['/site/login']],

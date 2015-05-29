@@ -24,7 +24,7 @@ class Reservation extends \yii\db\ActiveRecord{
 		return [
 				'reservationDate' => 'Data rezerwacji',
 				'reservationInvoiced' => 'Zafakturowane',
-				'reservationPricePerAtendee' => 'Cena za ca�� rezerwacj�'
+				'reservationPricePerAtendee' => 'Cena za całą rezerwację'
 		];
 	}
 	
