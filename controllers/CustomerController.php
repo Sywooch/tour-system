@@ -132,7 +132,8 @@ public function actionBuy($id)
              		//'model3' => (empty($model3)) ? [new ReservationForm()] : $model3
             ]);
             }
-            //////////////*/			
+            //////////////*/
+			
 			if ( $model3->load(Yii::$app->request->post()) && Modelforattendees::loadMultiple($model2, Yii::$app->request->post()))
 			{
 				//$reservation = findOne()->where(['offers_offerId' => $id])
