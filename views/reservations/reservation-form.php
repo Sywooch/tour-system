@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use dosamigos\datepicker\DatePicker;
+use yii\jui\DatePicker;
 use dosamigos\switchinput\SwitchBox;
 use wbraganca\dynamicform\DynamicFormWidget;
 use app\models\Attendee;
@@ -17,13 +17,14 @@ $this->title='Rezerwacja oferty';
 $this->params['breadcrumbs'][] = ['label' => 'Rezerwacje', 'url' => ['list']]; 
 $this->params['breadcrumbs'][] = $this->title;
 
-/*$this->registerJs('
+$this->registerJs('
 		$(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
     console.log("beforeInsert");
 });
 
 $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     console.log("afterInsert");
+	$(".dp").datepicker();
 });
 
 $(".dynamicform_wrapper").on("beforeDelete", function(e, item) {
@@ -41,7 +42,7 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
     alert("Limit reached");
 });
 		');
-*/
+
 ?>
 
 <div class="site-contact">
@@ -150,18 +151,11 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
                                 <?= $form->field($attendee, "[{$i}]attendeePESEL") ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($attendee, "[{$i}]attendeeBirthdate")->widget(
-        DatePicker::className(), [
-        // inline too, not bad
-        'inline' => false,
-        // modify template for custom rendering
-        //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
-        'clientOptions' => [
-            'autoclose' => true,
-            'format' => 'yyyy-mm-dd',
-        	'class' => 'dp'
-        ]
-    ]);
+                                <?= $form->field($attendee, "[{$i}]attendeeBirthdate")->widget(DatePicker::className(),[
+                		'language' => 'pl',
+                		'dateFormat' => 'yyyy-MM-dd',
+                		'options'=>['class'=>'form-control dp']
+			    ]);
                                  ?>
                             </div>
                         </div><!-- .row -->
