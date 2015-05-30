@@ -76,7 +76,7 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
 	
 		
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php $form = ActiveForm::begin([
             		'id' => 'reservation-form',
             //		'enableAjaxValidation' => 'true'
@@ -131,26 +131,28 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
                                 echo Html::activeHiddenInput($attendee, "[{$i}]attendeeId");
                             }
                         ?>
-                        <?= $form->field($attendee, "[{$i}]attendeeName") ?>
                         <div class="row">
-                            <div class="col-sm-6">
+                        	<div class="col-sm-12 col-md-4">
+                        		<?= $form->field($attendee, "[{$i}]attendeeName") ?>
+                        	</div>
+                            <div class="col-sm-12 col-md-4">
                                 <?= $form->field($attendee, "[{$i}]attendeeSurname") ?>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12 col-md-4">
                                 <?= $form->field($attendee, "[{$i}]attendeeStreet") ?>
                             </div>
                         </div><!-- .row -->
                         <div class="row">
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-2">
                                 <?= $form->field($attendee, "[{$i}]attendeeSPostcode") ?>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-4">
                                 <?= $form->field($attendee, "[{$i}]attendeeCity") ?>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-4">
                                 <?= $form->field($attendee, "[{$i}]attendeePESEL") ?>
                             </div>
-                            <div class="col-sm-4">
+                            <div class="col-sm-12 col-md-2">
                                 <?= $form->field($attendee, "[{$i}]attendeeBirthdate")->widget(DatePicker::className(),[
                 		'language' => 'pl',
                 		'dateFormat' => 'yyyy-MM-dd',
@@ -170,7 +172,7 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
     				
                
     <?php endif; ?>
-                <div class="form-group">
+                <div class="form-group text-center">
                     <?= Html::submitButton('Rezerwuj', ['class' => 'btn btn-success', 'name' => 'save-reservation']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
