@@ -17,7 +17,7 @@ $this->title='Rezerwacja oferty';
 $this->params['breadcrumbs'][] = ['label' => 'Rezerwacje', 'url' => ['list']]; 
 $this->params['breadcrumbs'][] = $this->title;
 
-$this->registerJs('
+/*$this->registerJs('
 		$(".dynamicform_wrapper").on("beforeInsert", function(e, item) {
     console.log("beforeInsert");
 });
@@ -41,6 +41,7 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
     alert("Limit reached");
 });
 		');
+*/
 ?>
 
 <div class="site-contact">
@@ -49,20 +50,38 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
     <?php if (Yii::$app->session->hasFlash('reservationAdded')): ?>
 
     <div class="alert alert-success">
-        Dodano now� rezerwacj�.
+        Dodano nową rezerwację.
     </div>
 	
-	<?php else: ?>    
+	 <?php elseif (Yii::$app->session->hasFlash('reservationNotAdded')): ?>
+
+    <div class="alert alert-success">
+        Nie utworzono rezerwacji. Wystąpił błąd w trakcie zapisywania do bazy danych.
+    </div>
+	
+	<?php elseif (Yii::$app->session->hasFlash('customerAsAttendeeError')): ?>
+
+    <div class="alert alert-success">
+        Nie utworzono rezerwacji. Wystąpił błąd w trakcie zapisywania do bazy danych klienta jako uczestnika.
+    </div>
+	
+	<?php elseif (Yii::$app->session->hasFlash('reservationNotAdded')): ?>
+
+    <div class="alert alert-success">
+        Nie utworzono rezerwacji. Wystąpił błąd w trakcie zapisywania do bazy danych któregoś uczestnika z lsity.
+    </div>
+	
+	<?php else: ?>
+	
 		
     <div class="row">
         <div class="col-lg-5">
             <?php $form = ActiveForm::begin([
             		'id' => 'reservation-form',
-            		'enableAjaxValidation' => 'true'
+            //		'enableAjaxValidation' => 'true'
             ]); ?>
              <?php   if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer()):?>
-                <?= $form->field($model3, 'attendeeQuantity') ?>
-                <?= $form->field($model3, 'userAttends')->widget(
+                <?= $form->field($reservationForm, 'userAttends')->widget(
     		SwitchBox::className(), [
     			'clientOptions' => [
     				'onText' => 'TAK',
@@ -70,8 +89,7 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
     			]
     				])->label(false); //   
 
-                 
-                 //////////////////////////////////////////////////////////?>
+              ?>
     				
     				<?php DynamicFormWidget::begin([
                 'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]
@@ -81,7 +99,7 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
                 'min' => 1, // 0 or 1 (default 1)
                 'insertButton' => '.add-item', // css class
                 'deleteButton' => '.remove-item', // css class
-                'model' => $model2[0],
+                'model' => $attendees[0],
                 'formId' => 'reservation-form',
                 'formFields' => [
                     'attendeeName',
@@ -95,10 +113,10 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
             ]); ?>
 
             <div class="container-items"><!-- widgetContainer -->
-            <?php foreach ($model2 as $i => $models2): ?>
+            <?php foreach ($attendees as $i => $attendee): ?>
                 <div class="item panel panel-default"><!-- widgetBody -->
                     <div class="panel-heading">
-                        <h3 class="panel-title pull-left">Uczestnik</h3>
+                        <h3 class="panel-title pull-left">Uczestnik </h3>
                         <div class="pull-right">
                             <button type="button" class="add-item btn btn-success btn-xs"><i class="glyphicon glyphicon-plus"></i></button>
                             <button type="button" class="remove-item btn btn-danger btn-xs"><i class="glyphicon glyphicon-minus"></i></button>
@@ -108,31 +126,31 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
                     <div class="panel-body">
                         <?php
                             // necessary for update action.
-                            if (! $models2->isNewRecord) {
-                                echo Html::activeHiddenInput($models2, "[{$i}]attendeeId");
+                            if (! $attendee->isNewRecord) {
+                                echo Html::activeHiddenInput($attendee, "[{$i}]attendeeId");
                             }
                         ?>
-                        <?= $form->field($models2, "[{$i}]attendeeName") ?>
+                        <?= $form->field($attendee, "[{$i}]attendeeName") ?>
                         <div class="row">
                             <div class="col-sm-6">
-                                <?= $form->field($models2, "[{$i}]attendeeSurname") ?>
+                                <?= $form->field($attendee, "[{$i}]attendeeSurname") ?>
                             </div>
                             <div class="col-sm-6">
-                                <?= $form->field($models2, "[{$i}]attendeeStreet") ?>
+                                <?= $form->field($attendee, "[{$i}]attendeeStreet") ?>
                             </div>
                         </div><!-- .row -->
                         <div class="row">
                             <div class="col-sm-4">
-                                <?= $form->field($models2, "[{$i}]attendeeSPostcode") ?>
+                                <?= $form->field($attendee, "[{$i}]attendeeSPostcode") ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($models2, "[{$i}]attendeeCity") ?>
+                                <?= $form->field($attendee, "[{$i}]attendeeCity") ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($models2, "[{$i}]attendeePESEL") ?>
+                                <?= $form->field($attendee, "[{$i}]attendeePESEL") ?>
                             </div>
                             <div class="col-sm-4">
-                                <?= $form->field($models2, "[{$i}]attendeeBirthdate")->widget(
+                                <?= $form->field($attendee, "[{$i}]attendeeBirthdate")->widget(
         DatePicker::className(), [
         // inline too, not bad
         'inline' => false,
@@ -140,7 +158,8 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
         //'template' => '<div class="well well-sm" style="background-color: #fff; width:250px">{input}</div>',
         'clientOptions' => [
             'autoclose' => true,
-            'format' => 'yyyy-m-d'
+            'format' => 'yyyy-mm-dd',
+        	'class' => 'dp'
         ]
     ]);
                                  ?>

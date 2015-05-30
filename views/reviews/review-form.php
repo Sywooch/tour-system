@@ -6,7 +6,7 @@ use dosamigos\tinymce\TinyMce;
 
 	$this->title = 'Twoja Opinia';
 
-$this->params['breadcrumbs'][] = ['label' => 'Opinia', 'url' => ['list']]; //akcja lista?
+$this->params['breadcrumbs'][] = ['label' => 'Rezerwacje', 'url' => ['/customer/reservations']]; //akcja lista?
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -16,29 +16,25 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php if (Yii::$app->session->hasFlash('reviewAdded')): ?>
 
     <div class="alert alert-success">
-        Twoja recenzja zostaĹ‚a dodana.
+        Twoja recenzja została dodana.
     </div>
 	
-	<?php else: ?>  
-	
-	 <?php if (Yii::$app->session->hasFlash('OfferNotEnd')): ?>
+	 <?php elseif (Yii::$app->session->hasFlash('OfferNotEnd')): ?>
 
     <div class="alert alert-danger">
-        OpiniÄ™ moĹĽna wystawiÄ‡ dopiero po zakoĹ„czeniu wycieczki.
+        Opinię można wystawić dopiero po zakończeniu wycieczki.
     </div>
-	
-	<?php else: ?>  
-	
-	 <?php if (Yii::$app->session->hasFlash('reviewExists')): ?>
+    
+	 <?php elseif (Yii::$app->session->hasFlash('reviewExists')): ?>
 	
 	<div class="alert alert-danger">
-        Opinia zostaĹ‚a juĹĽ wystawiona.
+        Opinia została już wystawiona.
     </div>
 	
 	<?php else: ?>    
 		
     <div class="row">
-        <div class="col-lg-5">
+        <div class="col-lg-12">
             <?php $form = ActiveForm::begin([
             		'id' => 'review-form',
             		'enableAjaxValidation' => 'true'
@@ -51,15 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
         
         'toolbar' => "undo redo | styleselect | bold italic"
     ]
-]) ?>
+])->label("Treść recenzji:") ?>
                 <div class="form-group">
-                    <?= Html::submitButton('Wystaw opiniÄ™', ['class' => 'btn btn-success', 'name' => 'review-accept']) ?>
+                    <?= Html::submitButton('Wystaw opinię', ['class' => 'btn btn-success', 'name' => 'review-accept']) ?>
                 </div>
             <?php ActiveForm::end(); ?>
         </div>
     </div>
 
-    <?php endif; ?>
-    <?php endif; ?>
     <?php endif; ?>
 </div>

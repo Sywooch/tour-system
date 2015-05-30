@@ -30,10 +30,8 @@ class Review extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            //[['reviewDate', 'reviewDescription', 'reservations_reservationId'], 'required'],
-          //  [['reviewDate'], 'safe'],
-           // [['reservations_reservationId'], 'integer'],
-           // [['reviewDescription'], 'string', 'max' => 255]
+            [['reviewDescription'], 'required'],
+            [['reviewDescription'], 'string', 'max' => 255]
         ];
     }
 

@@ -21,10 +21,10 @@ class Attendee extends \yii\db\ActiveRecord
 	public function rules()
 	{
 		return [
-			/*	[['attendeeName', 'attendeeSurname', 'attendeeStreet','attendeeSPostcode','attendeeCity','attendeePESEL','attendeeBirthdate'],
+				[['attendeeName', 'attendeeSurname', 'attendeeStreet','attendeeSPostcode','attendeeCity','attendeePESEL','attendeeBirthdate'],
 				'required', 'message' => 'To pole nie może być puste.'],
-				[['attendeePESEL', 'reservations_reservationId'], 'integer'],
-				[['attendeeBirthdate'], 'safe', 'message'=>"To pole nie może by puste."], */
+				[['attendeePESEL'], 'integer'],
+				[['attendeeBirthdate'], 'safe', 'message'=>"To pole nie może by puste."], 
 		];
 	}
 	public function attributeLabels()

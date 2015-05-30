@@ -10,22 +10,21 @@ use yii\base\Model;
  */
 class ReservationForm extends Model
 {
-    public $attendeeQuantity=1;
-    public $userAttends=TRUE;
+    public $userAttends=true;
 
     public function rules()
     {
-        return [
-            
-            [['attendeeQuantity'], 'integer', 'min'=>1, 'message'=>'ilość użytkowników nie może być mniejsza niż 1'],
-        ];
+        return [['userAttends', 'uaValidate']];
     }
 
     public function attributeLabels()
     {
     	return [
-    			'attendeeQuantity' => 'ilość uczestników',
     			'userAttends' => 'Jestem uczestnikiem',
     	];
+    }
+    
+    public function uaValidate(){
+    	if($this->userAttends !== true) $this->userAttends = false;
     }
 }

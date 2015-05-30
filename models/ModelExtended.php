@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 use yii\helpers\ArrayHelper;
 
-class Modelforattendees extends \yii\base\Model
+class ModelExtended extends \yii\base\Model
 {
     /**
      * Creates and populates a set of models.

@@ -133,9 +133,8 @@ public function beforeAction($action)
     		return $this->render('/reviews/review-form', ['model' => $model]);
     	}
     	
-    	$offer = Reservation::findOne($id)->getOffers()->one();
     	$d1=new \DateTime(date("Y-m-d"));
-    	$d2=new \DateTime($offer->offerEndDate);
+    	$d2=new \DateTime(Reservation::findOne($id)->getOffers()->one()->offerEndDate);
     	if ($d2>$d1)
     	{
     		Yii::$app->session->setFlash('OfferNotEnd');
@@ -143,13 +142,13 @@ public function beforeAction($action)
     	}
     	
     	if(!$model->load(Yii::$app->request->post())){
-    		$model->reservations_reservationId=$id;
     		return $this->render('/reviews/review-form', ['model' => $model]);
     	}
-    	$model->reservations_reservationId = $_POST['Review']['reservations_reservationId'];
     	$model->reviewDate = date("Y-m-d");
-    	$model->reviewDescription = $_POST['Review']['reviewDescription'];
+    	$model->reservations_reservationId=$id;
     	$model->save();
+    	Yii::$app->session->setFlash('reviewAdded');
+    	return $this->refresh();
     }
 
     public function actionAddimage($id)
