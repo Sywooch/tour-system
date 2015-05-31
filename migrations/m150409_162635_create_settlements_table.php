@@ -11,9 +11,9 @@ class m150409_162635_create_settlements_table extends Migration
             'settlementId' => Schema::TYPE_PK,	
             'offers_offerId' => Schema::TYPE_INTEGER . ' NOT NULL',
             'settlementNo' => Schema::TYPE_STRING . '(45) NOT NULL',
-            'settlementTotalIncome' => Schema::TYPE_INTEGER  . ' NOT NULL',
-            'settlementVAT' => Schema::TYPE_INTEGER  . ' NOT NULL',
-            'settlementCosts' => Schema::TYPE_INTEGER  . ' NOT NULL',
+            'settlementTotalIncome' => Schema::TYPE_FLOAT  . ' NOT NULL',
+            'settlementVAT' => Schema::TYPE_FLOAT  . ' NOT NULL',
+            'settlementCosts' => Schema::TYPE_FLOAT  . ' NOT NULL',
             'settlementDate' => Schema::TYPE_DATE  . ' NOT NULL',
         ]);
     }

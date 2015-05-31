@@ -12,7 +12,8 @@ class m150409_161850_create_customerInvoices_table extends Migration
             'customerInvoiceNo' => Schema::TYPE_STRING . '(45) NOT NULL UNIQUE',
             'customerInvoiceDate' => Schema::TYPE_DATE . ' NOT NULL',
             'customerInvoiceDateOfSale' => Schema::TYPE_DATE . ' NOT NULL',
-            'attendees_attendeeId' => Schema::TYPE_INTEGER . ' NOT NULL',
+        	'customerInvoicePaymentDate' => Schema::TYPE_DATE . 'NOT NULL',
+            'reservations_reservationId' => Schema::TYPE_INTEGER . ' NOT NULL',
             'settlements_offers_offerId' => Schema::TYPE_INTEGER . ' NOT NULL',
             'paymentMethods_paymentMethodId' => Schema::TYPE_INTEGER . ' NOT NULL'
         ]);

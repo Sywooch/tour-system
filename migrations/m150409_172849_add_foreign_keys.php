@@ -17,7 +17,7 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->addForeignKey('reservationId_fk_in_payments', 'payments', 'reservations_reservationId', 'reservations', 'reservationId');
         $this->addForeignKey('paymentMethodId_fk_in_payments', 'payments', 'paymentMethods_paymentMethodId', 'paymentMethods', 'paymentMethodId');
         $this->addForeignKey('reservationId_fk_in_attendees', 'attendees', 'reservations_reservationId', 'reservations', 'reservationId');
-        $this->addForeignKey('attendeeId_fk_in_customerInvoices', 'customerInvoices', 'attendees_attendeeId', 'attendees', 'attendeeId');
+        $this->addForeignKey('reservationId_fk_in_customerInvoices', 'customerInvoices', 'reservations_reservationId', 'reservations', 'reservationId');
         $this->addForeignKey('offerId_fk_in_settlements', 'settlements', 'offers_offerId', 'offers', 'offerId');
         $this->addForeignKey('settlements_offerId_fk_in_customerInvoices', 'customerInvoices', 'settlements_offers_offerId', 'settlements', 'offers_offerId');
         $this->addForeignKey('paymentMethodId_fk_in_customerInvoices', 'customerInvoices', 'paymentMethods_paymentMethodId', 'paymentMethods', 'paymentMethodId');
