@@ -8,6 +8,14 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reservations-list">
 	<h1><?= Html::encode($this->title) ?></h1></div>
+	
+	<?php if (Yii::$app->session->hasFlash('noReviews')): ?>
+
+    <div class="alert alert-danger">
+        Nie ma żadnych opinii.
+    </div>
+    
+    <?php else: ?>   
     
 	<br />
     <table class="table table-striped">
@@ -37,5 +45,5 @@ $this->params['breadcrumbs'][] = $this->title;
     </table>
  
     <?= LinkPager::widget(['pagination' => $pagination]) ?>
-
+<?php endif; ?>
 </div>
