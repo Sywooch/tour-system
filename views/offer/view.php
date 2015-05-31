@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		<div class="col-xs-6 col-lg-3 text-center"><strong>Data powrotu: </strong><br><?= $model->offerEndDate ?></div>
 		<div class="col-xs-6 col-lg-3 lead"><strong class="pull-right">Cena: 
 		<?php 
-			if($model->offerIsFirstMinute != 1 && $model->offerIsLastMinute != 1) echo $model->offerPirce . " zł";
+			if($model->offerIsFirstMinute != 1 && $model->offerIsLastMinute != 1) echo $model->offerPrice . " zł";
 			else{
 				echo '<s>' . $model->offerPrice . ' zł' . '</s><br><span class="pull-right" style="color: green">';
 				if($model->offerIsFirstMinute) echo $model->offerFirstMinutePrice . " zł";
