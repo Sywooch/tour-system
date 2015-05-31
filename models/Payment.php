@@ -45,9 +45,9 @@ class Payment extends \yii\db\ActiveRecord
     {
         return [
             'paymentId' => 'Payment ID',
-            'paymentDate' => 'Payment Date',
-            'paymentValue' => 'Payment Value',
-            'paymentMethods_paymentMethodId' => 'Payment Methods Payment Method ID',
+            'paymentDate' => 'Data płatności',
+            'paymentValue' => 'Wartość płatności',
+            'paymentMethods_paymentMethodId' => 'Użyta metoda płatności',
             'reservations_reservationId' => 'Reservations Reservation ID',
         ];
     }

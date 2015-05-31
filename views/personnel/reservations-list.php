@@ -46,6 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
     			$row .= '<td>' . $reservation->getOffers()->one()->offerStartDate .'</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerEndDate .'</td>';
     			$row .= '<td>';
+    			
     			$row .=  Html::a('<span class="glyphicon glyphicon-usd"></span>', '/personnel/addpayement?id=' . $reservation->reservationId, [
     					'title' => 'Dodaj Płatność']);
     			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', '/personnel/addinvoice?id=' . $reservation->reservationId, [
