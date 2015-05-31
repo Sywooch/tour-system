@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				echo '</div></div></div>';
    		}
    		echo '</div>';
-   		
+   	
    		echo '<div class="hidden-md hidden-lg">';
    		foreach ($offers as $offer) {
    			echo '<div class="row" style="border: 1px solid grey;">';

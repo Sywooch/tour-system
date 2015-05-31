@@ -146,3 +146,18 @@ class PersonnelController extends Controller
 		}
 	}
 	}
+		$payment = new Payment();	
+		$payment->reservations_reservationId=$id;
+		
+		if ($payment->load(Yii::$app->request->post()) && $payment->save()) {
+			Yii::$app->session->setFlash('paymentAdded');
+			return $this->refresh();
+		} else {
+			return $this->render('add-payment', [
+					'payment' => $payment,
+			]);
+		}
+		
+		
+	}
+}

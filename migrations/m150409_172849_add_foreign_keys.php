@@ -48,7 +48,7 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->dropForeignKey('seasonId_fk_in_offers', 'offers');
         $this->dropForeignKey('offers_offerId_fk_in_offerimages', 'offerimages');
     }
-    
+   
     /*
     // Use safeUp/safeDown to run migration code within a transaction
     public function safeUp()
