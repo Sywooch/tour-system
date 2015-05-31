@@ -16,21 +16,18 @@ use yii\grid\GridView;
 <tr width="40%" style="border: 1px solid black">
 <td  width="40%" style="border: 1px solid black">
 <h4>Sprzedawca</h4>
-Firma: <?php echo $conf->companyName; ?><br>
-Adres: <?php echo $conf->companyAddress; ?><br>
-Kod Pocztowy: <?php echo $conf->companyPostcode; ?><br>
-Miasto: <?php echo $conf->companyCity; ?><br>
+<?php echo $conf->companyName; ?><br>
+<?php echo $conf->companyAddress; ?><br>
+<?php echo $conf->companyPostcode; ?> <?php echo $conf->companyCity; ?><br>
 NIP: <?php echo $conf->companyNIP; ?>
 </td>
 <td width="20%" style="border-top: none; border-bottom:none">&nbsp;</td>
 <td  width="40%" style="border: 1px solid black">
 <h4>Nabywca</h4>
-Imię i nazwisko: <?php echo $reservation->getCustomers()->one()->customerName . " "; ?>
+<?php echo $reservation->getCustomers()->one()->customerName . " "; ?>
 <?php echo $reservation->getCustomers()->one()->customerSurname; ?><br>
-Adres: <?php echo $reservation->getCustomers()->one()->customerStreet; ?><br>
-Kod Pocztowy: <?php echo $reservation->getCustomers()->one()->customerPostcode; ?><br>
-Miasto: <?php echo $reservation->getCustomers()->one()->customerCity; ?><br>
-PESEL: <?php echo $reservation->getCustomers()->one()->customerPESEL; ?>
+<?php echo $reservation->getCustomers()->one()->customerStreet; ?><br>
+<?php echo $reservation->getCustomers()->one()->customerPostcode; ?> <?php echo $reservation->getCustomers()->one()->customerCity; ?><br>
 </td></tr>
 </table>
 </div>
@@ -58,7 +55,7 @@ Termin płatności: <?php echo $invoice->customerInvoicePaymentDate; ?>
     			$row .= '<td>' . $i . '</td>';
     			$row .= '<td>' . 'Udział w imprezie: ' . $reservation->getOffers()->one()->offerName . '<br>';      			
     			$row .= 'Imię i nazwisko uszestnika: ' . $attendee->attendeeName . ' '. $attendee->attendeeSurname . '</td>';
-    			$row .= '<td>' . $reservation->reservationPricePerAtendee .'</td>';
+    			$row .= '<td class="pull-right">' . $reservation->reservationPricePerAtendee .',00 zł</td>';
     			$row .= '</tr>'; 	
     			$i++;
     			echo $row;
@@ -75,6 +72,6 @@ Termin płatności: <?php echo $invoice->customerInvoicePaymentDate; ?>
 
 <div class="row">
 <br>
-<h2>Zapłacono: <?php echo $reservation->getPaymentsValue(); ?></h2>
-<h2>Pozostaje do zapłaty: <?php echo $reservation->reservationPricePerAtendee*($i-1)-$reservation->getPaymentsValue(); ?></h2> <br>
+<h2>Zapłacono: <?php echo $reservation->getPaymentsValue(); ?>,00 zł</h2>
+<h2>Pozostaje do zapłaty: <?php echo $reservation->reservationPricePerAtendee*($i-1)-$reservation->getPaymentsValue(); ?>,00 zł</h2> <br>
 </div>

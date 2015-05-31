@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\OfferSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Offers';
+$this->title = 'Lista ofert';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="offer-index">

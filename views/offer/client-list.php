@@ -10,6 +10,17 @@ use yii\widgets\LinkPager;
 
 $this->title = 'Lista ofert';
 $this->params['breadcrumbs'][] = $this->title;
+
+$this->registerCss('
+		.item {
+			border-bottom: 1px solid black !important;
+		}
+		
+		.item:last-child {
+			border-bottom: none !important;
+		}
+		');
+
 ?>
 <div class="offer-index">
 
@@ -18,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		$i = $pagination->page*10 + 1;
 		echo '<div class="hidden-xs hidden-sm">';
    		foreach ($offers as $offer) {
-   			echo '<div class="row" style="border: 1px solid grey;">';
+   			echo '<div class="row item">';
    			echo '<div class="col-xs-3 col-md-2">';
 				if($offer->getImages()->count() != 0){
 					echo Html::a('<img src="' . $offer->getImages()->one()->image_path . '" class="img-thumbnail" style="max-width: 170px; height: auto;">',
@@ -45,7 +56,7 @@ $this->params['breadcrumbs'][] = $this->title;
    	
    		echo '<div class="hidden-md hidden-lg">';
    		foreach ($offers as $offer) {
-   			echo '<div class="row" style="border: 1px solid grey;">';
+   			echo '<div class="row item">';
    			echo '<div class="col-xs-12">';
    			echo Html::a('<h3>' . $offer->offerName . '</h3>',
    					'view?id=' . $offer->offerId);

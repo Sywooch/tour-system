@@ -26,7 +26,7 @@ class UploadForm extends Model
 				$offerImage = new OfferImage();
 				$name = \Yii::$app->security->generateRandomString() . '.' . $file->extension;
 				$file->saveAs('uploads/' . $name);
-				$offerImage->image_path = 'uploads/' . $name;
+				$offerImage->image_path = '/uploads/' . $name;
             	$offerImage->offers_offerId = $id;
             	$offerImage->save();
 			}

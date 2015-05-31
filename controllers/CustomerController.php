@@ -54,8 +54,8 @@ public function beforeAction($action)
 		$model2 = new Customer();
 		
 		$model1->groups_groupId=3;
-		//$model1->generateAuthKey();
-		$model1->authKey = "hgytdydrdrdyrdrt";
+		$model1->generateAuthKey();
+		//$model1->authKey = "hgytdydrdrdyrdrt";
 		 
 		if (Yii::$app->request->isAjax && $model1->load(Yii::$app->request->post()) && $model2->load(Yii::$app->request->post())) {
 			Yii::$app->response->format = Response::FORMAT_JSON;
@@ -221,7 +221,7 @@ public function actionEdit($id){
 		echo $mpdf->Output('filename.pdf', 'D'); // call the mpdf api output as needed
 	}
 	
-	public function actionGenerateInvoice ($invoiceNo="5/2015")
+	public function actionGenerateInvoice ($invoiceNo)
 	{
 		$invoice = CustomerInvoice::find()->where(['customerInvoiceNo' => $invoiceNo])->one();
 		$conf = Config::findOne(1);

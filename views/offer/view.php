@@ -27,11 +27,12 @@ $this->params['breadcrumbs'][] = $this->title;
             'spinner' => [
                 'lines' => 20,
             ],
-            'tagName' => 'span',
+            'tagName' => 'div',
             'useHtmlData' => false,
             'htmlOptions' => [
                 'class' => 'custom-class',
                 'id' => 'custom-id',
+            	'data-allowfullscreen' => true,
             ],
         ]
     );
@@ -81,6 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
 		?></strong></div>
 	</div>
     <br><br>
+    <div class="visible-md visible-lg">
     <?= Tabs::widget([
             'items' => [
                 [
@@ -128,8 +130,13 @@ $this->params['breadcrumbs'][] = $this->title;
     		'options' => ['class' => 'hidden-sm hidden-xs'],
         ]);
     ?>
+    </div>
     <?= Accordion::widget([
     		'items' => [
+    				[
+    				'header' => 'Opis oferty',
+    				'content' => $model->offerDescription,
+    				],
     				[
     					'header' => 'Miejsce zakwaterowania',
     					'content' => $model->offerAccommodation,

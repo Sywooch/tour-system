@@ -140,12 +140,15 @@ class PersonnelController extends Controller
 			Yii::$app->session->setFlash('invoiceAdded');
 			$conf->lastInvoiceNo = (int) $conf->lastInvoiceNo+1;
 			$conf->save(false);
+			$reservation->reservationInvoiced = 1;
+			$reservation->save(false);
 			return $this->refresh();
 		} else {
 			return $this->render('/invoices/invoice-form', array ('invoice' => $invoice, 'reservation' => $reservation));
 		}
 	}
-	}
+	
+	public function addPayment(){
 		$payment = new Payment();	
 		$payment->reservations_reservationId=$id;
 		
@@ -157,7 +160,5 @@ class PersonnelController extends Controller
 					'payment' => $payment,
 			]);
 		}
-		
-		
 	}
 }

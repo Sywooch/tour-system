@@ -59,4 +59,8 @@ public function rules()
 			
 		return $total;
 	}
+	
+	public function getCustomerInvoice(){
+		return $this->hasOne(CustomerInvoice::classname(), ['reservations_reservationId' => 'reservationId']);
+	}
 }

@@ -101,7 +101,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 	}
 	public function generateAuthKey ()
 	{
-		$this->authKey=Yii::$app->getSecurity()->generateRandomKey();
+		$this->authKey=Yii::$app->getSecurity()->generateRandomString();
 	}
 	public function isCustomer () 
 	{
