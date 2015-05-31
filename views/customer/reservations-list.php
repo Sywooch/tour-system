@@ -7,47 +7,24 @@ $this->title = 'Twoje rezerwacje';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="reservations-list">
-	<h1><?= Html::encode($this->title) ?></h1></div>
-    
-	<br />
-    <table class="table table-striped">
-    	<tr>
-    		<th>#</th>
-    		<th>Numer rezerwacji</th>
-    		<th>Nazwa oferty</th>
-    		<th>Kraj</th>
-    		<th>Miejsce pobytu</th>
-    		<th>Data rezerwacji</th>
-    		<th>Cena</th>
-    		<th>Początek</th>
-    		<th>Zakończenie</th>
-    		<th>Wystaw Opinię</th>
-    	</tr>
-    	<?php
-    		$i = $pagination->page*10 + 1; 
-    		foreach ($reservations as $reservation) 
-    		{
-    			$row = '<tr>';
-    			$row .= '<td>' . $i . '</td>';
-    			$row .= '<td>' . $reservation->reservationId . '</td>';
-    			$row .= '<td>' . $reservation->getOffers()->one()->offerName . '</td>';
-    			$row .= '<td>' . $reservation->getOffers()->one()->getCountriesCountry()->one()->countryName .'</td>';
-    			$row .= '<td>' . $reservation->getOffers()->one()->offerAccommodation .'</td>';
-    			$row .= '<td>' . $reservation->reservationDate .'</td>';
-    			$row .= '<td>' . $reservation->getOffers()->one()->offerPrice .'</td>';
-    			$row .= '<td>' . $reservation->getOffers()->one()->offerStartDate .'</td>';
-    			$row .= '<td>' . $reservation->getOffers()->one()->offerEndDate .'</td>';
-    			$row .= '<td>';
-    			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', '/offer/review?id=' . $reservation->reservationId, [
-                    'title' => 'Wystaw Opinię']);
-    			$row .= '&nbsp;&nbsp;';
-    			$row .= '</td></tr>'; 	
-    			$i++;
-    			echo $row;
-    		} 
-    	?>
-    </table>
- 
-    <?= LinkPager::widget(['pagination' => $pagination]) ?>
+	<h1><?= Html::encode($this->title) ?></h1>
+    <?php 
+		$i = $pagination->page*10 + 1;
+		foreach ($reservations as $reservation) {
+   			echo '<div class="row" style="border: 1px solid grey;">';
+   			echo Html::a('<h3>Rezerwacja oferty: ' . $reservation->getOffers()->one()->offerName . '</h3>',
+					'reservation-detail?id=' . $reservation->reservationId);
+			echo '<div class="col-xs-6 col-md-3"><strong>Nr rezerwacji: </strong><br>' . $reservation->reservationId . '</div>';
+			echo '<div class="col-xs-6 col-md-3"><strong>Data rezerwacji: </strong><br>' . $reservation->reservationDate . '</div>';
+			echo '<div class="col-xs-6 col-md-3"><strong>Liczba osób: </strong><br>' . $reservation->getAttendees()->count() . '</div>';
+			echo '<div class="col-xs-6 col-md-3 lead"><strong class="pull-right">Do zapłaty: ' . $reservation->reservationPricePerAtendee . " zł";
+			$color = 'green';
+			if($reservation->reservationPricePerAtendee != $reservation->getPaymentsValue()) $color ='red';
+			echo '<br><span style="color: ' . $color . ';">   Zapłacono: ' . $reservation->getPaymentsValue() . " zł</span>";
+			echo '</strong></div>';
+			echo '</div>';
+   		}
+   	?>
+   	<?= LinkPager::widget(['pagination' => $pagination]) ?>
 
 </div>

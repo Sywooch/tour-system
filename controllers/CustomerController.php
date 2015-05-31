@@ -204,6 +204,12 @@ public function actionEdit($id){
 		]);		
 	}
 	
+	public function actionReservationDetail($id){
+		$reservation = Reservation::findOne($id);
+		
+		return $this->render('reservation-detail', ['reservation' => $reservation]);
+	}
+	
 	public function actionAgreement() {
 	
 		$content = $this->renderPartial('render-form');
