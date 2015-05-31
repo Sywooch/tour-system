@@ -30,10 +30,10 @@ class Review extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['reviewDate', 'reviewDescription', 'reservations_reservationId'], 'required'],
-            [['reviewDate'], 'safe'],
-            [['reservations_reservationId'], 'integer'],
-            [['reviewDescription'], 'string', 'max' => 255]
+            //[['reviewDate', 'reviewDescription', 'reservations_reservationId'], 'required'],
+          //  [['reviewDate'], 'safe'],
+           // [['reservations_reservationId'], 'integer'],
+           // [['reviewDescription'], 'string', 'max' => 255]
         ];
     }
 
@@ -44,8 +44,8 @@ class Review extends \yii\db\ActiveRecord
     {
         return [
             'reviewId' => 'Review ID',
-            'reviewDate' => 'Review Date',
-            'reviewDescription' => 'Review Description',
+            'reviewDate' => 'Data recenzji',
+            'reviewDescription' => 'Recenzja',
             'reservations_reservationId' => 'Reservations Reservation ID',
         ];
     }
@@ -55,6 +55,6 @@ class Review extends \yii\db\ActiveRecord
      */
     public function getReservationsReservation()
     {
-        return $this->hasOne(Reservations::className(), ['reservationId' => 'reservations_reservationId']);
+        return $this->hasOne(Reservation::className(), ['reservationId' => 'reservations_reservationId']);
     }
 }
