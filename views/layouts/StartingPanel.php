@@ -49,6 +49,7 @@ AppAsset::register($this);
                 	 		['label' => 'Sprzedane oferty', 'url' => ['/agent/oferty']]:['label' =>''],
             		 ],
             		],
+                		['label' => 'Last Minute', 'url' => ['/offer/last-minute']],
                 		Yii::$app->user->identity->isPersonnel() ?
                 		['label' => 'Panel administrotora', 'url' => ['/admin-panel/index']] : ['label'=>''],
                         ['label' => 'Witaj (' . Yii::$app->user->identity->userLogin . ')',

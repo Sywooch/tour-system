@@ -93,13 +93,32 @@ public function beforeAction($action)
 
     public function actionLastMinute ()
     {
-    	$searchModel = new OfferSearch();
-    	$dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+    	if (Yii::$app->user->isGuest || Yii::$app->user->identity->isCustomer ()) {
+    		$query = Offer::find()->where(['offerIsLastMinute' => 1]);
+    		
+    		$pagination = new Pagination([
+    				'defaultPageSize' => 10,
+    				'totalCount' => $query->count(),
+    		]);
+    		
+    		$offers = $query->orderBy('offerId')
+    		->offset($pagination->offset)
+    		->limit($pagination->limit)
+    		->all();
+    		
+    		return $this->render('client-list', [
+    				'offers' => $offers,
+    				'pagination' => $pagination,
+    		]);
+    	}
     	
-    	return $this->render('list', [
-    			'searchModel' => $searchModel,
-    			'dataProvider' => $dataProvider,
-    	]);
+        $searchModel = new OfferSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        return $this->render('list', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
     
     /**
