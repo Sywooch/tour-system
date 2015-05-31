@@ -45,8 +45,11 @@ class PersonnelController extends Controller
 		}
 	}
 	
-	public function actionReservationsList () {
+	public function actionReservationsList ($id=NULL) {
+		if ($id==NULL)
 		$query1 = Reservation::find();
+		else 
+			$query1 = Reservation::find()->where(['offers_offerIs' => $id])->all();
 	
 		$pagination = new Pagination([
 				'defaultPageSize' => 10,
@@ -64,7 +67,7 @@ class PersonnelController extends Controller
 		]);
 	}
 	
-	public function actionReservationsList ($id) {
+	/*public function actionReservationsList ($id) {
 		$query1 = Reservation::find()->where(['offers_offerIs' => $id])->all();
 	
 		$pagination = new Pagination([
@@ -81,7 +84,7 @@ class PersonnelController extends Controller
 				'reservations' => $reservations,
 				'pagination' => $pagination,
 		]);
-	}
+	}*/
 	
 	public function actionReport() {
 		
