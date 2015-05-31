@@ -81,31 +81,29 @@ public function actionBuy($id)
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
 		{
 			$attendees = [new Attendee()];
-			$reservationForm = new ReservationForm();
+			//$reservationForm = new ReservationForm();
 			
-			if ($reservationForm->load(Yii::$app->request->post())) {
+			if (Yii::$app->request->isPost) {
 				$attendees = ModelExtended::createMultiple(Attendee::classname());
 				ModelExtended::loadMultiple($attendees, Yii::$app->request->post());
 				// ajax validation
 				if (Yii::$app->request->isAjax) {
 					Yii::$app->response->format = Response::FORMAT_JSON;
-					return ArrayHelper::merge(
-							ActiveForm::validateMultiple($attendees),
-							ActiveForm::validate($reservationForm)
-					);
+					return ActiveForm::validateMultiple($attendees);
 				}
 					
 				// validate all models
-				$valid = $reservationForm->validate();
-				$valid = ModelExtended::validateMultiple($attendees) && $valid;
+				//$valid = $reservationForm->validate();
+				$valid = ModelExtended::validateMultiple($attendees);
 					
 				if ($valid) {
 					$reservation = new Reservation();
 					$reservation->reservationDate = date("Y-m-d");
 					$reservation->reservationInvoiced = false;
 					$reservation->customers_userId = Yii::$app->user->identity->getCustomer()->one()->customerId;
-					if($reservationForm->userAttends === true) $count = 1;
-					else $count = 0;
+				//	if($reservationForm->userAttends === true) $count = 1;
+					//else
+						 $count = 0;
 					foreach($attendees as $attende) $count++;
 					$reservation->reservationPricePerAtendee = $count * Offer::findOne($id)->offerPrice;
 					$reservation->offers_offerId = $id;
@@ -113,7 +111,7 @@ public function actionBuy($id)
 					$transaction = \Yii::$app->db->beginTransaction();
 					try {
 						if ($flag = $reservation->save(false)) {
-							if($reservationForm->userAttends == '1'){
+							/*if($reservationForm->userAttends == '1'){
 								$user = new Attendee();
 								$user->attendeeName = $app->user->identity->getCustomer()->one()->customerName;
 								$user->attendeeSurname = $app->user->identity->getCustomer()->one()->customerSurname;
@@ -128,7 +126,7 @@ public function actionBuy($id)
 									$transaction->rollBack();
 									Yii::$app->session->setFlash('customerAsAttendeeError');
 								}
-							}
+							}*/
 							foreach ($attendees as $attendee) {
 								$attendee->reservations_reservationId = $reservation->reservationId;
 								
@@ -153,7 +151,7 @@ public function actionBuy($id)
 			$offerName = Offer::findOne($id)->offerName;
 			
 			return $this->render('/reservations/reservation-form', [
-					'reservationForm' => $reservationForm,
+					//'reservationForm' => $reservationForm,
 					'offerName' => $offerName,
 					'offerId' => $id,
 					'attendees' => (empty($attendees)) ? [new Attendee] : $attendees
