@@ -48,7 +48,7 @@ class AgentController extends Controller
 	}
 
 
-public function actionSell($id)
+public function actionSell2($id)
 	{
 		$model1 = new Reservation ();
 		$model2 = new Attendee();
@@ -91,6 +91,90 @@ public function actionSell($id)
 		}
 	}
 
+	public function actionSell($id)
+	{
+	
+		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
+		{
+			$attendees = [new Attendee()];
+			//$reservationForm = new ReservationForm();
+				
+			if (Yii::$app->request->isPost) {
+				$attendees = ModelExtended::createMultiple(Attendee::classname());
+				ModelExtended::loadMultiple($attendees, Yii::$app->request->post());
+				// ajax validation
+				if (Yii::$app->request->isAjax) {
+					Yii::$app->response->format = Response::FORMAT_JSON;
+					return ActiveForm::validateMultiple($attendees);
+				}
+					
+				// validate all models
+				//$valid = $reservationForm->validate();
+				$valid = ModelExtended::validateMultiple($attendees);
+					
+				if ($valid) {
+					$reservation = new Reservation();
+					$reservation->reservationDate = date("Y-m-d");
+					$reservation->reservationInvoiced = false;
+					$reservation->customers_userId = Yii::$app->user->identity->getCustomer()->one()->customerId;
+					//	if($reservationForm->userAttends === true) $count = 1;
+					//else
+					$count = 0;
+					foreach($attendees as $attende) $count++;
+					$reservation->reservationPricePerAtendee = $count * Offer::findOne($id)->offerPrice;
+					$reservation->offers_offerId = $id;
+	
+					$transaction = \Yii::$app->db->beginTransaction();
+					try {
+						if ($flag = $reservation->save(false)) {
+							/*if($reservationForm->userAttends == '1'){
+							 $user = new Attendee();
+							 $user->attendeeName = $app->user->identity->getCustomer()->one()->customerName;
+							 $user->attendeeSurname = $app->user->identity->getCustomer()->one()->customerSurname;
+							 $user->attendeeStreet = $app->user->identity->getCustomer()->one()->customerStreet;
+							 $user->attendeeSPostcode = $app->user->identity->getCustomer()->one()->customerPostcode;
+							 $user->attendeeCity = $app->user->identity->getCustomer()->one()->customerCity;
+							 $user->attendeePESEL = $app->user->identity->getCustomer()->one()->customerPESEL;
+							 $user->attendeeBirthdate = $app->user->identity->getCustomer()->one()->customerBirthdate;
+							 $user->reservations_reservationId = $reservation->reservationId;
+	
+							 if (! ($flag = $user->save(false))) {
+							 $transaction->rollBack();
+							 Yii::$app->session->setFlash('customerAsAttendeeError');
+							 }
+								}*/
+							foreach ($attendees as $attendee) {
+								$attendee->reservations_reservationId = $reservation->reservationId;
+	
+								if (! ($flag = $attendee->save(false))) {
+									$transaction->rollBack();
+									Yii::$app->session->setFlash('attendeesError');
+									break;
+								}
+							}
+						}
+						if ($flag) {
+							$transaction->commit();
+							Yii::$app->session->setFlash('reservationAdded');
+						}
+					} catch (Exception $e) {
+						$transaction->rollBack();
+						Yii::$app->session->setFlash('reservationNotAdded');
+					}
+				}
+			}
+				
+			$offerName = Offer::findOne($id)->offerName;
+				
+			return $this->render('/reservations/reservation-form', [
+					//'reservationForm' => $reservationForm,
+					'offerName' => $offerName,
+					'offerId' => $id,
+					'attendees' => (empty($attendees)) ? [new Attendee] : $attendees
+			]);
+				
+		}
+	}
 	
 public function beforeAction($action)
 	{

@@ -40,7 +40,7 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->dropForeignKey('reservationId_fk_in_payments', 'payments');
         $this->dropForeignKey('paymentMethodId_fk_in_payments', 'payments');
         $this->dropForeignKey('reservationId_fk_in_attendees', 'attendees');
-        $this->dropForeignKey('attendeeId_fk_in_customerInvoices', 'customerInvoices');
+        $this->dropForeignKey('reservationId_fk_in_customerInvoices', 'customerInvoices');
         $this->dropForeignKey('offerId_fk_in_settlements', 'settlements');
         $this->dropForeignKey('settlements_offerId_fk_in_customerInvoices', 'customerInvoices');
         $this->dropForeignKey('paymentMethodId_fk_in_customerInvoices', 'customerInvoices');

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				echo '<div class="col-md-3"><strong>Data wyjazdu: </strong>' . $offer->offerStartDate . '</div>';
 				echo '<div class="col-md-3"><strong>Data powrotu: </strong>' . $offer->offerEndDate . '</div>';
 				echo '<div class="col-md-3 lead"><strong class="pull-right">';
-				if($offer->offerIsFirstMinute != 1 && $offer->offerIsLastMinute != 1) echo $offer->offerPirce . " zł";
+				if($offer->offerIsFirstMinute != 1 && $offer->offerIsLastMinute != 1) echo $offer->offerPrice . " zł";
 				else{
 					echo '<s>' . $offer->offerPrice . ' zł' . '</s><br><span class="pull-right" style="color: green">';
 					echo $offer->getPrice() . " zł";
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
    			echo '<div class="col-md-6"><strong>Data wyjazdu: </strong>' . $offer->offerStartDate . '</div>';
    			echo '<div class="col-md-6"><strong>Data powrotu: </strong>' . $offer->offerEndDate . '</div>';
    			echo '<div class="col-md-6 lead"><strong class="pull-right">Cena: ';
-   			if($offer->offerIsFirstMinute != 1 && $offer->offerIsLastMinute != 1) echo $offer->offerPirce . " zł";
+   			if($offer->offerIsFirstMinute != 1 && $offer->offerIsLastMinute != 1) echo $offer->offerPrice . " zł";
    			else{
    				echo '<s>' . $offer->offerPrice . ' zł' . '</s><br><span class="pull-right" style="color: green">';
    				echo $offer->getPrice() . " zł";
