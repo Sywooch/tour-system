@@ -25,7 +25,7 @@ $this->registerJs('
 
 $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
     console.log("afterInsert");
-	$(".dp").datepicker();
+	$(".dp").datepicker({dateFormat : "yy-mm-dd"});
 });
 
 $(".dynamicform_wrapper").on("beforeDelete", function(e, item) {

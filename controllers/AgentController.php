@@ -77,22 +77,22 @@ class AgentController extends Controller
 				// validate all models
 				//$valid = $reservationForm->validate();
 				$valid = ModelExtended::validateMultiple($attendees);
-				$valid = ActiveForm::validate($reservation) && $valid;
-				$valid = ActiveForm::validate($customer) && $valid;
+				$valid = $reservation->validate() && $valid;
+				$valid = $customer->validate() && $valid;
 					
 				if ($valid) {
-					/*$transaction = \Yii::$app->db->beginTransaction();
+					$transaction = \Yii::$app->db->beginTransaction();
 					try {
-						if($flag = $customer->save(false)){ */
+						if($flag = $customer->save(false)){
 							$reservation->reservationDate = date("Y-m-d");
 							$reservation->reservationInvoiced = false;
 							$reservation->agents_userId=Yii::$app->User->identity->getAgent()->one()->user_userId;
-			//				$reservation->customers_userId = $customer->customerId;
+							$reservation->customers_userId = $customer->customerId;
 							$count = 0;
 							foreach($attendees as $attende) $count++;
 							$reservation->reservationPricePerAtendee = $count * Offer::findOne($id)->offerPrice;
 							$reservation->offers_offerId = $id;
-		/*
+		
 							if ($flag = $reservation->save(false)) {
 								foreach ($attendees as $attendee) {
 									$attendee->reservations_reservationId = $reservation->reservationId;
@@ -112,9 +112,8 @@ class AgentController extends Controller
 					} catch (Exception $e) {
 						$transaction->rollBack();
 						Yii::$app->session->setFlash('reservationNotSold');
-					}*/
+					}
 				} 
-					return $this->render('/reservations/test', ['m1' => $customer, 'm2' => $reservation, 'm3' => $attendees]);
 			}
 				
 			$offerName = Offer::findOne($id)->offerName;
