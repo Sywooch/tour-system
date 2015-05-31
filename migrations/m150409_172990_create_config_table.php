@@ -7,7 +7,7 @@ class m150409_172990_create_config_table extends Migration
 {
     public function up()
     {
-        $this->createTable('countries', [
+        $this->createTable('conifg', [
             'id' => Schema::TYPE_PK,
             'lastInvoiceNo' => Schema::TYPE_INTEGER,
         	'companyName' => Schema::TYPE_STRING,
@@ -20,7 +20,7 @@ class m150409_172990_create_config_table extends Migration
 
     public function down()
     {
-        $this->dropTable('countries');
+        $this->dropTable('config');
     }
     
     /*
