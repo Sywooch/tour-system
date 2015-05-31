@@ -154,7 +154,7 @@ public function beforeAction($action)
 
 	public function actionSold()
 	{
-		$query1 = Reservation::find()->where (['agents_userId' => Yii::$app->user->identity->getAgent()->one()->agentId]);
+		$query1 = Reservation::find()->where (['agents_userId' => Yii::$app->user->identity->getAgent()->one()->user_userId]);
 		
 		$pagination = new Pagination([
 				'defaultPageSize' => 10,
