@@ -47,8 +47,8 @@ public function beforeAction($action)
 	public function actionView () 
 	{
 		$query = Review::find();
-		var_dump($query);
-		if (__isset($query)) {
+		
+		if (!$query->exists()) {
 			Yii::$app->session->setFlash('noReviews');
 		}
 		
