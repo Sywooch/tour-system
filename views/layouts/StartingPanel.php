@@ -83,6 +83,7 @@ AppAsset::register($this);
         ?>
 
         <div class="container">
+        	<div class="hidden-xs hidden-sm">
             <?= Breadcrumbs::widget([
             	'homeLink' => [
             			'label' =>'Strona startowa',
@@ -90,6 +91,7 @@ AppAsset::register($this);
             	],
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
+            </div>
             <?= $content ?>
         </div>
     </div>

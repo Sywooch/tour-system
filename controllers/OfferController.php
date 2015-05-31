@@ -13,6 +13,7 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 use yii\base\Object;
 use app\models\Reservation;
+use yii\data\Pagination;
 
 /**
  * OfferController implements the CRUD actions for Offer model.

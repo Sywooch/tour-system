@@ -49,9 +49,11 @@ AppAsset::register($this);
         ?>
 
         <div class="container">
+        	<div class=" hidden-xs hidden-sm">
             <?= Breadcrumbs::widget([
                 'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
             ]) ?>
+            </div>
             <?= $content ?>
         </div>
     </div>

@@ -126,4 +126,10 @@ class Offer extends \yii\db\ActiveRecord
     {
     	return $this->hasMany(OfferImage::className(), ['offers_offerId' => 'offerId']);
     }
+    
+    public function getPrice(){
+    	if($this->offerIsFirstMinute == 1) return $this->offerFirstMinutePrice;
+    	elseif($this->offerIsLastMinute == 1) return $this->offerLastMinutePrice;
+    	else return $this->offerPrice;
+    }
 }
