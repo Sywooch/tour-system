@@ -13,6 +13,7 @@ class Reservation extends \yii\db\ActiveRecord{
 	public function rules()
 	{
 		return [
+				[['reservationPrepaid'], 'integer', 'message'=>"Niepoprawny format zaliczki"],
 		];
 	}
 
@@ -21,6 +22,7 @@ class Reservation extends \yii\db\ActiveRecord{
 		return [
 				'reservationDate' => 'Data rezerwacji',
 				'reservationInvoiced' => 'Zafakturowane',
+				'reservationPrepaid' => "Zaliczka",
 				'reservationPricePerAtendee' => 'Cena za całą rezerwację'
 		];
 	}
@@ -40,4 +42,5 @@ class Reservation extends \yii\db\ActiveRecord{
 		return $this->hasOne(Offer::className(), ['offerId' => 'offers_offerId']);
 	}
 	
+
 }
