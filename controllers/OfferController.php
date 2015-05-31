@@ -75,8 +75,8 @@ public function beforeAction($action)
     		->limit($pagination->limit)
     		->all();
     		
-    		return $this->render('contractors-list', [
-    				'contractors' => $contractors,
+    		return $this->render('client-list', [
+    				'offers' => $offers,
     				'pagination' => $pagination,
     		]);
     	}
