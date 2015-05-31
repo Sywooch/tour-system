@@ -21,7 +21,7 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->addForeignKey('offerId_fk_in_settlements', 'settlements', 'offers_offerId', 'offers', 'offerId');
         $this->addForeignKey('settlements_offerId_fk_in_customerInvoices', 'customerInvoices', 'settlements_offers_offerId', 'settlements', 'offers_offerId');
         $this->addForeignKey('paymentMethodId_fk_in_customerInvoices', 'customerInvoices', 'paymentMethods_paymentMethodId', 'paymentMethods', 'paymentMethodId');
-        $this->addForeignKey('settlements_offerId_fk_in_costsBills', 'costsBills', 'settlements_offerId', 'settlements', 'offers_offerId');
+        $this->addForeignKey('offers_offerId_fk_in_costsBills', 'costsBills', 'offers_offerId', 'offers', 'offerId');
         $this->addForeignKey('contractorId_fk_in_costsBills', 'costsBills', 'contractors_contractorId', 'contractors', 'contractorId');
         $this->addForeignKey('countryId_fk_in_offers', 'offers', 'countries_countryId', 'countries', 'countryId');
         $this->addForeignKey('seasonId_fk_in_offers', 'offers', 'seasons_seasonId', 'seasons', 'seasonId');

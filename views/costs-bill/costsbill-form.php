@@ -49,7 +49,7 @@ $contractors = app\models\Contractor::find()
             		'id' => 'contractor-form',
             		'enableAjaxValidation' => 'true'
             ]); ?>
-            	<?= $form->field($model, 'settlements_offerId')->dropDownList(
+            	<?= $form->field($model, 'offers_offerId')->dropDownList(
         				ArrayHelper::map(Offer::find()->all(),'offerId','offerName'),
         				['prompt' => 'Wybierz ofertę, której dokument dotyczy']
    				 ) ?>

@@ -13,7 +13,7 @@ class m150409_162807_create_costsBills_table extends Migration
             'costsBillNo' => Schema::TYPE_STRING . '(45) NOT NULL',
             'costsBillValue' => Schema::TYPE_STRING . '(45) NOT NULL',
             'costsBillDescription' => Schema::TYPE_STRING . '(45) NOT NULL',
-            'settlements_offerId' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'offers_offerId' => Schema::TYPE_INTEGER . ' NOT NULL',
             'contractors_contractorId' => Schema::TYPE_INTEGER . ' NOT NULL'
         ]);
     }
