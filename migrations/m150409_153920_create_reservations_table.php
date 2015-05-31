@@ -14,7 +14,8 @@ class m150409_153920_create_reservations_table extends Migration
             'reservationPricePerAtendee' => Schema::TYPE_INTEGER . ' NOT NULL',
             'customers_userId' => Schema::TYPE_INTEGER,
             'agents_userId' => Schema::TYPE_INTEGER,
-            'offers_offerId' => Schema::TYPE_INTEGER . ' NOT NULL'
+            'offers_offerId' => Schema::TYPE_INTEGER . ' NOT NULL',
+        	'reservationPrepaid'=> Schema::TYPE_INTEGER
         ]);
     }
 
