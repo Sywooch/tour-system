@@ -20,7 +20,7 @@ class m150409_172990_create_config_table extends Migration
 
     public function down()
     {
-        $this->dropTable('config');
+        $this->dropTable('conifg');
     }
     
     /*

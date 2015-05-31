@@ -59,5 +59,4 @@ public function rules()
 			
 		return $total;
 	}
-	
 }

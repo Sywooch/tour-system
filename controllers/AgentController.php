@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\User;
 use app\models\Agent;
+use app\models\ModelExtended;
 use app\models\Reservation;
 use app\models\Attendee;
 use app\models\Offer;
@@ -48,49 +49,87 @@ class AgentController extends Controller
 	}
 
 
-public function actionSell($id)
+
+	public function actionSell($id)
 	{
-		$model1 = new Reservation ();
-		$model2 = new Attendee();
-		$model3 = new ReservationForm();
-		$model4 = new Customer();
-		
+	
 		if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isAgent())
 		{
-
-			if (Yii::$app->request->isAjax && $model4->load(Yii::$app->request->post())) {
-				Yii::$app->response->format = Response::FORMAT_JSON;
-				return ActiveForm::validate($model4);
-			}
+			$attendees = [new Attendee()];
+			$customer = new Customer();
+			$reservation = new Reservation();	
 			
-			if ($model3->load(Yii::$app->request->post()) && $model4->load(Yii::$app->request->post()) && $model4->save()) {
-				$model4->save();
-				$model2->attendeeName=$model4->customerName;
-				$model2->attendeeSurname=$model4->customerSurname;
-				$model2->attendeeStreet=$model4->customerStreet;
-				$model2->attendeeSPostcode=$model4->customerPostcode;
-				$model2->attendeeCity=$model4->customerCity;
-				$model2->attendeePESEL=$model4->customerPESEL;
-				$model2->attendeeBirthdate=$model4->customerBirthdate;				
+			if (Yii::$app->request->isPost) {
+				$customer->load(Yii::$app->request->post());
+				$reservation->load(Yii::$app->request->post());
+				$attendees = ModelExtended::createMultiple(Attendee::classname());
+				ModelExtended::loadMultiple($attendees, Yii::$app->request->post());
 				
-				$model1->reservationDate=date('Y-m-d');
-				$model1->offers_offerId = $id;
-				$offer = Offer::findOne($id);
-				$model1->reservationPricePerAtendee = $offer->offerPrice*$model3->attendeeQuantity;
-				$model1->customers_userId=$model4->customerId;
-				$model1->agents_userId=Yii::$app->User->identity->getAgent()->one()->user_userId;
-				$model1->save();
-				$model2->reservations_reservationId=$model1->reservationId;
-				$model2->save();
-				
-				Yii::$app->session->setFlash('reservationSold');
-				return $this->refresh();
-			} else {
-				return $this->render('/reservations/reservation-formagent', array ('model2' => $model2, 'model3' => $model3, 'model4' => $model4));
+			if (Yii::$app->request->isAjax) {
+                Yii::$app->response->format = Response::FORMAT_JSON;
+                return ArrayHelper::merge(
+                    ActiveForm::validateMultiple($attendees),
+                    ActiveForm::validate($customer),
+                	ActiveForm::validate($reservation)
+                );
+            }
+					
+				// validate all models
+				//$valid = $reservationForm->validate();
+				$valid = ModelExtended::validateMultiple($attendees);
+				$valid = ActiveForm::validate($reservation) && $valid;
+				$valid = ActiveForm::validate($customer) && $valid;
+					
+				if ($valid) {
+					/*$transaction = \Yii::$app->db->beginTransaction();
+					try {
+						if($flag = $customer->save(false)){ */
+							$reservation->reservationDate = date("Y-m-d");
+							$reservation->reservationInvoiced = false;
+							$reservation->agents_userId=Yii::$app->User->identity->getAgent()->one()->user_userId;
+			//				$reservation->customers_userId = $customer->customerId;
+							$count = 0;
+							foreach($attendees as $attende) $count++;
+							$reservation->reservationPricePerAtendee = $count * Offer::findOne($id)->offerPrice;
+							$reservation->offers_offerId = $id;
+		/*
+							if ($flag = $reservation->save(false)) {
+								foreach ($attendees as $attendee) {
+									$attendee->reservations_reservationId = $reservation->reservationId;
+		
+									if (! ($flag = $attendee->save(false))) {
+										$transaction->rollBack();
+										Yii::$app->session->setFlash('attendeesError');
+										break;
+									}
+								}
+							}
+							if ($flag) {
+								$transaction->commit();
+								Yii::$app->session->setFlash('reservationSold');
+							}
+						}
+					} catch (Exception $e) {
+						$transaction->rollBack();
+						Yii::$app->session->setFlash('reservationNotSold');
+					}*/
+				} 
+					return $this->render('/reservations/test', ['m1' => $customer, 'm2' => $reservation, 'm3' => $attendees]);
 			}
+				
+			$offerName = Offer::findOne($id)->offerName;
+				
+			return $this->render('/reservations/reservation-formagent', [
+					//'reservationForm' => $reservationForm,
+					'offerName' => $offerName,
+					'offerId' => $id,
+					'reservation' => $reservation,
+					'attendees' => (empty($attendees)) ? [new Attendee] : $attendees,
+					'customer' => $customer
+			]);
+				
 		}
 	}
-
 	
 public function beforeAction($action)
 	{
