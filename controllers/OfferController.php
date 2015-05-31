@@ -62,7 +62,24 @@ public function beforeAction($action)
      */
     public function actionList()
     {   
-
+    	if (Yii::$app->user->isGuest || Yii::$app->user->identity->isCustomer ()) {
+    		$query = Offer::find();
+    		
+    		$pagination = new Pagination([
+    				'defaultPageSize' => 10,
+    				'totalCount' => $query->count(),
+    		]);
+    		
+    		$offers = $query->orderBy('offerId')
+    		->offset($pagination->offset)
+    		->limit($pagination->limit)
+    		->all();
+    		
+    		return $this->render('contractors-list', [
+    				'contractors' => $contractors,
+    				'pagination' => $pagination,
+    		]);
+    	}
     	
         $searchModel = new OfferSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
