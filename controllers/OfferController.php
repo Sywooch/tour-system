@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\Offerimage;
+use app\models\UploadForm;
 use Yii;
 use app\models\Offer;
 use app\models\OfferSearch;
@@ -153,19 +153,20 @@ public function beforeAction($action)
 
     public function actionAddimage($id)
     {
-        $model_offer = new Offer();
-        $model_offer_image = new Offerimage();
-
-        if ($model_offer_image->load(Yii::$app->request->post())) {
-            $model_offer_image->offers_offerId = $id;
-            $model_offer_image->image_file = UploadedFile::getInstance($model_offer_image, 'image_file');
-            $model_offer_image->image_file->saveAs('uploads/' . $model_offer_image->image_file->baseName . '.' . $model_offer_image->image_file->extension);
-            $model_offer_image->image_path = 'uploads/' . $model_offer_image->image_file->baseName . '.' . $model_offer_image->image_file->extension;
-            $model_offer_image->save();
-            return $this->redirect(['view', 'id' => $id]);
+    	$model_offer_image = new UploadForm();
+		
+    	if (Yii::$app->request->isPost) {
+    		$model_offer_image->imageFiles = UploadedFile::getInstances($model_offer_image, 'imageFiles');
+    		if ($model_offer_image->upload($id)) {
+    			Yii::$app->session->setFlash('photosAdded');
+    			return $this->refresh();
+    		}
         } else {
+       		$offerName = Offer::findOne($id)->offerName;
             return $this->render('addimage', [
                 'model' => $model_offer_image,
+            	'offerId' => $id,
+            	'offerName' => $offerName,
             ]);
         }
     }

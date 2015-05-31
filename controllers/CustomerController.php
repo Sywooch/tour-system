@@ -150,8 +150,12 @@ public function actionBuy($id)
 				}
 			}
 			
+			$offerName = Offer::findOne($id)->offerName;
+			
 			return $this->render('/reservations/reservation-form', [
 					'reservationForm' => $reservationForm,
+					'offerName' => $offerName,
+					'offerId' => $id,
 					'attendees' => (empty($attendees)) ? [new Attendee] : $attendees
 			]);
 			

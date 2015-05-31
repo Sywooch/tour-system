@@ -14,7 +14,8 @@ use app\models\Attendee;
 
 $this->title='Rezerwacja oferty';
 
-$this->params['breadcrumbs'][] = ['label' => 'Rezerwacje', 'url' => ['list']]; 
+$this->params['breadcrumbs'][] = ['label' => 'Lista ofert', 'url' => ['list']]; 
+$this->params['breadcrumbs'][] = ['label' => $offerName, 'url' => ['/offer/view?id=' . $offerId]];
 $this->params['breadcrumbs'][] = $this->title;
 
 $this->registerJs('

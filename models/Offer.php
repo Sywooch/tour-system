@@ -121,4 +121,9 @@ class Offer extends \yii\db\ActiveRecord
     public function getCostsBills(){
     	return $this->hasMany(CostsBill::className(), ['offers_offerId' => 'offerId']);
     }
+    
+    public function getImages()
+    {
+    	return $this->hasMany(OfferImage::className(), ['offers_offerId' => 'offerId']);
+    }
 }
