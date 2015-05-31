@@ -29,18 +29,18 @@ $(".dynamicform_wrapper").on("afterInsert", function(e, item) {
 });
 
 $(".dynamicform_wrapper").on("beforeDelete", function(e, item) {
-    if (! confirm("Are you sure you want to delete this item?")) {
+    if (! confirm("Czy na pewno chcesz usunąć tego uczestnika?")) {
         return false;
     }
     return true;
 });
 
 $(".dynamicform_wrapper").on("afterDelete", function(e) {
-    console.log("Deleted item!");
+    console.log("Uczestnik usunięty!");
 });
 
 $(".dynamicform_wrapper").on("limitReached", function(e, item) {
-    alert("Limit reached");
+    alert("Osiągnięto limit uczestników");
 });
 		');
 

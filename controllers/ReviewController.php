@@ -48,6 +48,10 @@ public function beforeAction($action)
 	{
 		$query = Review::find();
 		
+		if (!$query->exists()) {
+			Yii::$app->session->setFlash('noReviews');
+		}
+		
 		$pagination = new Pagination([
 				'defaultPageSize' => 10,
 				'totalCount' => $query->count(),

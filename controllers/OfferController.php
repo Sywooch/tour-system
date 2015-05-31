@@ -61,7 +61,9 @@ public function beforeAction($action)
      * @return mixed
      */
     public function actionList()
-    {    	
+    {   
+
+    	
         $searchModel = new OfferSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
