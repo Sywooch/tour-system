@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     		<th>Cena</th>
     		<th>Początek</th>
     		<th>Zakończenie</th>
+    		<th>Opcje</th>
     	</tr>
     	<?php
     		$i = $pagination->page*10 + 1; 
@@ -34,11 +35,9 @@ $this->params['breadcrumbs'][] = $this->title;
     			/*$reservation->getCustomers()->one()->isUser() ?
     			$row .= '<td>' . 'Brak' . '</td>':
     			$row .= '<td>' . $reservation->getCustomers()->one()->getUser()->one()->userLogin . '</td>';*/
-    			if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
-    			{
-    				$row .= '<td>' . $reservation->getCustomers()->one()->customerName . '</td>';
-    				$row .= '<td>' . $reservation->getCustomers()->one()->customerSurname . '</td>';
-    			}
+    			
+    			$row .= '<td>' . $reservation->getCustomers()->one()->customerName . '</td>';
+    			$row .= '<td>' . $reservation->getCustomers()->one()->customerSurname . '</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerName . '</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->getCountriesCountry()->one()->countryName .'</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerAccommodation .'</td>';
@@ -47,6 +46,10 @@ $this->params['breadcrumbs'][] = $this->title;
     			$row .= '<td>' . $reservation->getOffers()->one()->offerStartDate .'</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerEndDate .'</td>';
     			$row .= '<td>';
+    			$row .=  Html::a('<span class="glyphicon glyphicon-usd"></span>', '/personnel/addpayement?id=' . $reservation->reservationId, [
+    					'title' => 'Dodaj Płatność']);
+    			$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', '/personnel/addinvoice?id=' . $reservation->reservationId, [
+    					'title' => 'Wystaw fakturę']);
     			/*$row .=  Html::a('<span class="glyphicon glyphicon-pencil"></span>', 'edit?id=' . $reservation->reservationId, [
                     'title' => 'Edytuj']);
     			$row .= '&nbsp;&nbsp;';

@@ -63,7 +63,7 @@ public function beforeAction($action)
      */
     public function actionList()
     {   
-    	if (Yii::$app->user->isGuest || Yii::$app->user->identity->isCustomer ()) {
+    	/*if (Yii::$app->user->isGuest || Yii::$app->user->identity->isCustomer ()) {
     		$query = Offer::find();
     		
     		$pagination = new Pagination([
@@ -80,7 +80,7 @@ public function beforeAction($action)
     				'offers' => $offers,
     				'pagination' => $pagination,
     		]);
-    	}
+    	}*/
     	
         $searchModel = new OfferSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
