@@ -83,15 +83,9 @@ $(".dynamicform_wrapper").on("limitReached", function(e, item) {
             //		'enableAjaxValidation' => 'true'
             ]); ?>
              <?php   if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer()):?>
-                <?= $form->field($reservationForm, 'userAttends')->widget(
-    		SwitchBox::className(), [
-    			'clientOptions' => [
-    				'onText' => 'TAK',
-    				'offText' => 'NIE'
-    			]
-    				])->label(false); //   
+                 
 
-              ?>
+              
     				
     				<?php DynamicFormWidget::begin([
                 'widgetContainer' => 'dynamicform_wrapper', // required: only alphanumeric characters plus "_" [A-Za-z0-9_]

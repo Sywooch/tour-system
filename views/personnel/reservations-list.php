@@ -34,8 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
     			/*$reservation->getCustomers()->one()->isUser() ?
     			$row .= '<td>' . 'Brak' . '</td>':
     			$row .= '<td>' . $reservation->getCustomers()->one()->getUser()->one()->userLogin . '</td>';*/
-    			$row .= '<td>' . $reservation->getCustomers()->one()->customerName . '</td>';
-    			$row .= '<td>' . $reservation->getCustomers()->one()->customerSurname . '</td>';
+    			if (!Yii::$app->user->isGuest && Yii::$app->user->identity->isCustomer())
+    			{
+    				$row .= '<td>' . $reservation->getCustomers()->one()->customerName . '</td>';
+    				$row .= '<td>' . $reservation->getCustomers()->one()->customerSurname . '</td>';
+    			}
     			$row .= '<td>' . $reservation->getOffers()->one()->offerName . '</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->getCountriesCountry()->one()->countryName .'</td>';
     			$row .= '<td>' . $reservation->getOffers()->one()->offerAccommodation .'</td>';
