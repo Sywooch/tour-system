@@ -132,4 +132,9 @@ class Offer extends \yii\db\ActiveRecord
     	elseif($this->offerIsLastMinute == 1) return $this->offerLastMinutePrice;
     	else return $this->offerPrice;
     }
+    
+    public function getSettlement()
+    {
+    	return $this->hasOne(Settlement::className(), ['offers_offerId' => 'offerId']);
+    }
 }

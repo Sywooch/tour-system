@@ -17,7 +17,9 @@ use yii\data\Pagination;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
 use app\models\ModelExtended;
-
+use app\models\CustomerInvoice;
+use app\models\Config;
+use app\models\PaymentMethod;
 
 
 class CustomerController extends Controller
@@ -204,6 +206,12 @@ public function actionEdit($id){
 		]);		
 	}
 	
+	public function actionReservationDetail($id){
+		$reservation = Reservation::findOne($id);
+	
+		return $this->render('reservation-detail', ['reservation' => $reservation]);
+	}
+	
 	public function actionAgreement() {
 	
 		$content = $this->renderPartial('render-form');
@@ -212,5 +220,33 @@ public function actionEdit($id){
 		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
 		$mpdf->WriteHtml($content); // call mpdf write html
 		echo $mpdf->Output('filename.pdf', 'D'); // call the mpdf api output as needed
+	}
+	
+	public function actionGenerateInvoice ($invoiceNo="5/2015")
+	{
+		$invoice = CustomerInvoice::find()->where(['customerInvoiceNo' => $invoiceNo])->one();
+		$conf = Config::findOne(1);
+		$reservation = Reservation::find()->where(['reservationId' => $invoice->reservations_reservationId])->one();
+		$payment_method = PaymentMethod::find()->where(['paymentMethodId' => $invoice->paymentMethods_paymentMethodId])->one();
+		$attendees = Attendee::find()->where(['reservations_reservationId'=>$invoice->reservations_reservationId])->all();
+	
+		/*return $this->render('/invoices/invoice-view', array ('invoice' => $invoice,
+				'reservation' => $reservation,
+				'conf' => $conf,
+				'payment_method' => $payment_method,
+				'attendees' => $attendees));*/
+		
+		$content = $this->renderPartial('/invoices/invoice-view', array ('invoice' => $invoice,
+				'reservation' => $reservation,
+				'conf' => $conf,
+				'payment_method' => $payment_method,
+				'attendees' => $attendees));
+		$pdf = Yii::$app->pdf; // or new Pdf();
+		$mpdf = $pdf->api; // fetches mpdf api
+		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
+		$css = file_get_contents(Yii::$app->basePath . "/vendor/bower/bootstrap/dist/css/bootstrap.min.css");
+		$mpdf->WriteHtml($css, 1);
+		$mpdf->WriteHtml($content, 2); // call mpdf write html
+		echo $mpdf->Output('invoice.pdf', 'D'); // call the mpdf api output as needed
 	}
 }

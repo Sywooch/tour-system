@@ -35,9 +35,9 @@ class CustomerInvoice extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['customerInvoiceNo', 'customerInvoiceDate', 'customerInvoiceDateOfSale', 'attendees_attendeeId', 'settlements_offers_offerId', 'paymentMethods_paymentMethodId'], 'required'],
-            [['customerInvoiceDate', 'customerInvoiceDateOfSale'], 'safe'],
-            [['attendees_attendeeId', 'settlements_offers_offerId', 'paymentMethods_paymentMethodId'], 'integer'],
+            [['customerInvoiceNo', 'customerInvoiceDate', 'paymentMethods_paymentMethodId'], 'required'],
+            [['customerInvoiceDate', 'customerInvoiceDateOfSale', 'customerInvoicePaymentDate'], 'safe'],
+            [['paymentMethods_paymentMethodId'], 'integer'],
             [['customerInvoiceNo'], 'string', 'max' => 45],
             [['customerInvoiceNo'], 'unique']
         ];
