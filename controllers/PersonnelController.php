@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\User;
 use app\models\Agent;
+use app\models\Payment;
 use app\models\Reservation;
 use yii\data\Pagination;
 use yii\bootstrap\ActiveForm;
@@ -94,5 +95,22 @@ class PersonnelController extends Controller
 		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
 		$mpdf->WriteHtml($content); // call mpdf write html
 		echo $mpdf->Output('filename.pdf', 'D'); // call the mpdf api output as needed
+	}
+	
+	public function actionAddpayement($id) {
+	
+		$payment = new Payment();	
+		$payment->reservations_reservationId=$id;
+		
+		if ($payment->load(Yii::$app->request->post()) && $payment->save()) {
+			Yii::$app->session->setFlash('paymentAdded');
+			return $this->refresh();
+		} else {
+			return $this->render('add-payment', [
+					'payment' => $payment,
+			]);
+		}
+		
+		
 	}
 }
