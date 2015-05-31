@@ -50,7 +50,7 @@ public function rules()
 	public function getPayments(){
 		return $this->hasMany(Payment::className(), ['reservations_reservationId' => 'reservationId']);
 	}
-	
+
 	public function getPaymentsValue(){
 		$total = 0;
 		if($this->getPayments()->count() > 0)

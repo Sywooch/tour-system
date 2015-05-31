@@ -10,10 +10,15 @@ use app\models\User;
 use app\models\Agent;
 use app\models\Payment;
 use app\models\Reservation;
+use app\models\CustomerInvoice;
+use app\models\Config;
 use yii\data\Pagination;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
 use kartik\mpdf\Pdf;
+use yii\base\Object;
+use app\models\PaymentMethod;
+use app\models\Attendee;
 
 class PersonnelController extends Controller
 {
@@ -99,6 +104,48 @@ class PersonnelController extends Controller
 	
 	public function actionAddpayement($id) {
 	
+		$payment = new Payment();
+		$payment->reservations_reservationId=$id;
+	
+		if ($payment->load(Yii::$app->request->post()) && $payment->save()) {
+			Yii::$app->session->setFlash('paymentAdded');
+			return $this->refresh();
+		} else {
+			return $this->render('add-payment', [
+					'payment' => $payment,
+			]);
+		}
+	
+	
+	}
+	
+	public function actionAddinvoice ($id) 
+	{
+		$reservation = Reservation::find()->where(['reservationId' => $id])->one();
+		$invoice = new CustomerInvoice();
+		$conf = Config::findOne(1);
+		
+		if (!$invoice->load(Yii::$app->request->post())) {
+			$invoice->customerInvoiceNo = $conf->lastInvoiceNo + 1 . '/' . date('Y');
+			$invoice->customerInvoiceDate = date ('Y-m-d');
+			$invoice->customerInvoiceDateOfSale = date($reservation->reservationDate);
+		}
+		
+		if (Yii::$app->request->isAjax && $invoice->load(Yii::$app->request->post())) {
+			Yii::$app->response->format = Response::FORMAT_JSON;
+			return ActiveForm::validate($invoice);
+		}
+		$invoice->reservations_reservationId = $reservation->reservationId;
+		if (($invoice->load(Yii::$app->request->post()) && $invoice->save())) {
+			Yii::$app->session->setFlash('invoiceAdded');
+			$conf->lastInvoiceNo = (int) $conf->lastInvoiceNo+1;
+			$conf->save(false);
+			return $this->refresh();
+		} else {
+			return $this->render('/invoices/invoice-form', array ('invoice' => $invoice, 'reservation' => $reservation));
+		}
+	}
+	}
 		$payment = new Payment();	
 		$payment->reservations_reservationId=$id;
 		

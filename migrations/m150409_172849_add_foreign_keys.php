@@ -19,7 +19,6 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->addForeignKey('reservationId_fk_in_attendees', 'attendees', 'reservations_reservationId', 'reservations', 'reservationId');
         $this->addForeignKey('reservationId_fk_in_customerInvoices', 'customerInvoices', 'reservations_reservationId', 'reservations', 'reservationId');
         $this->addForeignKey('offerId_fk_in_settlements', 'settlements', 'offers_offerId', 'offers', 'offerId');
-        $this->addForeignKey('settlements_offerId_fk_in_customerInvoices', 'customerInvoices', 'settlements_offers_offerId', 'settlements', 'offers_offerId');
         $this->addForeignKey('paymentMethodId_fk_in_customerInvoices', 'customerInvoices', 'paymentMethods_paymentMethodId', 'paymentMethods', 'paymentMethodId');
         $this->addForeignKey('offers_offerId_fk_in_costsBills', 'costsBills', 'offers_offerId', 'offers', 'offerId');
         $this->addForeignKey('contractorId_fk_in_costsBills', 'costsBills', 'contractors_contractorId', 'contractors', 'contractorId');
@@ -42,7 +41,6 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->dropForeignKey('reservationId_fk_in_attendees', 'attendees');
         $this->dropForeignKey('reservationId_fk_in_customerInvoices', 'customerInvoices');
         $this->dropForeignKey('offerId_fk_in_settlements', 'settlements');
-        $this->dropForeignKey('settlements_offerId_fk_in_customerInvoices', 'customerInvoices');
         $this->dropForeignKey('paymentMethodId_fk_in_customerInvoices', 'customerInvoices');
         $this->dropForeignKey('offers_offerId_fk_in_costsBills', 'costsBills');
         $this->dropForeignKey('contractorId_fk_in_costsBills', 'costsBills');
@@ -50,7 +48,7 @@ class m150409_172849_add_foreign_keys extends Migration
         $this->dropForeignKey('seasonId_fk_in_offers', 'offers');
         $this->dropForeignKey('offers_offerId_fk_in_offerimages', 'offerimages');
     }
-    
+   
     /*
     // Use safeUp/safeDown to run migration code within a transaction
     public function safeUp()
