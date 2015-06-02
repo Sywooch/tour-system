@@ -30,7 +30,7 @@ $this->registerCss('
    					'label' => 'Akcja',
    					'dropdown' => [
    							'items' => [
-   									['label' => 'Pobierz umowę', 'url' => 'agreement'],
+   									['label' => 'Pobierz umowę', 'url' => 'agreement?id=' . $reservation->reservationId],
    									['label' => 'Dodaj opinię', 'url' => '/offer/reservation?id=' . $reservation->reservationId],
         							['label' => ($reservation->reservationInvoiced != 0) ? 'Pobierz fakturę' : '', 
         							 'url' => ($reservation->reservationInvoiced != 0) ? 'generate-invoice?invoiceNo=' . 

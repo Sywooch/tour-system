@@ -113,22 +113,6 @@ public function actionBuy($id)
 					$transaction = \Yii::$app->db->beginTransaction();
 					try {
 						if ($flag = $reservation->save(false)) {
-							/*if($reservationForm->userAttends == '1'){
-								$user = new Attendee();
-								$user->attendeeName = $app->user->identity->getCustomer()->one()->customerName;
-								$user->attendeeSurname = $app->user->identity->getCustomer()->one()->customerSurname;
-								$user->attendeeStreet = $app->user->identity->getCustomer()->one()->customerStreet;
-								$user->attendeeSPostcode = $app->user->identity->getCustomer()->one()->customerPostcode;
-								$user->attendeeCity = $app->user->identity->getCustomer()->one()->customerCity;
-								$user->attendeePESEL = $app->user->identity->getCustomer()->one()->customerPESEL;
-								$user->attendeeBirthdate = $app->user->identity->getCustomer()->one()->customerBirthdate;
-								$user->reservations_reservationId = $reservation->reservationId;
-				
-								if (! ($flag = $user->save(false))) {
-									$transaction->rollBack();
-									Yii::$app->session->setFlash('customerAsAttendeeError');
-								}
-							}*/
 							foreach ($attendees as $attendee) {
 								$attendee->reservations_reservationId = $reservation->reservationId;
 								
@@ -211,9 +195,12 @@ public function actionEdit($id){
 		return $this->render('reservation-detail', ['reservation' => $reservation]);
 	}
 	
-	public function actionAgreement() {
+	public function actionAgreement($id) {
+		
+		$reservation = Reservation::findOne($id);
+		$config = Config::findOne(1);
 	
-		$content = $this->renderPartial('render-form');
+		$content = $this->renderPartial('agreement', ['reservation' => $reservation, 'config' => $config]);
 		$pdf = Yii::$app->pdf; // or new Pdf();
 		$mpdf = $pdf->api; // fetches mpdf api
 		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
@@ -243,9 +230,9 @@ public function actionEdit($id){
 		$pdf = Yii::$app->pdf; // or new Pdf();
 		$mpdf = $pdf->api; // fetches mpdf api
 		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
-		$css = file_get_contents(Yii::$app->basePath . "/vendor/bower/bootstrap/dist/css/bootstrap.min.css");
-		$mpdf->WriteHtml($css, 1);
-		$mpdf->WriteHtml($content, 2); // call mpdf write html
+		//$css = file_get_contents(Yii::$app->basePath . "/vendor/bower/bootstrap/dist/css/bootstrap.min.css");
+		//$mpdf->WriteHtml($css, 1);
+		$mpdf->WriteHtml($content); // call mpdf write html
 		echo $mpdf->Output('invoice.pdf', 'D'); // call the mpdf api output as needed
 	}
 }

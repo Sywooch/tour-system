@@ -137,4 +137,13 @@ class Offer extends \yii\db\ActiveRecord
     {
     	return $this->hasOne(Settlement::className(), ['offers_offerId' => 'offerId']);
     }
+    
+    public function countAttendees()
+    {
+    	$count = 0;
+    	foreach($this->getReservations() as $reservation)
+    		$count += $reservation->getAttendees()->count;
+    	
+    	return $count;
+    }
 }
