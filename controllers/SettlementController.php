@@ -35,7 +35,7 @@ class SettlementController extends Controller
     		}
     		 
     		$settlement->settlementTotalIncome = Offer::find($id)->one()->getTotalIncome();
-    		$settlement->settlementVAT = ($settlement->settlementTotalIncome - $settlement->settlementCosts) * 0.23 / 1.23;
+    		$settlement->settlementVAT = round((($settlement->settlementTotalIncome - $settlement->settlementCosts) * 0.23 / 1.23),2);
     		if($settlement->settlementVAT < 0) $settlement->settlementVAT = 0;
     	}
     	
@@ -56,7 +56,7 @@ class SettlementController extends Controller
     	}
     	 
     	$settlement->settlementTotalIncome = Offer::find($id)->one()->getTotalIncome();
-    	$settlement->settlementVAT = ($settlement->settlementTotalIncome - $settlement->settlementCosts) * 0.23 / 1.23;
+    	$settlement->settlementVAT = round((($settlement->settlementTotalIncome - $settlement->settlementCosts) * 0.23 / 1.23),2);
     	if($settlement->settlementVAT < 0) $settlement->settlementVAT = 0;
     	
     	return $this->render('settlement-form', ['settlement' => $settlement, 'costsBills' => $costsBills]);

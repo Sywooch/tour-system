@@ -54,7 +54,7 @@ public function rules()
 	public function getPaymentsValue(){
 		$total = 0;
 		if($this->getPayments()->count() > 0)
-			foreach($this->getPayments() as $payment)
+			foreach($this->getPayments()->all() as $payment)
 				$total += $payment->paymentValue;
 			
 		return $total;

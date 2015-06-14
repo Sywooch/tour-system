@@ -19,6 +19,7 @@ use kartik\mpdf\Pdf;
 use yii\base\Object;
 use app\models\PaymentMethod;
 use app\models\Attendee;
+use app\models\Settlement;
 
 class PersonnelController extends Controller
 {
@@ -160,5 +161,27 @@ class PersonnelController extends Controller
 					'payment' => $payment,
 			]);
 		}
+	}
+	
+	public function actionGenerateInvoice ($invoiceNo)
+	{
+		$invoice = CustomerInvoice::find()->where(['customerInvoiceNo' => $invoiceNo])->one();
+		$conf = Config::findOne(1);
+		$reservation = Reservation::find()->where(['reservationId' => $invoice->reservations_reservationId])->one();
+		$payment_method = PaymentMethod::find()->where(['paymentMethodId' => $invoice->paymentMethods_paymentMethodId])->one();
+		$settlement = Settlement::find()->where(['offers_offerId'=>$reservation->offers_offerId])->one();
+
+		$content = $this->renderPartial('/invoices/invoice-copy', array ('invoice' => $invoice,
+				'reservation' => $reservation,
+				'conf' => $conf,
+				'payment_method' => $payment_method,
+				'settlement' => $settlement));
+		$pdf = Yii::$app->pdf; // or new Pdf();
+		$mpdf = $pdf->api; // fetches mpdf api
+		$mpdf->SetHeader('TourSystem'); // call methods or set any properties
+		//$css = file_get_contents(Yii::$app->basePath . "/vendor/bower/bootstrap/dist/css/bootstrap.min.css");
+		//$mpdf->WriteHtml($css, 1);
+		$mpdf->WriteHtml($content); // call mpdf write html
+		echo $mpdf->Output('invoice_COPY.pdf', 'D'); // call the mpdf api output as needed
 	}
 }

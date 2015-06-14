@@ -65,21 +65,21 @@ class Offer extends \yii\db\ActiveRecord
     {
         return [
             'offerName' => 'Nazwa oferty',
-            'offerStartDate' => 'Data początku oferty',
-            'offerEndDate' => 'Data konca oferty',
-            'offerPrice' => 'Cena oferty',
+            'offerStartDate' => 'Data wyjazdu',
+            'offerEndDate' => 'Data powrotu',
+            'offerPrice' => 'Cena',
             'offerDescription' => 'Opis oferty',
-            'offerAccommodation' => 'Offer Accommodation',
-            'offerBenefits' => 'Korzyści oferty',
-            'offerProgram' => 'Programa oferty',
-            'offerOptional' => 'Offer Optional',
-            'offerNote' => 'Offer Note',
-            'offerPracticalData' => 'Offer Practical Data',
-            'offerLastMinutePrice' => 'Offer Last Minute Price',
-            'offerFirstMinutePrice' => 'Offer First Minute Price',
-            'offerIsFirstMinute' => 'Offer Is First Minute',
-            'offerIsLastMinute' => 'Offer Is Last Minute',
-            'offerIsActive' => 'Offer Is Active',
+            'offerAccommodation' => 'Miejsce zakwaterowania',
+            'offerBenefits' => 'Cena zawiera',
+            'offerProgram' => 'Program oferty',
+            'offerOptional' => 'Porogram fakultatywny',
+            'offerNote' => 'Uwagi',
+            'offerPracticalData' => 'Informacje praktyczny',
+            'offerLastMinutePrice' => 'Cena Last Minute',
+            'offerFirstMinutePrice' => 'Cena First Minute',
+            'offerIsFirstMinute' => 'First Minute',
+            'offerIsLastMinute' => 'Last Minute',
+            'offerIsActive' => 'Aktywna',
             'countries_countryId' => 'Nazwa kraju',
             'seasons_seasonId' => 'Nazwa sezonu',
         ];
@@ -141,8 +141,8 @@ class Offer extends \yii\db\ActiveRecord
     public function countAttendees()
     {
     	$count = 0;
-    	foreach($this->getReservations() as $reservation)
-    		$count += $reservation->getAttendees()->count;
+    	foreach($this->getReservations()->all() as $reservation)
+    		$count += $reservation->getAttendees()->count();
     	
     	return $count;
     }

@@ -61,7 +61,8 @@ $this->params['breadcrumbs'][] = $this->title;
     		$payments .= "<h4>Płatność " . $i . ":</h4>";
     		$payments .= '<ol>';
     		$payments .= '<li><strong>Kwota: </strong>' . $payment->paymentValue . ' zł</li>';
-    		$payments .= '<li><strong>Data płatności: </strong>' . $payment->getPaymentgetPaymentMethodsPaymentMethod()->one()->paymentName . '</li>';;
+    		$payments .= '<li><strong>Data płatności: </strong>' . $payment->paymentDate . '</li>';
+    		$payments .= '<li><strong>Sposób płatności: </strong>' . $payment->getPaymentMethodsPaymentMethod()->one()->paymentMethodName . '</li>';;
     		$payments .= '</ol>';
     		$i++;
     	}

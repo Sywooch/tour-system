@@ -16,7 +16,7 @@ use app\models\Reservation;
     		$attendiesNo = 0;
     		$Reservations = $settlement->getOffer()->one()->getReservations()->all();
     		foreach($Reservations as $Reservation)
-    			$attendiesNo += $Reservation->getAttendies()->count(); 
+    			$attendiesNo += $Reservation->getAttendees()->count(); 
     	?>
     	<strong>Liczba uczestników: </strong> <?=  $attendiesNo ?><br><br>
 	</div>

@@ -8,6 +8,7 @@ use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\Offer;
 
 class SiteController extends Controller
 {
@@ -73,7 +74,8 @@ class SiteController extends Controller
 
     public function actionIndex()
     {
-        return $this->render('index');
+    	$offers = Offer::find()->orderBy('offerId')->limit(3)->all();
+        return $this->render('index', ['offers' => $offers]);
     }
 
     public function actionLogin()

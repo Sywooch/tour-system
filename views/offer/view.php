@@ -58,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
         	echo Html::a('Rezerwacja', ['/site/login'], ['class' => 'btn btn-primary']);
         } else {
         	if (Yii::$app->user->identity->isAgent() || Yii::$app->user->identity->isPersonnel()) {
-        		echo Html::a('Sprzedarz', ['/agent/sell', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
+        		echo Html::a('Sprzedaż', ['/agent/sell', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
         	} else {
         			echo Html::a('Rezerwacja', ['/customer/buy', 'id' => $model->offerId], ['class' => 'btn btn-primary']);
         	}
